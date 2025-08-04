@@ -31,10 +31,7 @@ type NotLeader struct {
 	// The requested region ID
 	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// Region leader of the requested region
-	Leader               *metapb.Peer `protobuf:"bytes,2,opt,name=leader,proto3" json:"leader,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Leader *metapb.Peer `protobuf:"bytes,2,opt,name=leader,proto3" json:"leader,omitempty"`
 }
 
 func (m *NotLeader) Reset()         { *m = NotLeader{} }
@@ -88,10 +85,7 @@ func (m *NotLeader) GetLeader() *metapb.Peer {
 // which should be forbidden and retry.
 type IsWitness struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *IsWitness) Reset()         { *m = IsWitness{} }
@@ -134,21 +128,72 @@ func (m *IsWitness) GetRegionId() uint64 {
 	return 0
 }
 
+// BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+// client should update the buckets version and retry.
+type BucketVersionNotMatch struct {
+	Version uint64   `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+	Keys    [][]byte `protobuf:"bytes,2,rep,name=keys,proto3" json:"keys,omitempty"`
+}
+
+func (m *BucketVersionNotMatch) Reset()         { *m = BucketVersionNotMatch{} }
+func (m *BucketVersionNotMatch) String() string { return proto.CompactTextString(m) }
+func (*BucketVersionNotMatch) ProtoMessage()    {}
+func (*BucketVersionNotMatch) Descriptor() ([]byte, []int) {
+	return fileDescriptor_390aa86757fd1154, []int{2}
+}
+func (m *BucketVersionNotMatch) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BucketVersionNotMatch) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BucketVersionNotMatch.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BucketVersionNotMatch) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BucketVersionNotMatch.Merge(m, src)
+}
+func (m *BucketVersionNotMatch) XXX_Size() int {
+	return m.Size()
+}
+func (m *BucketVersionNotMatch) XXX_DiscardUnknown() {
+	xxx_messageInfo_BucketVersionNotMatch.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BucketVersionNotMatch proto.InternalMessageInfo
+
+func (m *BucketVersionNotMatch) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
+func (m *BucketVersionNotMatch) GetKeys() [][]byte {
+	if m != nil {
+		return m.Keys
+	}
+	return nil
+}
+
 type DiskFull struct {
 	// The requested store ID
 	StoreId []uint64 `protobuf:"varint,1,rep,packed,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
 	// The detailed info
-	Reason               string   `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Reason string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
 }
 
 func (m *DiskFull) Reset()         { *m = DiskFull{} }
 func (m *DiskFull) String() string { return proto.CompactTextString(m) }
 func (*DiskFull) ProtoMessage()    {}
 func (*DiskFull) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{2}
+	return fileDescriptor_390aa86757fd1154, []int{3}
 }
 func (m *DiskFull) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -197,17 +242,14 @@ type StoreNotMatch struct {
 	// Store id in request
 	RequestStoreId uint64 `protobuf:"varint,1,opt,name=request_store_id,json=requestStoreId,proto3" json:"request_store_id,omitempty"`
 	// Actual store id
-	ActualStoreId        uint64   `protobuf:"varint,2,opt,name=actual_store_id,json=actualStoreId,proto3" json:"actual_store_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ActualStoreId uint64 `protobuf:"varint,2,opt,name=actual_store_id,json=actualStoreId,proto3" json:"actual_store_id,omitempty"`
 }
 
 func (m *StoreNotMatch) Reset()         { *m = StoreNotMatch{} }
 func (m *StoreNotMatch) String() string { return proto.CompactTextString(m) }
 func (*StoreNotMatch) ProtoMessage()    {}
 func (*StoreNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{3}
+	return fileDescriptor_390aa86757fd1154, []int{4}
 }
 func (m *StoreNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,17 +296,14 @@ func (m *StoreNotMatch) GetActualStoreId() uint64 {
 // matches the requested region ID.
 type RegionNotFound struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *RegionNotFound) Reset()         { *m = RegionNotFound{} }
 func (m *RegionNotFound) String() string { return proto.CompactTextString(m) }
 func (*RegionNotFound) ProtoMessage()    {}
 func (*RegionNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{4}
+	return fileDescriptor_390aa86757fd1154, []int{5}
 }
 func (m *RegionNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -304,17 +343,14 @@ func (m *RegionNotFound) GetRegionId() uint64 {
 // matchesthe request region ID.
 type RegionNotInitialized struct {
 	// The request region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *RegionNotInitialized) Reset()         { *m = RegionNotInitialized{} }
 func (m *RegionNotInitialized) String() string { return proto.CompactTextString(m) }
 func (*RegionNotInitialized) ProtoMessage()    {}
 func (*RegionNotInitialized) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{5}
+	return fileDescriptor_390aa86757fd1154, []int{6}
 }
 func (m *RegionNotInitialized) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -360,17 +396,14 @@ type KeyNotInRegion struct {
 	// Start key of the requested region
 	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	// Snd key of the requested region
-	EndKey               []byte   `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	EndKey []byte `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 }
 
 func (m *KeyNotInRegion) Reset()         { *m = KeyNotInRegion{} }
 func (m *KeyNotInRegion) String() string { return proto.CompactTextString(m) }
 func (*KeyNotInRegion) ProtoMessage()    {}
 func (*KeyNotInRegion) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{6}
+	return fileDescriptor_390aa86757fd1154, []int{7}
 }
 func (m *KeyNotInRegion) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -432,17 +465,14 @@ func (m *KeyNotInRegion) GetEndKey() []byte {
 // Hence, a command is based on a stale version of a region.
 type EpochNotMatch struct {
 	// Available regions that may be siblings of the requested one.
-	CurrentRegions       []*metapb.Region `protobuf:"bytes,1,rep,name=current_regions,json=currentRegions,proto3" json:"current_regions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
+	CurrentRegions []*metapb.Region `protobuf:"bytes,1,rep,name=current_regions,json=currentRegions,proto3" json:"current_regions,omitempty"`
 }
 
 func (m *EpochNotMatch) Reset()         { *m = EpochNotMatch{} }
 func (m *EpochNotMatch) String() string { return proto.CompactTextString(m) }
 func (*EpochNotMatch) ProtoMessage()    {}
 func (*EpochNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{7}
+	return fileDescriptor_390aa86757fd1154, []int{8}
 }
 func (m *EpochNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -485,17 +515,14 @@ type ServerIsBusy struct {
 	BackoffMs       uint64 `protobuf:"varint,2,opt,name=backoff_ms,json=backoffMs,proto3" json:"backoff_ms,omitempty"`
 	EstimatedWaitMs uint32 `protobuf:"varint,3,opt,name=estimated_wait_ms,json=estimatedWaitMs,proto3" json:"estimated_wait_ms,omitempty"`
 	// Current applied_index at the leader, may be used in replica read.
-	AppliedIndex         uint64   `protobuf:"varint,4,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	AppliedIndex uint64 `protobuf:"varint,4,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
 }
 
 func (m *ServerIsBusy) Reset()         { *m = ServerIsBusy{} }
 func (m *ServerIsBusy) String() string { return proto.CompactTextString(m) }
 func (*ServerIsBusy) ProtoMessage()    {}
 func (*ServerIsBusy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{8}
+	return fileDescriptor_390aa86757fd1154, []int{9}
 }
 func (m *ServerIsBusy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -556,16 +583,13 @@ func (m *ServerIsBusy) GetAppliedIndex() uint64 {
 // the current request term is lower than current raft term.
 // This can be retried at most time.
 type StaleCommand struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *StaleCommand) Reset()         { *m = StaleCommand{} }
 func (m *StaleCommand) String() string { return proto.CompactTextString(m) }
 func (*StaleCommand) ProtoMessage()    {}
 func (*StaleCommand) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{9}
+	return fileDescriptor_390aa86757fd1154, []int{10}
 }
 func (m *StaleCommand) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -601,17 +625,14 @@ type RaftEntryTooLarge struct {
 	// The requested region ID
 	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// Size of the raft entry
-	EntrySize            uint64   `protobuf:"varint,2,opt,name=entry_size,json=entrySize,proto3" json:"entry_size,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	EntrySize uint64 `protobuf:"varint,2,opt,name=entry_size,json=entrySize,proto3" json:"entry_size,omitempty"`
 }
 
 func (m *RaftEntryTooLarge) Reset()         { *m = RaftEntryTooLarge{} }
 func (m *RaftEntryTooLarge) String() string { return proto.CompactTextString(m) }
 func (*RaftEntryTooLarge) ProtoMessage()    {}
 func (*RaftEntryTooLarge) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{10}
+	return fileDescriptor_390aa86757fd1154, []int{11}
 }
 func (m *RaftEntryTooLarge) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -659,16 +680,13 @@ func (m *RaftEntryTooLarge) GetEntrySize() uint64 {
 // the prewrite of an async commit transaction cannot succeed. The client can backoff and
 // resend the request.
 type MaxTimestampNotSynced struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *MaxTimestampNotSynced) Reset()         { *m = MaxTimestampNotSynced{} }
 func (m *MaxTimestampNotSynced) String() string { return proto.CompactTextString(m) }
 func (*MaxTimestampNotSynced) ProtoMessage()    {}
 func (*MaxTimestampNotSynced) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{11}
+	return fileDescriptor_390aa86757fd1154, []int{12}
 }
 func (m *MaxTimestampNotSynced) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -705,17 +723,14 @@ type ReadIndexNotReady struct {
 	// The reason why the region is not ready to serve read index request
 	Reason string `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *ReadIndexNotReady) Reset()         { *m = ReadIndexNotReady{} }
 func (m *ReadIndexNotReady) String() string { return proto.CompactTextString(m) }
 func (*ReadIndexNotReady) ProtoMessage()    {}
 func (*ReadIndexNotReady) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{12}
+	return fileDescriptor_390aa86757fd1154, []int{13}
 }
 func (m *ReadIndexNotReady) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -763,17 +778,14 @@ func (m *ReadIndexNotReady) GetRegionId() uint64 {
 // This can be retried at most time.
 type ProposalInMergingMode struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *ProposalInMergingMode) Reset()         { *m = ProposalInMergingMode{} }
 func (m *ProposalInMergingMode) String() string { return proto.CompactTextString(m) }
 func (*ProposalInMergingMode) ProtoMessage()    {}
 func (*ProposalInMergingMode) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{13}
+	return fileDescriptor_390aa86757fd1154, []int{14}
 }
 func (m *ProposalInMergingMode) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -811,19 +823,16 @@ func (m *ProposalInMergingMode) GetRegionId() uint64 {
 
 type DataIsNotReady struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	PeerId               uint64   `protobuf:"varint,2,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
-	SafeTs               uint64   `protobuf:"varint,3,opt,name=safe_ts,json=safeTs,proto3" json:"safe_ts,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	PeerId   uint64 `protobuf:"varint,2,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
+	SafeTs   uint64 `protobuf:"varint,3,opt,name=safe_ts,json=safeTs,proto3" json:"safe_ts,omitempty"`
 }
 
 func (m *DataIsNotReady) Reset()         { *m = DataIsNotReady{} }
 func (m *DataIsNotReady) String() string { return proto.CompactTextString(m) }
 func (*DataIsNotReady) ProtoMessage()    {}
 func (*DataIsNotReady) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{14}
+	return fileDescriptor_390aa86757fd1154, []int{15}
 }
 func (m *DataIsNotReady) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -875,17 +884,14 @@ func (m *DataIsNotReady) GetSafeTs() uint64 {
 
 type RecoveryInProgress struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *RecoveryInProgress) Reset()         { *m = RecoveryInProgress{} }
 func (m *RecoveryInProgress) String() string { return proto.CompactTextString(m) }
 func (*RecoveryInProgress) ProtoMessage()    {}
 func (*RecoveryInProgress) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{15}
+	return fileDescriptor_390aa86757fd1154, []int{16}
 }
 func (m *RecoveryInProgress) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -923,18 +929,15 @@ func (m *RecoveryInProgress) GetRegionId() uint64 {
 
 type FlashbackInProgress struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	FlashbackStartTs     uint64   `protobuf:"varint,2,opt,name=flashback_start_ts,json=flashbackStartTs,proto3" json:"flashback_start_ts,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId         uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	FlashbackStartTs uint64 `protobuf:"varint,2,opt,name=flashback_start_ts,json=flashbackStartTs,proto3" json:"flashback_start_ts,omitempty"`
 }
 
 func (m *FlashbackInProgress) Reset()         { *m = FlashbackInProgress{} }
 func (m *FlashbackInProgress) String() string { return proto.CompactTextString(m) }
 func (*FlashbackInProgress) ProtoMessage()    {}
 func (*FlashbackInProgress) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{16}
+	return fileDescriptor_390aa86757fd1154, []int{17}
 }
 func (m *FlashbackInProgress) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -979,17 +982,14 @@ func (m *FlashbackInProgress) GetFlashbackStartTs() uint64 {
 
 type FlashbackNotPrepared struct {
 	// The requested region ID
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *FlashbackNotPrepared) Reset()         { *m = FlashbackNotPrepared{} }
 func (m *FlashbackNotPrepared) String() string { return proto.CompactTextString(m) }
 func (*FlashbackNotPrepared) ProtoMessage()    {}
 func (*FlashbackNotPrepared) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{17}
+	return fileDescriptor_390aa86757fd1154, []int{18}
 }
 func (m *FlashbackNotPrepared) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1025,6 +1025,106 @@ func (m *FlashbackNotPrepared) GetRegionId() uint64 {
 	return 0
 }
 
+// MismatchPeerId is the error variant that tells the request is sent to wrong peer.
+// Client receives this error should reload the region info and retry.
+type MismatchPeerId struct {
+	RequestPeerId uint64 `protobuf:"varint,1,opt,name=request_peer_id,json=requestPeerId,proto3" json:"request_peer_id,omitempty"`
+	StorePeerId   uint64 `protobuf:"varint,2,opt,name=store_peer_id,json=storePeerId,proto3" json:"store_peer_id,omitempty"`
+}
+
+func (m *MismatchPeerId) Reset()         { *m = MismatchPeerId{} }
+func (m *MismatchPeerId) String() string { return proto.CompactTextString(m) }
+func (*MismatchPeerId) ProtoMessage()    {}
+func (*MismatchPeerId) Descriptor() ([]byte, []int) {
+	return fileDescriptor_390aa86757fd1154, []int{19}
+}
+func (m *MismatchPeerId) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MismatchPeerId) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MismatchPeerId.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MismatchPeerId) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MismatchPeerId.Merge(m, src)
+}
+func (m *MismatchPeerId) XXX_Size() int {
+	return m.Size()
+}
+func (m *MismatchPeerId) XXX_DiscardUnknown() {
+	xxx_messageInfo_MismatchPeerId.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MismatchPeerId proto.InternalMessageInfo
+
+func (m *MismatchPeerId) GetRequestPeerId() uint64 {
+	if m != nil {
+		return m.RequestPeerId
+	}
+	return 0
+}
+
+func (m *MismatchPeerId) GetStorePeerId() uint64 {
+	if m != nil {
+		return m.StorePeerId
+	}
+	return 0
+}
+
+// UndeterminedResult is the error variant that tells the result is not determined yet.
+// For example, the raft protocol timed out and the apply result is unknown.
+type UndeterminedResult struct {
+	Message string `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+}
+
+func (m *UndeterminedResult) Reset()         { *m = UndeterminedResult{} }
+func (m *UndeterminedResult) String() string { return proto.CompactTextString(m) }
+func (*UndeterminedResult) ProtoMessage()    {}
+func (*UndeterminedResult) Descriptor() ([]byte, []int) {
+	return fileDescriptor_390aa86757fd1154, []int{20}
+}
+func (m *UndeterminedResult) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UndeterminedResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UndeterminedResult.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UndeterminedResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UndeterminedResult.Merge(m, src)
+}
+func (m *UndeterminedResult) XXX_Size() int {
+	return m.Size()
+}
+func (m *UndeterminedResult) XXX_DiscardUnknown() {
+	xxx_messageInfo_UndeterminedResult.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UndeterminedResult proto.InternalMessageInfo
+
+func (m *UndeterminedResult) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 type Error struct {
 	// The error message
@@ -1054,17 +1154,19 @@ type Error struct {
 	FlashbackNotPrepared *FlashbackNotPrepared `protobuf:"bytes,18,opt,name=FlashbackNotPrepared,proto3" json:"FlashbackNotPrepared,omitempty"`
 	// IsWitness is the error variant that tells a request be handle by witness
 	// which should be forbidden and retry.
-	IsWitness            *IsWitness `protobuf:"bytes,19,opt,name=is_witness,json=isWitness,proto3" json:"is_witness,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	IsWitness      *IsWitness      `protobuf:"bytes,19,opt,name=is_witness,json=isWitness,proto3" json:"is_witness,omitempty"`
+	MismatchPeerId *MismatchPeerId `protobuf:"bytes,20,opt,name=mismatch_peer_id,json=mismatchPeerId,proto3" json:"mismatch_peer_id,omitempty"`
+	// BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+	BucketVersionNotMatch *BucketVersionNotMatch `protobuf:"bytes,21,opt,name=bucket_version_not_match,json=bucketVersionNotMatch,proto3" json:"bucket_version_not_match,omitempty"`
+	// UndeterminedResult is the error variant that tells the result is not determined yet.
+	UndeterminedResult *UndeterminedResult `protobuf:"bytes,22,opt,name=undetermined_result,json=undeterminedResult,proto3" json:"undetermined_result,omitempty"`
 }
 
 func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_390aa86757fd1154, []int{18}
+	return fileDescriptor_390aa86757fd1154, []int{21}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1226,9 +1328,31 @@ func (m *Error) GetIsWitness() *IsWitness {
 	return nil
 }
 
+func (m *Error) GetMismatchPeerId() *MismatchPeerId {
+	if m != nil {
+		return m.MismatchPeerId
+	}
+	return nil
+}
+
+func (m *Error) GetBucketVersionNotMatch() *BucketVersionNotMatch {
+	if m != nil {
+		return m.BucketVersionNotMatch
+	}
+	return nil
+}
+
+func (m *Error) GetUndeterminedResult() *UndeterminedResult {
+	if m != nil {
+		return m.UndeterminedResult
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*NotLeader)(nil), "errorpb.NotLeader")
 	proto.RegisterType((*IsWitness)(nil), "errorpb.IsWitness")
+	proto.RegisterType((*BucketVersionNotMatch)(nil), "errorpb.BucketVersionNotMatch")
 	proto.RegisterType((*DiskFull)(nil), "errorpb.DiskFull")
 	proto.RegisterType((*StoreNotMatch)(nil), "errorpb.StoreNotMatch")
 	proto.RegisterType((*RegionNotFound)(nil), "errorpb.RegionNotFound")
@@ -1245,83 +1369,96 @@ func init() {
 	proto.RegisterType((*RecoveryInProgress)(nil), "errorpb.RecoveryInProgress")
 	proto.RegisterType((*FlashbackInProgress)(nil), "errorpb.FlashbackInProgress")
 	proto.RegisterType((*FlashbackNotPrepared)(nil), "errorpb.FlashbackNotPrepared")
+	proto.RegisterType((*MismatchPeerId)(nil), "errorpb.MismatchPeerId")
+	proto.RegisterType((*UndeterminedResult)(nil), "errorpb.UndeterminedResult")
 	proto.RegisterType((*Error)(nil), "errorpb.Error")
 }
 
 func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_390aa86757fd1154) }
 
 var fileDescriptor_390aa86757fd1154 = []byte{
-	// 1114 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x96, 0xdd, 0x6e, 0x23, 0x35,
-	0x14, 0xc7, 0x49, 0xdb, 0xcd, 0xc7, 0x69, 0x3e, 0x9a, 0xd9, 0x7e, 0x0c, 0x2d, 0xad, 0x56, 0x03,
-	0x5a, 0x55, 0x08, 0x82, 0xda, 0x45, 0x42, 0x02, 0x81, 0x44, 0xd9, 0x56, 0x1b, 0x75, 0x13, 0x8a,
-	0x53, 0xa9, 0x97, 0x83, 0x9b, 0x39, 0x49, 0xad, 0xcc, 0x8c, 0x83, 0xed, 0x74, 0x9b, 0x3e, 0x08,
-	0x82, 0x37, 0xe0, 0x51, 0xb8, 0xe4, 0x92, 0x4b, 0x54, 0x5e, 0x04, 0xd9, 0x33, 0x99, 0x64, 0xa6,
-	0x43, 0xba, 0x57, 0xb1, 0x8f, 0xcf, 0x39, 0x3e, 0xce, 0xf1, 0xff, 0x37, 0x86, 0x1a, 0x0a, 0xc1,
-	0xc5, 0xf8, 0xba, 0x35, 0x16, 0x5c, 0x71, 0xab, 0x14, 0x4f, 0x77, 0xab, 0x01, 0x2a, 0x3a, 0x33,
-	0xef, 0x6e, 0x0e, 0xf9, 0x90, 0x9b, 0xe1, 0x17, 0x7a, 0x14, 0x5b, 0x1b, 0x62, 0x22, 0x95, 0x19,
-	0x46, 0x06, 0xa7, 0x0b, 0x95, 0x2e, 0x57, 0x6f, 0x91, 0x7a, 0x28, 0xac, 0x3d, 0xa8, 0x08, 0x1c,
-	0x32, 0x1e, 0xba, 0xcc, 0xb3, 0x0b, 0x2f, 0x0a, 0x87, 0x6b, 0xa4, 0x1c, 0x19, 0xda, 0x9e, 0xf5,
-	0x09, 0x14, 0x7d, 0xe3, 0x66, 0xaf, 0xbc, 0x28, 0x1c, 0xae, 0x1f, 0x57, 0x5b, 0xf1, 0x7e, 0x17,
-	0x88, 0x82, 0xc4, 0x6b, 0xce, 0x21, 0x54, 0xda, 0xf2, 0x8a, 0xa9, 0x10, 0xa5, 0x5c, 0x9a, 0xcf,
-	0xf9, 0x16, 0xca, 0xaf, 0x99, 0x1c, 0x9d, 0x4d, 0x7c, 0xdf, 0xfa, 0x10, 0xca, 0x52, 0x71, 0x81,
-	0x91, 0xdf, 0xea, 0xe1, 0x1a, 0x29, 0x99, 0x79, 0xdb, 0xb3, 0xb6, 0xa1, 0x28, 0x90, 0x4a, 0x1e,
-	0x9a, 0x6d, 0x2b, 0x24, 0x9e, 0x39, 0x14, 0x6a, 0x3d, 0xed, 0xd2, 0xe5, 0xaa, 0x43, 0x55, 0xff,
-	0xc6, 0x3a, 0x84, 0x0d, 0x81, 0xbf, 0x4c, 0x50, 0x2a, 0x77, 0x21, 0x97, 0xde, 0xb3, 0x1e, 0xdb,
-	0x7b, 0x71, 0xca, 0x97, 0xd0, 0xa0, 0x7d, 0x35, 0xa1, 0xfe, 0xdc, 0x71, 0xc5, 0x38, 0xd6, 0x22,
-	0x73, 0xec, 0xe7, 0x7c, 0x0e, 0x75, 0x62, 0xaa, 0xed, 0x72, 0x75, 0xc6, 0x27, 0xa1, 0xb7, 0xfc,
-	0x40, 0xaf, 0x60, 0x33, 0x71, 0x6f, 0x87, 0x4c, 0x31, 0xea, 0xb3, 0x7b, 0x7c, 0x22, 0x68, 0x02,
-	0xf5, 0x73, 0x9c, 0x9a, 0x88, 0x28, 0xd8, 0xda, 0x80, 0xd5, 0x11, 0x4e, 0x8d, 0x63, 0x95, 0xe8,
-	0x61, 0x3a, 0xc1, 0x4a, 0xa6, 0x2d, 0x7b, 0x50, 0x91, 0x8a, 0x0a, 0xe5, 0xea, 0xa0, 0x55, 0x13,
-	0x54, 0x36, 0x86, 0x73, 0x9c, 0x5a, 0x3b, 0x50, 0xc2, 0xd0, 0x33, 0x4b, 0x6b, 0x66, 0xa9, 0x88,
-	0xa1, 0x77, 0x8e, 0x53, 0xe7, 0x0d, 0xd4, 0x4e, 0xc7, 0xbc, 0x7f, 0x93, 0xfc, 0x7b, 0x5f, 0x41,
-	0xa3, 0x3f, 0x11, 0x02, 0x43, 0xe5, 0x46, 0xa9, 0xa5, 0x69, 0xc4, 0xfa, 0x71, 0x7d, 0xd6, 0xe6,
-	0xa8, 0x3c, 0x52, 0x8f, 0xdd, 0xa2, 0xa9, 0x74, 0x7e, 0x2d, 0x40, 0xb5, 0x87, 0xe2, 0x16, 0x45,
-	0x5b, 0x9e, 0x4c, 0xe4, 0x74, 0xa1, 0x61, 0x85, 0xc5, 0x86, 0x59, 0xfb, 0x00, 0xd7, 0xb4, 0x3f,
-	0xe2, 0x83, 0x81, 0x1b, 0xc8, 0xf8, 0x18, 0x95, 0xd8, 0xd2, 0x91, 0xd6, 0xa7, 0xd0, 0x44, 0xa9,
-	0x58, 0x40, 0x15, 0x7a, 0xee, 0x3b, 0xca, 0x94, 0xf6, 0xd2, 0xe7, 0xa9, 0x91, 0x46, 0xb2, 0x70,
-	0x45, 0x99, 0xea, 0x48, 0xeb, 0x63, 0xa8, 0xd1, 0xf1, 0xd8, 0x67, 0xe8, 0xb9, 0x2c, 0xf4, 0xf0,
-	0xce, 0x1c, 0x6e, 0x8d, 0x54, 0x63, 0x63, 0x5b, 0xdb, 0x9c, 0x3a, 0x54, 0x7b, 0x8a, 0xfa, 0xf8,
-	0x03, 0x0f, 0x02, 0x1a, 0x7a, 0xce, 0x8f, 0xd0, 0x24, 0x74, 0xa0, 0x4e, 0x43, 0x25, 0xa6, 0x97,
-	0x9c, 0xbf, 0xa5, 0x62, 0x88, 0xcb, 0x6f, 0xfc, 0x3e, 0x00, 0x6a, 0x6f, 0x57, 0xb2, 0x7b, 0x9c,
-	0x55, 0x6c, 0x2c, 0x3d, 0x76, 0x8f, 0xce, 0x0e, 0x6c, 0x75, 0xe8, 0xdd, 0x25, 0x0b, 0x50, 0x2a,
-	0x1a, 0x8c, 0xbb, 0x5c, 0xf5, 0xa6, 0x61, 0x1f, 0x3d, 0xe7, 0x0d, 0x34, 0x09, 0xd2, 0xa8, 0x8c,
-	0x2e, 0x57, 0x7a, 0xfc, 0xff, 0x7f, 0xcb, 0xb2, 0xe6, 0x3a, 0x5f, 0xc2, 0xd6, 0x85, 0xe0, 0x63,
-	0x2e, 0xa9, 0xdf, 0x0e, 0x3b, 0x28, 0x86, 0x2c, 0x1c, 0x76, 0xb8, 0xb7, 0xbc, 0x6e, 0xc7, 0x85,
-	0xfa, 0x6b, 0xaa, 0x68, 0x5b, 0x26, 0x9b, 0x2f, 0x3d, 0xe6, 0x0e, 0x94, 0xc6, 0x88, 0x62, 0xbe,
-	0x7f, 0x51, 0x4f, 0xa3, 0x05, 0x49, 0x07, 0xe8, 0xaa, 0xa8, 0x11, 0x6b, 0xa4, 0xa8, 0xa7, 0x97,
-	0xd2, 0x39, 0x02, 0x8b, 0x60, 0x9f, 0xdf, 0xa2, 0x98, 0xb6, 0xc3, 0x0b, 0xc1, 0x87, 0xe2, 0x49,
-	0xb5, 0xff, 0x0c, 0xcf, 0xcf, 0x7c, 0x2a, 0x6f, 0x74, 0xc3, 0xdf, 0x33, 0xc6, 0xfa, 0x0c, 0xac,
-	0xc1, 0x2c, 0xc6, 0x8d, 0x2e, 0xb9, 0x9a, 0xdd, 0x9c, 0x8d, 0x64, 0xa5, 0xa7, 0x17, 0x2e, 0xa5,
-	0x96, 0x5f, 0xb2, 0x43, 0x97, 0xab, 0x0b, 0x81, 0x63, 0x2a, 0x9e, 0x92, 0xdf, 0xef, 0x00, 0xcf,
-	0x4e, 0x35, 0x3f, 0x2d, 0x1b, 0x4a, 0x01, 0x4a, 0x49, 0x87, 0x18, 0x37, 0x68, 0x36, 0xb5, 0x8e,
-	0x00, 0x42, 0xae, 0xdc, 0x14, 0xfc, 0xac, 0xd6, 0x0c, 0xc2, 0x09, 0x3d, 0x49, 0x25, 0x4c, 0x40,
-	0xfa, 0xbd, 0x66, 0x91, 0xd9, 0x53, 0x47, 0x0e, 0x34, 0x3b, 0xcc, 0x5f, 0xb8, 0x7e, 0xbc, 0x93,
-	0x04, 0xa6, 0xd1, 0xa2, 0x21, 0x95, 0x42, 0xcd, 0x09, 0x34, 0x47, 0x38, 0x35, 0xf1, 0x2c, 0x8c,
-	0x35, 0x69, 0xee, 0xf9, 0x62, 0x8e, 0x34, 0x3a, 0x48, 0x7d, 0x94, 0x46, 0xc9, 0x77, 0xd0, 0x40,
-	0xad, 0x72, 0x93, 0x25, 0xd0, 0x3a, 0xb7, 0x9f, 0x99, 0x0c, 0xdb, 0x49, 0x86, 0x14, 0x05, 0x48,
-	0x0d, 0x53, 0x50, 0xf8, 0x06, 0xea, 0xd2, 0x48, 0xdb, 0x65, 0xd2, 0xbd, 0x9e, 0xc8, 0xa9, 0x5d,
-	0x34, 0xe1, 0x5b, 0x49, 0xf8, 0xa2, 0xf2, 0x49, 0x55, 0x2e, 0x72, 0xe0, 0x6b, 0xa8, 0x49, 0xad,
-	0x3f, 0xb7, 0x1f, 0x09, 0xd0, 0x2e, 0x65, 0x63, 0x17, 0xd4, 0x49, 0xaa, 0x72, 0x61, 0xa6, 0x0b,
-	0x8f, 0xd0, 0x3c, 0x2f, 0xbc, 0x9c, 0x29, 0x3c, 0x05, 0x7f, 0x52, 0x93, 0xa9, 0x6f, 0xc1, 0x39,
-	0x6c, 0x0a, 0x3a, 0x50, 0x6e, 0x24, 0x5f, 0xc5, 0xb9, 0xeb, 0x6b, 0xb9, 0xdb, 0x15, 0x93, 0x64,
-	0x77, 0xde, 0x83, 0x2c, 0x10, 0x48, 0x53, 0x3c, 0x62, 0xc4, 0x15, 0xd8, 0x01, 0xbd, 0x73, 0xd5,
-	0x4c, 0xe8, 0xa6, 0x28, 0x69, 0xa4, 0x6e, 0x83, 0x49, 0x78, 0x90, 0x24, 0xcc, 0x05, 0x02, 0xd9,
-	0x0a, 0xf2, 0xcc, 0xa6, 0x4a, 0xa4, 0x31, 0xc3, 0x4c, 0x56, 0x3d, 0x9d, 0xda, 0xeb, 0xd9, 0x2a,
-	0xb3, 0x30, 0x21, 0x4d, 0xf1, 0x88, 0x2f, 0x57, 0x60, 0x8f, 0x63, 0x54, 0xe8, 0x0b, 0x13, 0x44,
-	0xb0, 0x70, 0x03, 0xee, 0xa1, 0x5d, 0xcd, 0x54, 0x99, 0xcb, 0x14, 0xb2, 0x35, 0xce, 0x45, 0xcd,
-	0x09, 0x34, 0x3d, 0xaa, 0xa8, 0xbe, 0x02, 0xf3, 0x12, 0x6b, 0x99, 0x8b, 0x98, 0xe6, 0x0d, 0xa9,
-	0x7b, 0x69, 0xfe, 0xf4, 0x60, 0x7b, 0x41, 0x0f, 0x6c, 0xfe, 0x71, 0xb4, 0xeb, 0x26, 0xd1, 0xfe,
-	0x63, 0x55, 0x2c, 0x7c, 0x41, 0xc9, 0xa6, 0xc8, 0xfb, 0xae, 0xb6, 0xa0, 0xe2, 0x31, 0x39, 0x72,
-	0x07, 0x13, 0xdf, 0xb7, 0x1b, 0x26, 0x4f, 0x73, 0x5e, 0x50, 0xfc, 0xb4, 0x20, 0x65, 0x6f, 0xf6,
-	0xc8, 0x38, 0xcf, 0xa3, 0x96, 0xbd, 0x61, 0x02, 0xf7, 0x16, 0x0a, 0xc8, 0xba, 0x90, 0x3c, 0xd8,
-	0x75, 0x73, 0x79, 0x66, 0x37, 0x4d, 0xb6, 0x8f, 0x92, 0x6c, 0x39, 0x3e, 0x24, 0x17, 0x84, 0x3f,
-	0xe5, 0xd3, 0xcb, 0xb6, 0x32, 0xff, 0x4f, 0x9e, 0x13, 0xc9, 0x07, 0xdf, 0x11, 0x00, 0x93, 0xee,
-	0xbb, 0xe8, 0x2d, 0x66, 0x3f, 0xcf, 0x70, 0x2b, 0x79, 0xa5, 0x91, 0x0a, 0x4b, 0x86, 0xeb, 0x91,
-	0x62, 0x0d, 0x05, 0x4e, 0x5e, 0xfe, 0xfd, 0x47, 0xb9, 0xf0, 0xe7, 0xc3, 0x41, 0xe1, 0xaf, 0x87,
-	0x83, 0xc2, 0x3f, 0x0f, 0x07, 0x85, 0xdf, 0xfe, 0x3d, 0xf8, 0x00, 0x36, 0xb8, 0x18, 0xb6, 0x14,
-	0x1b, 0xdd, 0xb6, 0x46, 0xb7, 0xe6, 0x09, 0x79, 0x5d, 0x34, 0x3f, 0xaf, 0xfe, 0x0b, 0x00, 0x00,
-	0xff, 0xff, 0xf8, 0xff, 0x54, 0xcd, 0x98, 0x0a, 0x00, 0x00,
+	// 1284 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x97, 0xcf, 0x6e, 0xdb, 0x46,
+	0x13, 0xc0, 0x2d, 0xdb, 0x91, 0xa5, 0xb1, 0xfe, 0x58, 0x8c, 0x65, 0xf3, 0x4b, 0xbe, 0x08, 0x01,
+	0x5b, 0x04, 0x46, 0xd1, 0xaa, 0x88, 0x53, 0xa0, 0x40, 0x8b, 0x16, 0x88, 0x1b, 0x07, 0x11, 0x1c,
+	0xa9, 0xee, 0xca, 0xad, 0x2f, 0x05, 0xd8, 0xb5, 0x38, 0x52, 0x16, 0x22, 0xb9, 0xea, 0xee, 0xd2,
+	0x89, 0x72, 0xed, 0x0b, 0xf4, 0x54, 0xf4, 0x11, 0xfa, 0x28, 0x3d, 0xe6, 0x98, 0x63, 0x11, 0xbf,
+	0x48, 0xb1, 0x4b, 0x8a, 0x12, 0x69, 0xc6, 0xe9, 0x49, 0x9c, 0xd9, 0x99, 0xd9, 0xd9, 0x9d, 0xdd,
+	0xdf, 0x8e, 0xa0, 0x8e, 0x42, 0x70, 0x31, 0xbb, 0xe8, 0xce, 0x04, 0x57, 0xdc, 0xda, 0x4a, 0xc4,
+	0x3b, 0xb5, 0x00, 0x15, 0x5d, 0xa8, 0xef, 0xec, 0x4e, 0xf8, 0x84, 0x9b, 0xcf, 0xcf, 0xf5, 0x57,
+	0xa2, 0x6d, 0x8a, 0x48, 0x2a, 0xf3, 0x19, 0x2b, 0x9c, 0x01, 0x54, 0x07, 0x5c, 0x3d, 0x47, 0xea,
+	0xa1, 0xb0, 0xee, 0x42, 0x55, 0xe0, 0x84, 0xf1, 0xd0, 0x65, 0x9e, 0x5d, 0xba, 0x5f, 0x3a, 0xd8,
+	0x24, 0x95, 0x58, 0xd1, 0xf3, 0xac, 0x8f, 0xa1, 0xec, 0x1b, 0x33, 0x7b, 0xfd, 0x7e, 0xe9, 0x60,
+	0xfb, 0xb0, 0xd6, 0x4d, 0xe6, 0x3b, 0x45, 0x14, 0x24, 0x19, 0x73, 0x0e, 0xa0, 0xda, 0x93, 0xe7,
+	0x4c, 0x85, 0x28, 0xe5, 0x8d, 0xf1, 0x9c, 0x63, 0x68, 0x1f, 0x45, 0xa3, 0x29, 0xaa, 0x9f, 0x50,
+	0x48, 0xc6, 0xc3, 0x01, 0x57, 0x7d, 0xaa, 0x46, 0x2f, 0x2c, 0x1b, 0xb6, 0x2e, 0x63, 0x55, 0xe2,
+	0xb3, 0x10, 0x2d, 0x0b, 0x36, 0xa7, 0x38, 0x97, 0xf6, 0xfa, 0xfd, 0x8d, 0x83, 0x1a, 0x31, 0xdf,
+	0xce, 0x37, 0x50, 0x79, 0xc2, 0xe4, 0xf4, 0x69, 0xe4, 0xfb, 0xd6, 0xff, 0xa0, 0x22, 0x15, 0x17,
+	0x18, 0x4f, 0xb7, 0xa1, 0x5d, 0x8d, 0xdc, 0xf3, 0xac, 0x3d, 0x28, 0x0b, 0xa4, 0x92, 0x87, 0x26,
+	0xfb, 0x2a, 0x49, 0x24, 0x87, 0x42, 0x7d, 0xa8, 0x4d, 0xd2, 0xd9, 0x0f, 0x60, 0x47, 0xe0, 0xaf,
+	0x11, 0x4a, 0xe5, 0xae, 0xc4, 0xd2, 0x69, 0x34, 0x12, 0xfd, 0x30, 0x09, 0xf9, 0x00, 0x9a, 0x74,
+	0xa4, 0x22, 0xea, 0x2f, 0x0d, 0xd7, 0x8d, 0x61, 0x3d, 0x56, 0x27, 0x76, 0xce, 0x67, 0xd0, 0x20,
+	0x66, 0xd1, 0x03, 0xae, 0x9e, 0xf2, 0x28, 0xf4, 0x6e, 0xde, 0x97, 0x47, 0xb0, 0x9b, 0x9a, 0xf7,
+	0x42, 0xa6, 0x18, 0xf5, 0xd9, 0x6b, 0xfc, 0x80, 0x53, 0x04, 0x8d, 0x13, 0x9c, 0x1b, 0x8f, 0xd8,
+	0xd9, 0xda, 0x81, 0x8d, 0x29, 0xce, 0x8d, 0x61, 0x8d, 0xe8, 0xcf, 0x6c, 0x80, 0xf5, 0x5c, 0x75,
+	0xef, 0x42, 0x55, 0x2a, 0x2a, 0x94, 0xab, 0x9d, 0x36, 0x8c, 0x53, 0xc5, 0x28, 0x4e, 0x70, 0x6e,
+	0xed, 0xc3, 0x16, 0x86, 0x9e, 0x19, 0xda, 0x34, 0x43, 0x65, 0x0c, 0xbd, 0x13, 0x9c, 0x3b, 0xcf,
+	0xa0, 0x7e, 0x3c, 0xe3, 0xa3, 0x17, 0xe9, 0xee, 0x7d, 0x09, 0xcd, 0x51, 0x24, 0x04, 0x86, 0xca,
+	0x8d, 0x43, 0x4b, 0x53, 0x88, 0xed, 0xc3, 0xc6, 0xe2, 0xb4, 0xc4, 0xe9, 0x91, 0x46, 0x62, 0x16,
+	0x8b, 0xd2, 0xf9, 0xa3, 0x04, 0xb5, 0x21, 0x8a, 0x4b, 0x14, 0x3d, 0x79, 0x14, 0xc9, 0xf9, 0x4a,
+	0xc1, 0x4a, 0xab, 0x05, 0xb3, 0xee, 0x01, 0x5c, 0xd0, 0xd1, 0x94, 0x8f, 0xc7, 0x6e, 0x20, 0x93,
+	0x65, 0x54, 0x13, 0x4d, 0x5f, 0x5a, 0x9f, 0x40, 0x0b, 0xa5, 0x62, 0x01, 0x55, 0xe8, 0xb9, 0x2f,
+	0x29, 0x53, 0xda, 0x4a, 0xaf, 0xa7, 0x4e, 0x9a, 0xe9, 0xc0, 0x39, 0x65, 0xaa, 0x2f, 0xad, 0x8f,
+	0xa0, 0x4e, 0x67, 0x33, 0x9f, 0xa1, 0xe7, 0xb2, 0xd0, 0xc3, 0x57, 0x66, 0x71, 0x9b, 0xa4, 0x96,
+	0x28, 0x7b, 0x5a, 0xe7, 0x34, 0xa0, 0x36, 0x54, 0xd4, 0xc7, 0xef, 0x78, 0x10, 0xd0, 0xd0, 0x73,
+	0xbe, 0x87, 0x16, 0xa1, 0x63, 0x75, 0x1c, 0x2a, 0x31, 0x3f, 0xe3, 0xfc, 0x39, 0x15, 0x13, 0xbc,
+	0xf9, 0xe2, 0xdc, 0x03, 0x40, 0x6d, 0xed, 0x4a, 0xf6, 0x1a, 0x17, 0x19, 0x1b, 0xcd, 0x90, 0xbd,
+	0x46, 0x67, 0x1f, 0xda, 0x7d, 0xfa, 0xea, 0x8c, 0x05, 0x28, 0x15, 0x0d, 0x66, 0x03, 0xae, 0x86,
+	0xf3, 0x70, 0x84, 0x9e, 0xf3, 0x0c, 0x5a, 0x04, 0x69, 0x9c, 0xc6, 0x80, 0x2b, 0xfd, 0xfd, 0xfe,
+	0x6d, 0xb9, 0xa9, 0xb8, 0xce, 0x17, 0xd0, 0x3e, 0x15, 0x7c, 0xc6, 0x25, 0xf5, 0x7b, 0x61, 0x1f,
+	0xc5, 0x84, 0x85, 0x93, 0x3e, 0xf7, 0x6e, 0xce, 0xdb, 0x71, 0xa1, 0xf1, 0x84, 0x2a, 0xda, 0x93,
+	0xe9, 0xe4, 0x37, 0x2e, 0x73, 0x1f, 0xb6, 0x66, 0x88, 0x62, 0x39, 0x7f, 0x59, 0x8b, 0xf1, 0x80,
+	0xa4, 0x63, 0x74, 0x55, 0x5c, 0x88, 0x4d, 0x52, 0xd6, 0xe2, 0x99, 0x74, 0x1e, 0x82, 0x45, 0x70,
+	0xc4, 0x2f, 0x51, 0xcc, 0x7b, 0xe1, 0xa9, 0xe0, 0x13, 0xf1, 0x41, 0x68, 0xfc, 0x02, 0xb7, 0x9f,
+	0xfa, 0x54, 0xbe, 0xd0, 0x05, 0xff, 0x8f, 0x3e, 0xd6, 0xa7, 0x60, 0x8d, 0x17, 0x3e, 0x6e, 0x7c,
+	0xc8, 0xd5, 0xe2, 0xe4, 0xec, 0xa4, 0x23, 0x43, 0x3d, 0x70, 0x26, 0xf5, 0xf5, 0x4b, 0x67, 0x18,
+	0x70, 0x75, 0x2a, 0x70, 0x46, 0xc5, 0x87, 0xae, 0xdf, 0xcf, 0xd0, 0xe8, 0x33, 0x19, 0xe8, 0x2b,
+	0x70, 0x1a, 0x2f, 0xfa, 0x01, 0x34, 0x17, 0x18, 0x59, 0xec, 0x4a, 0xec, 0x54, 0x4f, 0xd4, 0x89,
+	0x9d, 0x03, 0xf5, 0x98, 0x1e, 0xd9, 0xbd, 0xdb, 0x36, 0xca, 0xd8, 0xc6, 0xe9, 0x82, 0xf5, 0x63,
+	0xe8, 0xa1, 0x42, 0x11, 0xb0, 0x10, 0x3d, 0x82, 0x32, 0xf2, 0x95, 0xc6, 0x64, 0x80, 0x52, 0xd2,
+	0x09, 0x26, 0x47, 0x61, 0x21, 0x3a, 0xbf, 0xd5, 0xe0, 0xd6, 0xb1, 0x7e, 0x14, 0xde, 0x6f, 0x63,
+	0x3d, 0x04, 0x08, 0xb9, 0x72, 0x33, 0x44, 0xb7, 0xba, 0x8b, 0x97, 0x25, 0x7d, 0x12, 0x48, 0x35,
+	0x4c, 0x5f, 0x87, 0xc7, 0x9a, 0x8c, 0x66, 0x07, 0xb4, 0xe7, 0x58, 0x93, 0xcc, 0x14, 0x74, 0xfb,
+	0x70, 0x3f, 0x75, 0xcc, 0x82, 0x4e, 0x23, 0x33, 0x03, 0xbe, 0x23, 0x68, 0x4d, 0x71, 0x6e, 0xfc,
+	0x59, 0x98, 0x10, 0xc2, 0xdc, 0xba, 0xd5, 0x18, 0x59, 0x90, 0x91, 0xc6, 0x34, 0x0b, 0xb6, 0x6f,
+	0xa1, 0x89, 0x9a, 0x39, 0x26, 0x8a, 0xd9, 0x72, 0xfb, 0x96, 0x89, 0xb0, 0x97, 0x46, 0xc8, 0x30,
+	0x89, 0xd4, 0x31, 0x83, 0xa8, 0xaf, 0xa1, 0x21, 0x0d, 0x68, 0x5c, 0x26, 0xdd, 0x8b, 0x48, 0xce,
+	0xed, 0xb2, 0x71, 0x6f, 0xa7, 0xee, 0xab, 0x1c, 0x22, 0x35, 0xb9, 0x4a, 0xa5, 0xaf, 0x74, 0xb9,
+	0xa8, 0x8f, 0xee, 0x28, 0xc6, 0x81, 0xbd, 0x95, 0xf7, 0x5d, 0x61, 0x05, 0xa9, 0xc9, 0x15, 0x49,
+	0x27, 0x1e, 0x97, 0x7a, 0x99, 0x78, 0x25, 0x97, 0x78, 0xe6, 0x29, 0x22, 0xf1, 0xc9, 0x48, 0x13,
+	0x3f, 0x81, 0x5d, 0x41, 0xc7, 0xca, 0x8d, 0x61, 0xa2, 0x38, 0x77, 0x7d, 0x0d, 0x1f, 0xbb, 0x6a,
+	0x82, 0xdc, 0x59, 0xd6, 0x20, 0x8f, 0x27, 0xd2, 0x12, 0xd7, 0x88, 0x75, 0x0e, 0x76, 0x40, 0x5f,
+	0xb9, 0x6a, 0x81, 0x1d, 0x93, 0x94, 0x34, 0xe0, 0xb1, 0xc1, 0x04, 0xec, 0xa4, 0x01, 0x0b, 0xf1,
+	0x44, 0xda, 0x41, 0x91, 0xda, 0x64, 0x89, 0x34, 0x21, 0xaa, 0x89, 0xaa, 0xc5, 0xb9, 0xbd, 0x9d,
+	0xcf, 0x32, 0x8f, 0x36, 0xd2, 0x12, 0xd7, 0x68, 0x77, 0x0e, 0xf6, 0x2c, 0x01, 0x97, 0x3e, 0x30,
+	0x41, 0x8c, 0x2e, 0x37, 0xe0, 0x1e, 0xda, 0xb5, 0x5c, 0x96, 0x85, 0x84, 0x23, 0xed, 0x59, 0x21,
+	0xf8, 0x8e, 0xa0, 0xe5, 0x51, 0x45, 0xf5, 0x11, 0x58, 0xa6, 0x58, 0xcf, 0x1d, 0xc4, 0x2c, 0xfd,
+	0x48, 0xc3, 0xcb, 0xd2, 0x70, 0x08, 0x7b, 0x2b, 0xf7, 0x81, 0x2d, 0x9f, 0x6a, 0xbb, 0x61, 0x02,
+	0xdd, 0xbb, 0x7e, 0x2b, 0x56, 0xde, 0x73, 0xb2, 0x2b, 0x8a, 0x5e, 0xf9, 0x2e, 0x54, 0x3d, 0x26,
+	0xa7, 0xee, 0x38, 0xf2, 0x7d, 0xbb, 0x69, 0xe2, 0xb4, 0x96, 0x09, 0x25, 0x8d, 0x0e, 0xa9, 0x78,
+	0x8b, 0x96, 0xe7, 0xa4, 0x88, 0xa1, 0xf6, 0x8e, 0x71, 0xbc, 0xbb, 0x92, 0x40, 0xde, 0x84, 0x14,
+	0xa1, 0x77, 0x50, 0x48, 0x57, 0xbb, 0x65, 0xa2, 0xfd, 0x3f, 0x8d, 0x56, 0x60, 0x43, 0x0a, 0xb1,
+	0xfc, 0x43, 0x31, 0x4b, 0x6d, 0x2b, 0xb7, 0x3f, 0x45, 0x46, 0xa4, 0x18, 0xc3, 0x0f, 0x01, 0x98,
+	0x74, 0x5f, 0xc6, 0x0d, 0xa6, 0x7d, 0x3b, 0xc7, 0xad, 0xb4, 0xf5, 0x24, 0x55, 0x96, 0x76, 0xa1,
+	0x8f, 0x61, 0x27, 0x48, 0xe0, 0x9c, 0x52, 0x76, 0x37, 0x57, 0xea, 0x2c, 0xbd, 0x49, 0x23, 0xc8,
+	0xd2, 0xfc, 0x1c, 0xec, 0x0b, 0xd3, 0xab, 0xba, 0x49, 0x2b, 0xba, 0x72, 0x87, 0xdb, 0xb9, 0x73,
+	0x58, 0xd8, 0xd4, 0x92, 0xf6, 0x45, 0x61, 0xaf, 0xfb, 0x1c, 0x6e, 0x47, 0x2b, 0x68, 0x77, 0x85,
+	0x61, 0xbb, 0xbd, 0x97, 0xab, 0xdf, 0x75, 0xfc, 0x13, 0x2b, 0xba, 0xae, 0xdb, 0x8e, 0xd9, 0x64,
+	0x78, 0x77, 0x74, 0xf8, 0xf6, 0xaf, 0x4a, 0xe9, 0xef, 0x77, 0x9d, 0xd2, 0x9b, 0x77, 0x9d, 0xd2,
+	0x3f, 0xef, 0x3a, 0xa5, 0xdf, 0xaf, 0x3a, 0x6b, 0x7f, 0x5e, 0x75, 0xd6, 0xde, 0x5c, 0x75, 0xd6,
+	0xde, 0x5e, 0x75, 0xd6, 0x60, 0x87, 0x8b, 0x49, 0x57, 0xb1, 0xe9, 0x65, 0x77, 0x7a, 0x69, 0xfe,
+	0x0d, 0x5c, 0x94, 0xcd, 0xcf, 0xa3, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0xfd, 0x4e, 0xb6, 0x79,
+	0x63, 0x0c, 0x00, 0x00,
 }
 
 func (m *NotLeader) Marshal() (dAtA []byte, err error) {
@@ -1344,10 +1481,6 @@ func (m *NotLeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Leader != nil {
 		{
 			size, err := m.Leader.MarshalToSizedBuffer(dAtA[:i])
@@ -1388,12 +1521,45 @@ func (m *IsWitness) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *BucketVersionNotMatch) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BucketVersionNotMatch) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BucketVersionNotMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Keys) > 0 {
+		for iNdEx := len(m.Keys) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Keys[iNdEx])
+			copy(dAtA[i:], m.Keys[iNdEx])
+			i = encodeVarintErrorpb(dAtA, i, uint64(len(m.Keys[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Version != 0 {
+		i = encodeVarintErrorpb(dAtA, i, uint64(m.Version))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -1420,10 +1586,6 @@ func (m *DiskFull) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Reason) > 0 {
 		i -= len(m.Reason)
 		copy(dAtA[i:], m.Reason)
@@ -1472,10 +1634,6 @@ func (m *StoreNotMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.ActualStoreId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.ActualStoreId))
 		i--
@@ -1509,10 +1667,6 @@ func (m *RegionNotFound) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -1541,10 +1695,6 @@ func (m *RegionNotInitialized) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -1573,10 +1723,6 @@ func (m *KeyNotInRegion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.EndKey) > 0 {
 		i -= len(m.EndKey)
 		copy(dAtA[i:], m.EndKey)
@@ -1626,10 +1772,6 @@ func (m *EpochNotMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.CurrentRegions) > 0 {
 		for iNdEx := len(m.CurrentRegions) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1667,10 +1809,6 @@ func (m *ServerIsBusy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.AppliedIndex != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.AppliedIndex))
 		i--
@@ -1716,10 +1854,6 @@ func (m *StaleCommand) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1743,10 +1877,6 @@ func (m *RaftEntryTooLarge) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.EntrySize != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.EntrySize))
 		i--
@@ -1780,10 +1910,6 @@ func (m *MaxTimestampNotSynced) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1807,10 +1933,6 @@ func (m *ReadIndexNotReady) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -1846,10 +1968,6 @@ func (m *ProposalInMergingMode) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -1878,10 +1996,6 @@ func (m *DataIsNotReady) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.SafeTs != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.SafeTs))
 		i--
@@ -1920,10 +2034,6 @@ func (m *RecoveryInProgress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -1952,10 +2062,6 @@ func (m *FlashbackInProgress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.FlashbackStartTs != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.FlashbackStartTs))
 		i--
@@ -1989,14 +2095,73 @@ func (m *FlashbackNotPrepared) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintErrorpb(dAtA, i, uint64(m.RegionId))
 		i--
 		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MismatchPeerId) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MismatchPeerId) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MismatchPeerId) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.StorePeerId != 0 {
+		i = encodeVarintErrorpb(dAtA, i, uint64(m.StorePeerId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.RequestPeerId != 0 {
+		i = encodeVarintErrorpb(dAtA, i, uint64(m.RequestPeerId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UndeterminedResult) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UndeterminedResult) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UndeterminedResult) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintErrorpb(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -2021,9 +2186,47 @@ func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.UndeterminedResult != nil {
+		{
+			size, err := m.UndeterminedResult.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintErrorpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb2
+	}
+	if m.BucketVersionNotMatch != nil {
+		{
+			size, err := m.BucketVersionNotMatch.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintErrorpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xaa
+	}
+	if m.MismatchPeerId != nil {
+		{
+			size, err := m.MismatchPeerId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintErrorpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa2
 	}
 	if m.IsWitness != nil {
 		{
@@ -2283,9 +2486,6 @@ func (m *NotLeader) Size() (n int) {
 		l = m.Leader.Size()
 		n += 1 + l + sovErrorpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2298,8 +2498,23 @@ func (m *IsWitness) Size() (n int) {
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *BucketVersionNotMatch) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovErrorpb(uint64(m.Version))
+	}
+	if len(m.Keys) > 0 {
+		for _, b := range m.Keys {
+			l = len(b)
+			n += 1 + l + sovErrorpb(uint64(l))
+		}
 	}
 	return n
 }
@@ -2321,9 +2536,6 @@ func (m *DiskFull) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovErrorpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2339,9 +2551,6 @@ func (m *StoreNotMatch) Size() (n int) {
 	if m.ActualStoreId != 0 {
 		n += 1 + sovErrorpb(uint64(m.ActualStoreId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2354,9 +2563,6 @@ func (m *RegionNotFound) Size() (n int) {
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2368,9 +2574,6 @@ func (m *RegionNotInitialized) Size() (n int) {
 	_ = l
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2396,9 +2599,6 @@ func (m *KeyNotInRegion) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovErrorpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2413,9 +2613,6 @@ func (m *EpochNotMatch) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovErrorpb(uint64(l))
 		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2439,9 +2636,6 @@ func (m *ServerIsBusy) Size() (n int) {
 	if m.AppliedIndex != 0 {
 		n += 1 + sovErrorpb(uint64(m.AppliedIndex))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2451,9 +2645,6 @@ func (m *StaleCommand) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2469,9 +2660,6 @@ func (m *RaftEntryTooLarge) Size() (n int) {
 	if m.EntrySize != 0 {
 		n += 1 + sovErrorpb(uint64(m.EntrySize))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2481,9 +2669,6 @@ func (m *MaxTimestampNotSynced) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2500,9 +2685,6 @@ func (m *ReadIndexNotReady) Size() (n int) {
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2514,9 +2696,6 @@ func (m *ProposalInMergingMode) Size() (n int) {
 	_ = l
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2536,9 +2715,6 @@ func (m *DataIsNotReady) Size() (n int) {
 	if m.SafeTs != 0 {
 		n += 1 + sovErrorpb(uint64(m.SafeTs))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2550,9 +2726,6 @@ func (m *RecoveryInProgress) Size() (n int) {
 	_ = l
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2569,9 +2742,6 @@ func (m *FlashbackInProgress) Size() (n int) {
 	if m.FlashbackStartTs != 0 {
 		n += 1 + sovErrorpb(uint64(m.FlashbackStartTs))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2584,8 +2754,33 @@ func (m *FlashbackNotPrepared) Size() (n int) {
 	if m.RegionId != 0 {
 		n += 1 + sovErrorpb(uint64(m.RegionId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *MismatchPeerId) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RequestPeerId != 0 {
+		n += 1 + sovErrorpb(uint64(m.RequestPeerId))
+	}
+	if m.StorePeerId != 0 {
+		n += 1 + sovErrorpb(uint64(m.StorePeerId))
+	}
+	return n
+}
+
+func (m *UndeterminedResult) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovErrorpb(uint64(l))
 	}
 	return n
 }
@@ -2672,8 +2867,17 @@ func (m *Error) Size() (n int) {
 		l = m.IsWitness.Size()
 		n += 2 + l + sovErrorpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	if m.MismatchPeerId != nil {
+		l = m.MismatchPeerId.Size()
+		n += 2 + l + sovErrorpb(uint64(l))
+	}
+	if m.BucketVersionNotMatch != nil {
+		l = m.BucketVersionNotMatch.Size()
+		n += 2 + l + sovErrorpb(uint64(l))
+	}
+	if m.UndeterminedResult != nil {
+		l = m.UndeterminedResult.Size()
+		n += 2 + l + sovErrorpb(uint64(l))
 	}
 	return n
 }
@@ -2780,7 +2984,6 @@ func (m *NotLeader) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2850,7 +3053,107 @@ func (m *IsWitness) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *BucketVersionNotMatch) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowErrorpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BucketVersionNotMatch: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BucketVersionNotMatch: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Keys", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Keys = append(m.Keys, make([]byte, postIndex-iNdEx))
+			copy(m.Keys[len(m.Keys)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipErrorpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}
@@ -3009,7 +3312,6 @@ func (m *DiskFull) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3098,7 +3400,6 @@ func (m *StoreNotMatch) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3168,7 +3469,6 @@ func (m *RegionNotFound) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3238,7 +3538,6 @@ func (m *RegionNotInitialized) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3410,7 +3709,6 @@ func (m *KeyNotInRegion) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3495,7 +3793,6 @@ func (m *EpochNotMatch) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3635,7 +3932,6 @@ func (m *ServerIsBusy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3686,7 +3982,6 @@ func (m *StaleCommand) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3775,7 +4070,6 @@ func (m *RaftEntryTooLarge) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3826,7 +4120,6 @@ func (m *MaxTimestampNotSynced) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3928,7 +4221,6 @@ func (m *ReadIndexNotReady) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3998,7 +4290,6 @@ func (m *ProposalInMergingMode) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4106,7 +4397,6 @@ func (m *DataIsNotReady) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4176,7 +4466,6 @@ func (m *RecoveryInProgress) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4265,7 +4554,6 @@ func (m *FlashbackInProgress) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4335,7 +4623,176 @@ func (m *FlashbackNotPrepared) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MismatchPeerId) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowErrorpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MismatchPeerId: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MismatchPeerId: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RequestPeerId", wireType)
+			}
+			m.RequestPeerId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RequestPeerId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StorePeerId", wireType)
+			}
+			m.StorePeerId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StorePeerId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipErrorpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UndeterminedResult) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowErrorpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UndeterminedResult: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UndeterminedResult: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipErrorpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}
@@ -5054,6 +5511,114 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 20:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MismatchPeerId", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.MismatchPeerId == nil {
+				m.MismatchPeerId = &MismatchPeerId{}
+			}
+			if err := m.MismatchPeerId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 21:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BucketVersionNotMatch", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.BucketVersionNotMatch == nil {
+				m.BucketVersionNotMatch = &BucketVersionNotMatch{}
+			}
+			if err := m.BucketVersionNotMatch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 22:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UndeterminedResult", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowErrorpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthErrorpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.UndeterminedResult == nil {
+				m.UndeterminedResult = &UndeterminedResult{}
+			}
+			if err := m.UndeterminedResult.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipErrorpb(dAtA[iNdEx:])
@@ -5066,7 +5631,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

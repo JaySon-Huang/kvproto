@@ -37,6 +37,7 @@ const (
 	ErrorType_NOT_BOOTSTRAPPED     ErrorType = 2
 	ErrorType_ALREADY_BOOTSTRAPPED ErrorType = 3
 	ErrorType_INVALID_VALUE        ErrorType = 4
+	ErrorType_CLUSTER_MISMATCHED   ErrorType = 5
 )
 
 var ErrorType_name = map[int32]string{
@@ -45,6 +46,7 @@ var ErrorType_name = map[int32]string{
 	2: "NOT_BOOTSTRAPPED",
 	3: "ALREADY_BOOTSTRAPPED",
 	4: "INVALID_VALUE",
+	5: "CLUSTER_MISMATCHED",
 }
 
 var ErrorType_value = map[string]int32{
@@ -53,6 +55,7 @@ var ErrorType_value = map[string]int32{
 	"NOT_BOOTSTRAPPED":     2,
 	"ALREADY_BOOTSTRAPPED": 3,
 	"INVALID_VALUE":        4,
+	"CLUSTER_MISMATCHED":   5,
 }
 
 func (x ErrorType) String() string {
@@ -71,10 +74,7 @@ type RequestHeader struct {
 	// keyspace_id is the unique id of the tenant/keyspace.
 	KeyspaceId uint32 `protobuf:"varint,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 	// keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
-	KeyspaceGroupId      uint32   `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	KeyspaceGroupId uint32 `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
 }
 
 func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
@@ -145,10 +145,7 @@ type ResponseHeader struct {
 	// keyspace_id is the unique id of the tenant/keyspace as the response receiver.
 	KeyspaceId uint32 `protobuf:"varint,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 	// keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
-	KeyspaceGroupId      uint32   `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	KeyspaceGroupId uint32 `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
 }
 
 func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
@@ -213,11 +210,8 @@ func (m *ResponseHeader) GetKeyspaceGroupId() uint32 {
 }
 
 type Error struct {
-	Type                 ErrorType `protobuf:"varint,1,opt,name=type,proto3,enum=tsopb.ErrorType" json:"type,omitempty"`
-	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
+	Type    ErrorType `protobuf:"varint,1,opt,name=type,proto3,enum=tsopb.ErrorType" json:"type,omitempty"`
+	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *Error) Reset()         { *m = Error{} }
@@ -268,12 +262,9 @@ func (m *Error) GetMessage() string {
 }
 
 type TsoRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Count                uint32         `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	DcLocation           string         `protobuf:"bytes,3,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Count      uint32         `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	DcLocation string         `protobuf:"bytes,3,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
 }
 
 func (m *TsoRequest) Reset()         { *m = TsoRequest{} }
@@ -331,12 +322,9 @@ func (m *TsoRequest) GetDcLocation() string {
 }
 
 type TsoResponse struct {
-	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Count                uint32          `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	Timestamp            *pdpb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Count     uint32          `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Timestamp *pdpb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 }
 
 func (m *TsoResponse) Reset()         { *m = TsoResponse{} }
@@ -400,10 +388,7 @@ type Participant struct {
 	Id uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 	// listen_urls is the serivce endpoint list in the url format.
 	// listen_urls[0] is primary service endpoint.
-	ListenUrls           []string `protobuf:"bytes,3,rep,name=listen_urls,json=listenUrls,proto3" json:"listen_urls,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ListenUrls []string `protobuf:"bytes,3,rep,name=listen_urls,json=listenUrls,proto3" json:"listen_urls,omitempty"`
 }
 
 func (m *Participant) Reset()         { *m = Participant{} }
@@ -460,6 +445,396 @@ func (m *Participant) GetListenUrls() []string {
 	return nil
 }
 
+type KeyspaceGroupMember struct {
+	Address   string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	IsPrimary bool   `protobuf:"varint,2,opt,name=is_primary,json=isPrimary,proto3" json:"is_primary,omitempty"`
+}
+
+func (m *KeyspaceGroupMember) Reset()         { *m = KeyspaceGroupMember{} }
+func (m *KeyspaceGroupMember) String() string { return proto.CompactTextString(m) }
+func (*KeyspaceGroupMember) ProtoMessage()    {}
+func (*KeyspaceGroupMember) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{6}
+}
+func (m *KeyspaceGroupMember) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeyspaceGroupMember) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeyspaceGroupMember.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeyspaceGroupMember) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceGroupMember.Merge(m, src)
+}
+func (m *KeyspaceGroupMember) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeyspaceGroupMember) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeyspaceGroupMember.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeyspaceGroupMember proto.InternalMessageInfo
+
+func (m *KeyspaceGroupMember) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *KeyspaceGroupMember) GetIsPrimary() bool {
+	if m != nil {
+		return m.IsPrimary
+	}
+	return false
+}
+
+type SplitState struct {
+	SplitSource uint32 `protobuf:"varint,1,opt,name=split_source,json=splitSource,proto3" json:"split_source,omitempty"`
+}
+
+func (m *SplitState) Reset()         { *m = SplitState{} }
+func (m *SplitState) String() string { return proto.CompactTextString(m) }
+func (*SplitState) ProtoMessage()    {}
+func (*SplitState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{7}
+}
+func (m *SplitState) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SplitState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SplitState.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SplitState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SplitState.Merge(m, src)
+}
+func (m *SplitState) XXX_Size() int {
+	return m.Size()
+}
+func (m *SplitState) XXX_DiscardUnknown() {
+	xxx_messageInfo_SplitState.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SplitState proto.InternalMessageInfo
+
+func (m *SplitState) GetSplitSource() uint32 {
+	if m != nil {
+		return m.SplitSource
+	}
+	return 0
+}
+
+type KeyspaceGroup struct {
+	Id         uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserKind   string                 `protobuf:"bytes,2,opt,name=user_kind,json=userKind,proto3" json:"user_kind,omitempty"`
+	SplitState *SplitState            `protobuf:"bytes,3,opt,name=split_state,json=splitState,proto3" json:"split_state,omitempty"`
+	Members    []*KeyspaceGroupMember `protobuf:"bytes,4,rep,name=members,proto3" json:"members,omitempty"`
+}
+
+func (m *KeyspaceGroup) Reset()         { *m = KeyspaceGroup{} }
+func (m *KeyspaceGroup) String() string { return proto.CompactTextString(m) }
+func (*KeyspaceGroup) ProtoMessage()    {}
+func (*KeyspaceGroup) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{8}
+}
+func (m *KeyspaceGroup) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeyspaceGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeyspaceGroup.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeyspaceGroup) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceGroup.Merge(m, src)
+}
+func (m *KeyspaceGroup) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeyspaceGroup) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeyspaceGroup.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeyspaceGroup proto.InternalMessageInfo
+
+func (m *KeyspaceGroup) GetId() uint32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *KeyspaceGroup) GetUserKind() string {
+	if m != nil {
+		return m.UserKind
+	}
+	return ""
+}
+
+func (m *KeyspaceGroup) GetSplitState() *SplitState {
+	if m != nil {
+		return m.SplitState
+	}
+	return nil
+}
+
+func (m *KeyspaceGroup) GetMembers() []*KeyspaceGroupMember {
+	if m != nil {
+		return m.Members
+	}
+	return nil
+}
+
+type FindGroupByKeyspaceIDRequest struct {
+	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	KeyspaceId uint32         `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+}
+
+func (m *FindGroupByKeyspaceIDRequest) Reset()         { *m = FindGroupByKeyspaceIDRequest{} }
+func (m *FindGroupByKeyspaceIDRequest) String() string { return proto.CompactTextString(m) }
+func (*FindGroupByKeyspaceIDRequest) ProtoMessage()    {}
+func (*FindGroupByKeyspaceIDRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{9}
+}
+func (m *FindGroupByKeyspaceIDRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FindGroupByKeyspaceIDRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FindGroupByKeyspaceIDRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FindGroupByKeyspaceIDRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindGroupByKeyspaceIDRequest.Merge(m, src)
+}
+func (m *FindGroupByKeyspaceIDRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FindGroupByKeyspaceIDRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindGroupByKeyspaceIDRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FindGroupByKeyspaceIDRequest proto.InternalMessageInfo
+
+func (m *FindGroupByKeyspaceIDRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *FindGroupByKeyspaceIDRequest) GetKeyspaceId() uint32 {
+	if m != nil {
+		return m.KeyspaceId
+	}
+	return 0
+}
+
+type FindGroupByKeyspaceIDResponse struct {
+	Header        *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	KeyspaceGroup *KeyspaceGroup  `protobuf:"bytes,2,opt,name=keyspace_group,json=keyspaceGroup,proto3" json:"keyspace_group,omitempty"`
+}
+
+func (m *FindGroupByKeyspaceIDResponse) Reset()         { *m = FindGroupByKeyspaceIDResponse{} }
+func (m *FindGroupByKeyspaceIDResponse) String() string { return proto.CompactTextString(m) }
+func (*FindGroupByKeyspaceIDResponse) ProtoMessage()    {}
+func (*FindGroupByKeyspaceIDResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{10}
+}
+func (m *FindGroupByKeyspaceIDResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FindGroupByKeyspaceIDResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FindGroupByKeyspaceIDResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FindGroupByKeyspaceIDResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindGroupByKeyspaceIDResponse.Merge(m, src)
+}
+func (m *FindGroupByKeyspaceIDResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *FindGroupByKeyspaceIDResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindGroupByKeyspaceIDResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FindGroupByKeyspaceIDResponse proto.InternalMessageInfo
+
+func (m *FindGroupByKeyspaceIDResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *FindGroupByKeyspaceIDResponse) GetKeyspaceGroup() *KeyspaceGroup {
+	if m != nil {
+		return m.KeyspaceGroup
+	}
+	return nil
+}
+
+type GetMinTSRequest struct {
+	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	DcLocation string         `protobuf:"bytes,2,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
+}
+
+func (m *GetMinTSRequest) Reset()         { *m = GetMinTSRequest{} }
+func (m *GetMinTSRequest) String() string { return proto.CompactTextString(m) }
+func (*GetMinTSRequest) ProtoMessage()    {}
+func (*GetMinTSRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{11}
+}
+func (m *GetMinTSRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetMinTSRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetMinTSRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetMinTSRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinTSRequest.Merge(m, src)
+}
+func (m *GetMinTSRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetMinTSRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMinTSRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMinTSRequest proto.InternalMessageInfo
+
+func (m *GetMinTSRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetMinTSRequest) GetDcLocation() string {
+	if m != nil {
+		return m.DcLocation
+	}
+	return ""
+}
+
+type GetMinTSResponse struct {
+	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Timestamp *pdpb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	// the count of keyspace group primaries that the TSO server/pod is serving
+	KeyspaceGroupsServing uint32 `protobuf:"varint,3,opt,name=keyspace_groups_serving,json=keyspaceGroupsServing,proto3" json:"keyspace_groups_serving,omitempty"`
+	// the total count of keyspace groups
+	KeyspaceGroupsTotal uint32 `protobuf:"varint,4,opt,name=keyspace_groups_total,json=keyspaceGroupsTotal,proto3" json:"keyspace_groups_total,omitempty"`
+}
+
+func (m *GetMinTSResponse) Reset()         { *m = GetMinTSResponse{} }
+func (m *GetMinTSResponse) String() string { return proto.CompactTextString(m) }
+func (*GetMinTSResponse) ProtoMessage()    {}
+func (*GetMinTSResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{12}
+}
+func (m *GetMinTSResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetMinTSResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetMinTSResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetMinTSResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinTSResponse.Merge(m, src)
+}
+func (m *GetMinTSResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetMinTSResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMinTSResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetMinTSResponse proto.InternalMessageInfo
+
+func (m *GetMinTSResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetMinTSResponse) GetTimestamp() *pdpb.Timestamp {
+	if m != nil {
+		return m.Timestamp
+	}
+	return nil
+}
+
+func (m *GetMinTSResponse) GetKeyspaceGroupsServing() uint32 {
+	if m != nil {
+		return m.KeyspaceGroupsServing
+	}
+	return 0
+}
+
+func (m *GetMinTSResponse) GetKeyspaceGroupsTotal() uint32 {
+	if m != nil {
+		return m.KeyspaceGroupsTotal
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterEnum("tsopb.ErrorType", ErrorType_name, ErrorType_value)
 	proto.RegisterType((*RequestHeader)(nil), "tsopb.RequestHeader")
@@ -468,47 +843,75 @@ func init() {
 	proto.RegisterType((*TsoRequest)(nil), "tsopb.TsoRequest")
 	proto.RegisterType((*TsoResponse)(nil), "tsopb.TsoResponse")
 	proto.RegisterType((*Participant)(nil), "tsopb.Participant")
+	proto.RegisterType((*KeyspaceGroupMember)(nil), "tsopb.KeyspaceGroupMember")
+	proto.RegisterType((*SplitState)(nil), "tsopb.SplitState")
+	proto.RegisterType((*KeyspaceGroup)(nil), "tsopb.KeyspaceGroup")
+	proto.RegisterType((*FindGroupByKeyspaceIDRequest)(nil), "tsopb.FindGroupByKeyspaceIDRequest")
+	proto.RegisterType((*FindGroupByKeyspaceIDResponse)(nil), "tsopb.FindGroupByKeyspaceIDResponse")
+	proto.RegisterType((*GetMinTSRequest)(nil), "tsopb.GetMinTSRequest")
+	proto.RegisterType((*GetMinTSResponse)(nil), "tsopb.GetMinTSResponse")
 }
 
 func init() { proto.RegisterFile("tsopb.proto", fileDescriptor_ad96434e4f0d3c2b) }
 
 var fileDescriptor_ad96434e4f0d3c2b = []byte{
-	// 556 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x93, 0x3f, 0x6f, 0xda, 0x4e,
-	0x18, 0xc7, 0x73, 0x18, 0x92, 0xf8, 0xf1, 0x8f, 0x60, 0x4e, 0xfc, 0x24, 0x44, 0x55, 0x8a, 0xac,
-	0xaa, 0x42, 0x51, 0x43, 0x2b, 0x77, 0xea, 0x48, 0x04, 0x4a, 0xad, 0x20, 0x8c, 0x2e, 0x26, 0x55,
-	0x27, 0xe4, 0xd8, 0x27, 0x6a, 0x01, 0x3e, 0xe7, 0xee, 0x1c, 0x89, 0xb1, 0xef, 0x22, 0x63, 0xc7,
-	0xbe, 0x94, 0x8e, 0x1d, 0x3b, 0x56, 0xf4, 0x8d, 0x54, 0x3e, 0x1b, 0x42, 0xba, 0xb4, 0x43, 0x27,
-	0x3f, 0xf7, 0xf9, 0x3e, 0x7a, 0xfe, 0x1b, 0x0c, 0x29, 0x58, 0x72, 0xd3, 0x4b, 0x38, 0x93, 0x0c,
-	0x57, 0xd4, 0xa3, 0x05, 0x49, 0xb8, 0x45, 0xad, 0xc6, 0x9c, 0xcd, 0x99, 0x32, 0x5f, 0x65, 0x56,
-	0x41, 0x6b, 0x3c, 0x15, 0x52, 0x99, 0x39, 0xb0, 0xee, 0x11, 0x54, 0x09, 0xbd, 0x4d, 0xa9, 0x90,
-	0xef, 0xa8, 0x1f, 0x52, 0x8e, 0x9f, 0x02, 0x04, 0xcb, 0x54, 0x48, 0xca, 0x67, 0x51, 0xd8, 0x44,
-	0x1d, 0xd4, 0x2d, 0x13, 0xbd, 0x20, 0x4e, 0x88, 0x9f, 0x80, 0x2e, 0x68, 0x1c, 0xe6, 0x6a, 0x49,
-	0xa9, 0xc7, 0x39, 0x70, 0x42, 0xfc, 0x0c, 0x8c, 0x05, 0x5d, 0x8b, 0xc4, 0x0f, 0x68, 0x26, 0x6b,
-	0x1d, 0xd4, 0xad, 0x12, 0xd8, 0x22, 0x27, 0xc4, 0xa7, 0x50, 0xdf, 0x39, 0xcc, 0x39, 0x4b, 0x93,
-	0xcc, 0xad, 0xac, 0xdc, 0x6a, 0x5b, 0xe1, 0x22, 0xe3, 0x4e, 0x68, 0x7d, 0x46, 0x70, 0x42, 0xa8,
-	0x48, 0x58, 0x2c, 0xe8, 0xdf, 0xd5, 0x66, 0x41, 0x85, 0x72, 0xce, 0xb8, 0xaa, 0xcb, 0xb0, 0xff,
-	0xeb, 0xe5, 0x33, 0x1a, 0x66, 0x8c, 0xe4, 0xd2, 0xbf, 0x2d, 0xf1, 0x02, 0x2a, 0x2a, 0x38, 0x7e,
-	0x0e, 0x65, 0xb9, 0x4e, 0xa8, 0x2a, 0xe9, 0xc4, 0x36, 0xf7, 0x13, 0x7b, 0xeb, 0x84, 0x12, 0xa5,
-	0xe2, 0x26, 0x1c, 0xad, 0xa8, 0x10, 0xfe, 0x9c, 0xaa, 0x0a, 0x75, 0xb2, 0x7d, 0x5a, 0xb7, 0x00,
-	0x9e, 0x60, 0xc5, 0x22, 0xf0, 0x4b, 0x38, 0xfc, 0xa8, 0x1a, 0x56, 0xf1, 0x0c, 0xbb, 0x51, 0xc4,
-	0x7b, 0xb4, 0x28, 0x52, 0xf8, 0xe0, 0x06, 0x54, 0x02, 0x96, 0xc6, 0x52, 0xc5, 0xac, 0x92, 0xfc,
-	0x91, 0xf5, 0x19, 0x06, 0xb3, 0x25, 0x0b, 0x7c, 0x19, 0xb1, 0x58, 0xf5, 0xa9, 0x13, 0x08, 0x83,
-	0x51, 0x41, 0xac, 0x4f, 0x08, 0x0c, 0x95, 0x33, 0x9f, 0x30, 0x3e, 0xfb, 0x2d, 0xe9, 0xff, 0xbb,
-	0xa4, 0xfb, 0x2b, 0xf8, 0x43, 0xd6, 0x33, 0xd0, 0x65, 0xb4, 0xa2, 0x42, 0xfa, 0xab, 0x44, 0xe5,
-	0x34, 0xec, 0x5a, 0x4f, 0x5d, 0xa5, 0xb7, 0xc5, 0xe4, 0xc1, 0xc3, 0x22, 0x60, 0x4c, 0x7c, 0x2e,
-	0xa3, 0x20, 0x4a, 0xfc, 0x58, 0x62, 0x0c, 0xe5, 0xd8, 0x5f, 0xe5, 0x53, 0xd4, 0x89, 0xb2, 0xf1,
-	0x09, 0x94, 0x76, 0x87, 0x56, 0x8a, 0xd4, 0x89, 0x2d, 0x23, 0x21, 0x69, 0x3c, 0x4b, 0xf9, 0x52,
-	0x34, 0xb5, 0x8e, 0x96, 0xf5, 0x95, 0xa3, 0x29, 0x5f, 0x8a, 0xd3, 0x00, 0xf4, 0xdd, 0xdc, 0xf1,
-	0x21, 0x94, 0xdc, 0x4b, 0xf3, 0x00, 0x1b, 0x70, 0x34, 0x1d, 0x5f, 0x8e, 0xdd, 0xf7, 0x63, 0x13,
-	0xe1, 0x06, 0x98, 0x63, 0xd7, 0x9b, 0x9d, 0xbb, 0xae, 0x77, 0xe5, 0x91, 0xfe, 0x64, 0x32, 0x1c,
-	0x98, 0x25, 0xdc, 0x84, 0x46, 0x7f, 0x44, 0x86, 0xfd, 0xc1, 0x87, 0xc7, 0x8a, 0x86, 0xeb, 0x50,
-	0x75, 0xc6, 0xd7, 0xfd, 0x91, 0x33, 0x98, 0x5d, 0xf7, 0x47, 0xd3, 0xa1, 0x59, 0xb6, 0xdf, 0x82,
-	0xe6, 0x5d, 0xb9, 0xd8, 0x06, 0xcd, 0x13, 0x0c, 0xd7, 0x8b, 0x51, 0x3d, 0xac, 0xb0, 0x85, 0xf7,
-	0x51, 0x3e, 0x40, 0xeb, 0xa0, 0x8b, 0x5e, 0xa3, 0xf3, 0x17, 0xdf, 0xbf, 0x1c, 0xa3, 0xaf, 0x9b,
-	0x36, 0xfa, 0xb6, 0x69, 0xa3, 0x1f, 0x9b, 0x36, 0xba, 0xff, 0xd9, 0x3e, 0x00, 0x93, 0xf1, 0x79,
-	0x4f, 0x46, 0x8b, 0xbb, 0xde, 0xe2, 0x4e, 0xfd, 0x99, 0x37, 0x87, 0xea, 0xf3, 0xe6, 0x57, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xe8, 0xbd, 0x91, 0x64, 0xe9, 0x03, 0x00, 0x00,
+	// 893 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xbf, 0x6f, 0xdb, 0x46,
+	0x14, 0x16, 0xf5, 0xc3, 0x11, 0x1f, 0x23, 0x9b, 0xbe, 0xc8, 0x89, 0xa0, 0x34, 0xaa, 0xcb, 0x66,
+	0x30, 0x82, 0x46, 0x29, 0xd8, 0xa2, 0x4b, 0xd1, 0x41, 0x8e, 0x54, 0x47, 0xb0, 0x2c, 0x19, 0x47,
+	0x3a, 0x45, 0x27, 0x96, 0x16, 0x0f, 0xea, 0xc1, 0x12, 0xc9, 0xdc, 0x9d, 0x0c, 0x08, 0x9d, 0x3a,
+	0x77, 0xe9, 0x98, 0xb1, 0x53, 0xd1, 0x3f, 0xa5, 0x63, 0xc6, 0x0c, 0x45, 0x51, 0xd8, 0xff, 0x48,
+	0xc1, 0xe3, 0xd1, 0x12, 0x15, 0x37, 0x2e, 0x8c, 0x4c, 0xbc, 0xfb, 0xde, 0xbb, 0xfb, 0xde, 0xaf,
+	0xef, 0x08, 0x86, 0xe0, 0x51, 0x7c, 0xda, 0x8e, 0x59, 0x24, 0x22, 0x54, 0x91, 0x9b, 0x26, 0xc4,
+	0x41, 0x06, 0x35, 0xeb, 0x93, 0x68, 0x12, 0xc9, 0xe5, 0xb3, 0x64, 0xa5, 0xd0, 0x2d, 0x36, 0xe7,
+	0x42, 0x2e, 0x53, 0xc0, 0x7a, 0xad, 0x41, 0x0d, 0x93, 0x57, 0x73, 0xc2, 0xc5, 0x0b, 0xe2, 0x07,
+	0x84, 0xa1, 0x47, 0x00, 0xe3, 0xe9, 0x9c, 0x0b, 0xc2, 0x3c, 0x1a, 0x34, 0xb4, 0x5d, 0x6d, 0xaf,
+	0x8c, 0x75, 0x85, 0xf4, 0x03, 0xf4, 0x10, 0x74, 0x4e, 0xc2, 0x20, 0xb5, 0x16, 0xa5, 0xb5, 0x9a,
+	0x02, 0xfd, 0x00, 0x7d, 0x0c, 0xc6, 0x19, 0x59, 0xf0, 0xd8, 0x1f, 0x93, 0xc4, 0x5c, 0xda, 0xd5,
+	0xf6, 0x6a, 0x18, 0x32, 0xa8, 0x1f, 0xa0, 0x27, 0xb0, 0x7d, 0xe5, 0x30, 0x61, 0xd1, 0x3c, 0x4e,
+	0xdc, 0xca, 0xd2, 0x6d, 0x2b, 0x33, 0x1c, 0x24, 0x78, 0x3f, 0xb0, 0x7e, 0xd3, 0x60, 0x13, 0x13,
+	0x1e, 0x47, 0x21, 0x27, 0xff, 0x2f, 0x36, 0x0b, 0x2a, 0x84, 0xb1, 0x88, 0xc9, 0xb8, 0x0c, 0xfb,
+	0x6e, 0x3b, 0xad, 0x51, 0x2f, 0xc1, 0x70, 0x6a, 0xfa, 0xb0, 0x21, 0x1e, 0x40, 0x45, 0x5e, 0x8e,
+	0x1e, 0x43, 0x59, 0x2c, 0x62, 0x22, 0x43, 0xda, 0xb4, 0xcd, 0x55, 0x62, 0x77, 0x11, 0x13, 0x2c,
+	0xad, 0xa8, 0x01, 0x77, 0x66, 0x84, 0x73, 0x7f, 0x42, 0x64, 0x84, 0x3a, 0xce, 0xb6, 0xd6, 0x2b,
+	0x00, 0x97, 0x47, 0xaa, 0x11, 0xe8, 0x33, 0xd8, 0xf8, 0x51, 0x26, 0x2c, 0xef, 0x33, 0xec, 0xba,
+	0xba, 0x2f, 0xd7, 0x28, 0xac, 0x7c, 0x50, 0x1d, 0x2a, 0xe3, 0x68, 0x1e, 0x0a, 0x79, 0x67, 0x0d,
+	0xa7, 0x9b, 0x24, 0xcf, 0x60, 0xec, 0x4d, 0xa3, 0xb1, 0x2f, 0x68, 0x14, 0xca, 0x3c, 0x75, 0x0c,
+	0xc1, 0x78, 0xa0, 0x10, 0xeb, 0x67, 0x0d, 0x0c, 0xc9, 0x99, 0x56, 0x18, 0x3d, 0x5d, 0x23, 0xdd,
+	0xb9, 0x22, 0x5d, 0x6d, 0xc1, 0x0d, 0xac, 0x4f, 0x41, 0x17, 0x74, 0x46, 0xb8, 0xf0, 0x67, 0xb1,
+	0xe4, 0x34, 0xec, 0xad, 0xb6, 0x9c, 0x4a, 0x37, 0x83, 0xf1, 0xd2, 0xc3, 0xc2, 0x60, 0x1c, 0xfb,
+	0x4c, 0xd0, 0x31, 0x8d, 0xfd, 0x50, 0x20, 0x04, 0xe5, 0xd0, 0x9f, 0xa5, 0x55, 0xd4, 0xb1, 0x5c,
+	0xa3, 0x4d, 0x28, 0x5e, 0x0d, 0x5a, 0x91, 0xca, 0x11, 0x9b, 0x52, 0x2e, 0x48, 0xe8, 0xcd, 0xd9,
+	0x94, 0x37, 0x4a, 0xbb, 0xa5, 0x24, 0xaf, 0x14, 0x3a, 0x61, 0x53, 0x6e, 0x0d, 0xe1, 0xde, 0xe1,
+	0x6a, 0x9b, 0x8e, 0xc8, 0xec, 0x94, 0xb0, 0xa4, 0xf6, 0x7e, 0x10, 0x30, 0xc2, 0xb9, 0xba, 0x3e,
+	0xdb, 0x26, 0x43, 0x45, 0xb9, 0x17, 0x33, 0x3a, 0xf3, 0xd9, 0x42, 0x32, 0x55, 0xb1, 0x4e, 0xf9,
+	0x71, 0x0a, 0x58, 0xcf, 0x00, 0x9c, 0x78, 0x4a, 0x85, 0x23, 0x7c, 0x41, 0xd0, 0x27, 0x70, 0x97,
+	0x27, 0x3b, 0x8f, 0x47, 0x73, 0x36, 0x4e, 0x43, 0xad, 0x61, 0x43, 0x62, 0x8e, 0x84, 0xac, 0xdf,
+	0x35, 0xa8, 0xe5, 0x22, 0x50, 0x39, 0xa4, 0xae, 0x49, 0x0e, 0x0f, 0x41, 0x9f, 0x73, 0xc2, 0xbc,
+	0x33, 0x1a, 0x06, 0x6a, 0x12, 0xaa, 0x09, 0x70, 0x48, 0xc3, 0x00, 0xd9, 0x60, 0x28, 0x86, 0x84,
+	0x50, 0x15, 0x71, 0x5b, 0x35, 0x63, 0x19, 0x09, 0x06, 0xbe, 0x8c, 0xea, 0xcb, 0x64, 0xb0, 0x92,
+	0x34, 0x79, 0xa3, 0xbc, 0x5b, 0xda, 0x33, 0xec, 0xa6, 0xf2, 0xbf, 0xa6, 0x12, 0x38, 0x73, 0xb5,
+	0x66, 0xf0, 0xd1, 0xb7, 0x34, 0x0c, 0xa4, 0x6d, 0x7f, 0x91, 0xb9, 0xf6, 0xbb, 0xb7, 0x1b, 0xc3,
+	0x35, 0x61, 0x15, 0xd7, 0x85, 0x65, 0xfd, 0xa2, 0xc1, 0xa3, 0xff, 0xe0, 0xbb, 0xdd, 0x08, 0x7e,
+	0x0d, 0x9b, 0x79, 0xa5, 0x2a, 0xdd, 0xd7, 0xaf, 0x4b, 0x1e, 0xd7, 0x72, 0xe2, 0xb5, 0x7e, 0x80,
+	0xad, 0x03, 0x22, 0x8e, 0x68, 0xe8, 0x3a, 0xb7, 0xce, 0x77, 0x55, 0x60, 0xc5, 0x77, 0x04, 0xf6,
+	0x97, 0x06, 0xe6, 0x92, 0xe2, 0x76, 0x29, 0xe6, 0xf4, 0x54, 0xbc, 0x49, 0x4f, 0xe8, 0x2b, 0x78,
+	0x90, 0xaf, 0x08, 0xf7, 0x38, 0x61, 0xe7, 0x34, 0x9c, 0xa8, 0x87, 0x6e, 0x27, 0x57, 0x04, 0xee,
+	0xa4, 0x46, 0x64, 0xc3, 0xce, 0xfa, 0x39, 0x11, 0x09, 0x7f, 0xaa, 0xde, 0xbd, 0x7b, 0xf9, 0x53,
+	0x6e, 0x62, 0x7a, 0xf2, 0x13, 0xe8, 0x57, 0xef, 0x1b, 0xda, 0x80, 0xe2, 0xe8, 0xd0, 0x2c, 0x20,
+	0x03, 0xee, 0x9c, 0x0c, 0x0f, 0x87, 0xa3, 0xef, 0x86, 0xa6, 0x86, 0xea, 0x60, 0x0e, 0x47, 0xae,
+	0xb7, 0x3f, 0x1a, 0xb9, 0x8e, 0x8b, 0x3b, 0xc7, 0xc7, 0xbd, 0xae, 0x59, 0x44, 0x0d, 0xa8, 0x77,
+	0x06, 0xb8, 0xd7, 0xe9, 0x7e, 0x9f, 0xb7, 0x94, 0xd0, 0x36, 0xd4, 0xfa, 0xc3, 0x97, 0x9d, 0x41,
+	0xbf, 0xeb, 0xbd, 0xec, 0x0c, 0x4e, 0x7a, 0x66, 0x19, 0xdd, 0x07, 0xf4, 0x7c, 0x70, 0xe2, 0xb8,
+	0x3d, 0xec, 0x1d, 0xf5, 0x9d, 0xa3, 0x8e, 0xfb, 0xfc, 0x45, 0xaf, 0x6b, 0x56, 0xec, 0xbf, 0x35,
+	0x28, 0xb9, 0xce, 0x08, 0xd9, 0x50, 0x72, 0x79, 0x84, 0x32, 0x79, 0x2c, 0xdf, 0xd0, 0x26, 0x5a,
+	0x85, 0xd2, 0xda, 0x5a, 0x85, 0x3d, 0xed, 0x73, 0x0d, 0x05, 0xb0, 0x73, 0xed, 0x18, 0xa2, 0x4f,
+	0xd5, 0x91, 0xf7, 0x89, 0xa2, 0xf9, 0xf8, 0xfd, 0x4e, 0x19, 0x13, 0xfa, 0x06, 0xaa, 0x59, 0xf3,
+	0xd1, 0x7d, 0x75, 0x66, 0x6d, 0xe0, 0x9a, 0x0f, 0xde, 0xc1, 0xb3, 0xe3, 0xfb, 0xf6, 0xdb, 0x3f,
+	0xaa, 0xda, 0x9f, 0x17, 0x2d, 0xed, 0xcd, 0x45, 0x4b, 0xfb, 0xe7, 0xa2, 0xa5, 0xfd, 0x7a, 0xd9,
+	0x2a, 0xbc, 0xbe, 0x6c, 0x15, 0xde, 0x5c, 0xb6, 0x0a, 0x6f, 0x2f, 0x5b, 0x05, 0x30, 0x23, 0x36,
+	0x69, 0x0b, 0x7a, 0x76, 0xde, 0x3e, 0x3b, 0x97, 0xff, 0xf2, 0xd3, 0x0d, 0xf9, 0xf9, 0xe2, 0xdf,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x32, 0x99, 0xb0, 0xdf, 0x1b, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -524,6 +927,13 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TSOClient interface {
 	Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoClient, error)
+	// Find the keyspace group that the keyspace belongs to by keyspace id.
+	FindGroupByKeyspaceID(ctx context.Context, in *FindGroupByKeyspaceIDRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceIDResponse, error)
+	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
+	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
+	// the min timestamp from all TSO servers/pods.
+	GetMinTS(ctx context.Context, in *GetMinTSRequest, opts ...grpc.CallOption) (*GetMinTSResponse, error)
 }
 
 type tSOClient struct {
@@ -565,9 +975,34 @@ func (x *tSOTsoClient) Recv() (*TsoResponse, error) {
 	return m, nil
 }
 
+func (c *tSOClient) FindGroupByKeyspaceID(ctx context.Context, in *FindGroupByKeyspaceIDRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceIDResponse, error) {
+	out := new(FindGroupByKeyspaceIDResponse)
+	err := c.cc.Invoke(ctx, "/tsopb.TSO/FindGroupByKeyspaceID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tSOClient) GetMinTS(ctx context.Context, in *GetMinTSRequest, opts ...grpc.CallOption) (*GetMinTSResponse, error) {
+	out := new(GetMinTSResponse)
+	err := c.cc.Invoke(ctx, "/tsopb.TSO/GetMinTS", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TSOServer is the server API for TSO service.
 type TSOServer interface {
 	Tso(TSO_TsoServer) error
+	// Find the keyspace group that the keyspace belongs to by keyspace id.
+	FindGroupByKeyspaceID(context.Context, *FindGroupByKeyspaceIDRequest) (*FindGroupByKeyspaceIDResponse, error)
+	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
+	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
+	// the min timestamp from all TSO servers/pods.
+	GetMinTS(context.Context, *GetMinTSRequest) (*GetMinTSResponse, error)
 }
 
 // UnimplementedTSOServer can be embedded to have forward compatible implementations.
@@ -576,6 +1011,12 @@ type UnimplementedTSOServer struct {
 
 func (*UnimplementedTSOServer) Tso(srv TSO_TsoServer) error {
 	return status.Errorf(codes.Unimplemented, "method Tso not implemented")
+}
+func (*UnimplementedTSOServer) FindGroupByKeyspaceID(ctx context.Context, req *FindGroupByKeyspaceIDRequest) (*FindGroupByKeyspaceIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindGroupByKeyspaceID not implemented")
+}
+func (*UnimplementedTSOServer) GetMinTS(ctx context.Context, req *GetMinTSRequest) (*GetMinTSResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMinTS not implemented")
 }
 
 func RegisterTSOServer(s *grpc.Server, srv TSOServer) {
@@ -608,10 +1049,55 @@ func (x *tSOTsoServer) Recv() (*TsoRequest, error) {
 	return m, nil
 }
 
+func _TSO_FindGroupByKeyspaceID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindGroupByKeyspaceIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TSOServer).FindGroupByKeyspaceID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tsopb.TSO/FindGroupByKeyspaceID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TSOServer).FindGroupByKeyspaceID(ctx, req.(*FindGroupByKeyspaceIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TSO_GetMinTS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMinTSRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TSOServer).GetMinTS(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tsopb.TSO/GetMinTS",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TSOServer).GetMinTS(ctx, req.(*GetMinTSRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _TSO_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "tsopb.TSO",
 	HandlerType: (*TSOServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "FindGroupByKeyspaceID",
+			Handler:    _TSO_FindGroupByKeyspaceID_Handler,
+		},
+		{
+			MethodName: "GetMinTS",
+			Handler:    _TSO_GetMinTS_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Tso",
@@ -643,10 +1129,6 @@ func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.KeyspaceGroupId != 0 {
 		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupId))
 		i--
@@ -690,10 +1172,6 @@ func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.KeyspaceGroupId != 0 {
 		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupId))
 		i--
@@ -744,10 +1222,6 @@ func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -783,10 +1257,6 @@ func (m *TsoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.DcLocation) > 0 {
 		i -= len(m.DcLocation)
 		copy(dAtA[i:], m.DcLocation)
@@ -834,10 +1304,6 @@ func (m *TsoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Timestamp != nil {
 		{
 			size, err := m.Timestamp.MarshalToSizedBuffer(dAtA[:i])
@@ -890,10 +1356,6 @@ func (m *Participant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ListenUrls) > 0 {
 		for iNdEx := len(m.ListenUrls) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.ListenUrls[iNdEx])
@@ -912,6 +1374,321 @@ func (m *Participant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Name)
 		copy(dAtA[i:], m.Name)
 		i = encodeVarintTsopb(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeyspaceGroupMember) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeyspaceGroupMember) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceGroupMember) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.IsPrimary {
+		i--
+		if m.IsPrimary {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SplitState) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SplitState) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SplitState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.SplitSource != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.SplitSource))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeyspaceGroup) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeyspaceGroup) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Members) > 0 {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintTsopb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.SplitState != nil {
+		{
+			size, err := m.SplitState.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.UserKind) > 0 {
+		i -= len(m.UserKind)
+		copy(dAtA[i:], m.UserKind)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.UserKind)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Id != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FindGroupByKeyspaceIDRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FindGroupByKeyspaceIDRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FindGroupByKeyspaceIDRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.KeyspaceId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FindGroupByKeyspaceIDResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FindGroupByKeyspaceIDResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FindGroupByKeyspaceIDResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.KeyspaceGroup != nil {
+		{
+			size, err := m.KeyspaceGroup.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetMinTSRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetMinTSRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetMinTSRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.DcLocation) > 0 {
+		i -= len(m.DcLocation)
+		copy(dAtA[i:], m.DcLocation)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.DcLocation)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetMinTSResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetMinTSResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetMinTSResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.KeyspaceGroupsTotal != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupsTotal))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.KeyspaceGroupsServing != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupsServing))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Timestamp != nil {
+		{
+			size, err := m.Timestamp.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0xa
 	}
@@ -947,9 +1724,6 @@ func (m *RequestHeader) Size() (n int) {
 	if m.KeyspaceGroupId != 0 {
 		n += 1 + sovTsopb(uint64(m.KeyspaceGroupId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -972,9 +1746,6 @@ func (m *ResponseHeader) Size() (n int) {
 	if m.KeyspaceGroupId != 0 {
 		n += 1 + sovTsopb(uint64(m.KeyspaceGroupId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -990,9 +1761,6 @@ func (m *Error) Size() (n int) {
 	l = len(m.Message)
 	if l > 0 {
 		n += 1 + l + sovTsopb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1014,9 +1782,6 @@ func (m *TsoRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTsopb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -1036,9 +1801,6 @@ func (m *TsoResponse) Size() (n int) {
 	if m.Timestamp != nil {
 		l = m.Timestamp.Size()
 		n += 1 + l + sovTsopb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1062,8 +1824,132 @@ func (m *Participant) Size() (n int) {
 			n += 1 + l + sovTsopb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *KeyspaceGroupMember) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.IsPrimary {
+		n += 2
+	}
+	return n
+}
+
+func (m *SplitState) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SplitSource != 0 {
+		n += 1 + sovTsopb(uint64(m.SplitSource))
+	}
+	return n
+}
+
+func (m *KeyspaceGroup) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovTsopb(uint64(m.Id))
+	}
+	l = len(m.UserKind)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.SplitState != nil {
+		l = m.SplitState.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if len(m.Members) > 0 {
+		for _, e := range m.Members {
+			l = e.Size()
+			n += 1 + l + sovTsopb(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *FindGroupByKeyspaceIDRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.KeyspaceId != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceId))
+	}
+	return n
+}
+
+func (m *FindGroupByKeyspaceIDResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.KeyspaceGroup != nil {
+		l = m.KeyspaceGroup.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	return n
+}
+
+func (m *GetMinTSRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	l = len(m.DcLocation)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	return n
+}
+
+func (m *GetMinTSResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Timestamp != nil {
+		l = m.Timestamp.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.KeyspaceGroupsServing != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceGroupsServing))
+	}
+	if m.KeyspaceGroupsTotal != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceGroupsTotal))
 	}
 	return n
 }
@@ -1191,7 +2077,6 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1335,7 +2220,6 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1437,7 +2321,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1575,7 +2458,6 @@ func (m *TsoRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1717,7 +2599,6 @@ func (m *TsoResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1851,7 +2732,853 @@ func (m *Participant) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeyspaceGroupMember) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeyspaceGroupMember: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeyspaceGroupMember: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsPrimary", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsPrimary = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SplitState) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SplitState: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SplitState: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SplitSource", wireType)
+			}
+			m.SplitSource = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SplitSource |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeyspaceGroup) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeyspaceGroup: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeyspaceGroup: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserKind", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserKind = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SplitState", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SplitState == nil {
+				m.SplitState = &SplitState{}
+			}
+			if err := m.SplitState.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Members", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Members = append(m.Members, &KeyspaceGroupMember{})
+			if err := m.Members[len(m.Members)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FindGroupByKeyspaceIDRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FindGroupByKeyspaceIDRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FindGroupByKeyspaceIDRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
+			}
+			m.KeyspaceId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FindGroupByKeyspaceIDResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FindGroupByKeyspaceIDResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FindGroupByKeyspaceIDResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroup", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceGroup == nil {
+				m.KeyspaceGroup = &KeyspaceGroup{}
+			}
+			if err := m.KeyspaceGroup.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetMinTSRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetMinTSRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetMinTSRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DcLocation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DcLocation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetMinTSResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetMinTSResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetMinTSResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Timestamp == nil {
+				m.Timestamp = &pdpb.Timestamp{}
+			}
+			if err := m.Timestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroupsServing", wireType)
+			}
+			m.KeyspaceGroupsServing = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceGroupsServing |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroupsTotal", wireType)
+			}
+			m.KeyspaceGroupsTotal = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceGroupsTotal |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}

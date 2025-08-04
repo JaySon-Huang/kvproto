@@ -9,10 +9,13 @@ import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
-option(gogoproto.sizer_all) = true;
-option(gogoproto.marshaler_all) = true;
-option(gogoproto.unmarshaler_all) = true;
-option(rustproto.lite_runtime_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -38,6 +41,13 @@ message ClusterIDMismatch {
     uint64 request = 2;
 }
 
+// Congested is an error variable that
+// tells people that the TiKV-CDC is congested.
+message Congested {
+    // The region ID that triggers the congestion.
+    uint64 region_id = 1;
+}
+
 message Error {
     errorpb.NotLeader not_leader = 1;
     errorpb.RegionNotFound region_not_found = 2;
@@ -45,6 +55,8 @@ message Error {
     DuplicateRequest duplicate_request = 4;
     Compatibility compatibility = 5;
     ClusterIDMismatch cluster_id_mismatch = 6;
+    errorpb.ServerIsBusy server_is_busy = 7;
+    Congested congested = 8;
 }
 
 message TxnInfo {
@@ -74,12 +86,16 @@ message Event {
         uint64 commit_ts = 2;
         LogType type = 3;
 
+        // generation is for pipelined DML protocol. See kvrpcpb.FlushRequest.generation.
+        uint64 generation = 10;
+
         enum OpType {
             UNKNOWN = 0;
             PUT = 1;
             DELETE = 2;
         }
         OpType op_type = 4;
+
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
@@ -118,6 +134,7 @@ message Event {
     }
 }
 
+// NOTE: events and resolved_ts won't appear simultaneously in one ChangeDataEvent.
 message ChangeDataEvent {
     repeated Event events = 1;
     ResolvedTs resolved_ts = 2;
@@ -127,10 +144,13 @@ message ChangeDataEvent {
 message ResolvedTs {
     repeated uint64 regions = 1;
     uint64 ts = 2;
+    uint64 request_id = 3;
 }
 
 message ChangeDataRequest {
     message Register {}
+
+    message Deregister {}
 
     message NotifyTxnStatus {
         repeated TxnStatus txn_status = 1;
@@ -144,6 +164,8 @@ message ChangeDataRequest {
     bytes start_key = 5;
     bytes end_key = 6;
     // Used for CDC to identify events corresponding to different requests.
+    // Generally in one call stream, a region can be subscribed multiple
+    // times with different `request_id`s.
     uint64 request_id = 7;
 
     kvrpcpb.ExtraOp extra_op = 8;
@@ -155,6 +177,8 @@ message ChangeDataRequest {
         // Notify the region that some of the running transactions on the region has a pushed
         // min_commit_ts so that the resolved_ts can be advanced.
         NotifyTxnStatus notify_txn_status = 10;
+
+	Deregister deregister = 13;
     }
 
     // KvAPI specifies to capture data written by different KV API.
@@ -166,10 +190,17 @@ message ChangeDataRequest {
     }
 
     KvAPI kv_api = 11;
+
     // Whether to filter out the value write by cdc itself.
     bool filter_loop = 12;
 }
 
 service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
+
+    // EventFeedV2 is like EventFeed, with some new changes:
+    //  * clients send requested features in HTTP/2 headers;
+    //  * if servers meets unsupported feature request,
+    //    it can fail the stream with an UNIMPLEMENTED error.
+    rpc EventFeedV2(stream ChangeDataRequest) returns (stream  ChangeDataEvent);
 }

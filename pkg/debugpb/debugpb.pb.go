@@ -143,12 +143,9 @@ func (BottommostLevelCompaction) EnumDescriptor() ([]byte, []int) {
 }
 
 type GetRequest struct {
-	Db                   DB       `protobuf:"varint,1,opt,name=db,proto3,enum=debugpb.DB" json:"db,omitempty"`
-	Cf                   string   `protobuf:"bytes,2,opt,name=cf,proto3" json:"cf,omitempty"`
-	Key                  []byte   `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Db  DB     `protobuf:"varint,1,opt,name=db,proto3,enum=debugpb.DB" json:"db,omitempty"`
+	Cf  string `protobuf:"bytes,2,opt,name=cf,proto3" json:"cf,omitempty"`
+	Key []byte `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
 }
 
 func (m *GetRequest) Reset()         { *m = GetRequest{} }
@@ -206,10 +203,7 @@ func (m *GetRequest) GetKey() []byte {
 }
 
 type GetResponse struct {
-	Value                []byte   `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Value []byte `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (m *GetResponse) Reset()         { *m = GetResponse{} }
@@ -253,11 +247,8 @@ func (m *GetResponse) GetValue() []byte {
 }
 
 type RaftLogRequest struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	LogIndex             uint64   `protobuf:"varint,2,opt,name=log_index,json=logIndex,proto3" json:"log_index,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	LogIndex uint64 `protobuf:"varint,2,opt,name=log_index,json=logIndex,proto3" json:"log_index,omitempty"`
 }
 
 func (m *RaftLogRequest) Reset()         { *m = RaftLogRequest{} }
@@ -308,10 +299,7 @@ func (m *RaftLogRequest) GetLogIndex() uint64 {
 }
 
 type RaftLogResponse struct {
-	Entry                *eraftpb.Entry `protobuf:"bytes,1,opt,name=entry,proto3" json:"entry,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Entry *eraftpb.Entry `protobuf:"bytes,1,opt,name=entry,proto3" json:"entry,omitempty"`
 }
 
 func (m *RaftLogResponse) Reset()         { *m = RaftLogResponse{} }
@@ -355,10 +343,7 @@ func (m *RaftLogResponse) GetEntry() *eraftpb.Entry {
 }
 
 type RegionInfoRequest struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *RegionInfoRequest) Reset()         { *m = RegionInfoRequest{} }
@@ -402,12 +387,9 @@ func (m *RegionInfoRequest) GetRegionId() uint64 {
 }
 
 type RegionInfoResponse struct {
-	RaftLocalState       *raft_serverpb.RaftLocalState   `protobuf:"bytes,1,opt,name=raft_local_state,json=raftLocalState,proto3" json:"raft_local_state,omitempty"`
-	RaftApplyState       *raft_serverpb.RaftApplyState   `protobuf:"bytes,2,opt,name=raft_apply_state,json=raftApplyState,proto3" json:"raft_apply_state,omitempty"`
-	RegionLocalState     *raft_serverpb.RegionLocalState `protobuf:"bytes,3,opt,name=region_local_state,json=regionLocalState,proto3" json:"region_local_state,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
-	XXX_unrecognized     []byte                          `json:"-"`
-	XXX_sizecache        int32                           `json:"-"`
+	RaftLocalState   *raft_serverpb.RaftLocalState   `protobuf:"bytes,1,opt,name=raft_local_state,json=raftLocalState,proto3" json:"raft_local_state,omitempty"`
+	RaftApplyState   *raft_serverpb.RaftApplyState   `protobuf:"bytes,2,opt,name=raft_apply_state,json=raftApplyState,proto3" json:"raft_apply_state,omitempty"`
+	RegionLocalState *raft_serverpb.RegionLocalState `protobuf:"bytes,3,opt,name=region_local_state,json=regionLocalState,proto3" json:"region_local_state,omitempty"`
 }
 
 func (m *RegionInfoResponse) Reset()         { *m = RegionInfoResponse{} }
@@ -465,11 +447,8 @@ func (m *RegionInfoResponse) GetRegionLocalState() *raft_serverpb.RegionLocalSta
 }
 
 type RegionSizeRequest struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	Cfs                  []string `protobuf:"bytes,2,rep,name=cfs,proto3" json:"cfs,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	Cfs      []string `protobuf:"bytes,2,rep,name=cfs,proto3" json:"cfs,omitempty"`
 }
 
 func (m *RegionSizeRequest) Reset()         { *m = RegionSizeRequest{} }
@@ -520,10 +499,7 @@ func (m *RegionSizeRequest) GetCfs() []string {
 }
 
 type RegionSizeResponse struct {
-	Entries              []*RegionSizeResponse_Entry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
-	XXX_unrecognized     []byte                      `json:"-"`
-	XXX_sizecache        int32                       `json:"-"`
+	Entries []*RegionSizeResponse_Entry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
 }
 
 func (m *RegionSizeResponse) Reset()         { *m = RegionSizeResponse{} }
@@ -567,11 +543,8 @@ func (m *RegionSizeResponse) GetEntries() []*RegionSizeResponse_Entry {
 }
 
 type RegionSizeResponse_Entry struct {
-	Cf                   string   `protobuf:"bytes,1,opt,name=cf,proto3" json:"cf,omitempty"`
-	Size_                uint64   `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Cf    string `protobuf:"bytes,1,opt,name=cf,proto3" json:"cf,omitempty"`
+	Size_ uint64 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
 }
 
 func (m *RegionSizeResponse_Entry) Reset()         { *m = RegionSizeResponse_Entry{} }
@@ -622,12 +595,9 @@ func (m *RegionSizeResponse_Entry) GetSize_() uint64 {
 }
 
 type ScanMvccRequest struct {
-	FromKey              []byte   `protobuf:"bytes,1,opt,name=from_key,json=fromKey,proto3" json:"from_key,omitempty"`
-	ToKey                []byte   `protobuf:"bytes,2,opt,name=to_key,json=toKey,proto3" json:"to_key,omitempty"`
-	Limit                uint64   `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	FromKey []byte `protobuf:"bytes,1,opt,name=from_key,json=fromKey,proto3" json:"from_key,omitempty"`
+	ToKey   []byte `protobuf:"bytes,2,opt,name=to_key,json=toKey,proto3" json:"to_key,omitempty"`
+	Limit   uint64 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 }
 
 func (m *ScanMvccRequest) Reset()         { *m = ScanMvccRequest{} }
@@ -685,11 +655,8 @@ func (m *ScanMvccRequest) GetLimit() uint64 {
 }
 
 type ScanMvccResponse struct {
-	Key                  []byte            `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Info                 *kvrpcpb.MvccInfo `protobuf:"bytes,2,opt,name=info,proto3" json:"info,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
+	Key  []byte            `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Info *kvrpcpb.MvccInfo `protobuf:"bytes,2,opt,name=info,proto3" json:"info,omitempty"`
 }
 
 func (m *ScanMvccResponse) Reset()         { *m = ScanMvccResponse{} }
@@ -746,9 +713,6 @@ type CompactRequest struct {
 	ToKey                     []byte                    `protobuf:"bytes,4,opt,name=to_key,json=toKey,proto3" json:"to_key,omitempty"`
 	Threads                   uint32                    `protobuf:"varint,5,opt,name=threads,proto3" json:"threads,omitempty"`
 	BottommostLevelCompaction BottommostLevelCompaction `protobuf:"varint,6,opt,name=bottommost_level_compaction,json=bottommostLevelCompaction,proto3,enum=debugpb.BottommostLevelCompaction" json:"bottommost_level_compaction,omitempty"`
-	XXX_NoUnkeyedLiteral      struct{}                  `json:"-"`
-	XXX_unrecognized          []byte                    `json:"-"`
-	XXX_sizecache             int32                     `json:"-"`
 }
 
 func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
@@ -827,9 +791,6 @@ func (m *CompactRequest) GetBottommostLevelCompaction() BottommostLevelCompactio
 }
 
 type CompactResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
@@ -866,11 +827,8 @@ func (m *CompactResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_CompactResponse proto.InternalMessageInfo
 
 type InjectFailPointRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Actions              string   `protobuf:"bytes,2,opt,name=actions,proto3" json:"actions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name    string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Actions string `protobuf:"bytes,2,opt,name=actions,proto3" json:"actions,omitempty"`
 }
 
 func (m *InjectFailPointRequest) Reset()         { *m = InjectFailPointRequest{} }
@@ -921,9 +879,6 @@ func (m *InjectFailPointRequest) GetActions() string {
 }
 
 type InjectFailPointResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *InjectFailPointResponse) Reset()         { *m = InjectFailPointResponse{} }
@@ -960,10 +915,7 @@ func (m *InjectFailPointResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_InjectFailPointResponse proto.InternalMessageInfo
 
 type RecoverFailPointRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (m *RecoverFailPointRequest) Reset()         { *m = RecoverFailPointRequest{} }
@@ -1007,9 +959,6 @@ func (m *RecoverFailPointRequest) GetName() string {
 }
 
 type RecoverFailPointResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *RecoverFailPointResponse) Reset()         { *m = RecoverFailPointResponse{} }
@@ -1046,9 +995,6 @@ func (m *RecoverFailPointResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_RecoverFailPointResponse proto.InternalMessageInfo
 
 type ListFailPointsRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ListFailPointsRequest) Reset()         { *m = ListFailPointsRequest{} }
@@ -1085,10 +1031,7 @@ func (m *ListFailPointsRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListFailPointsRequest proto.InternalMessageInfo
 
 type ListFailPointsResponse struct {
-	Entries              []*ListFailPointsResponse_Entry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
-	XXX_unrecognized     []byte                          `json:"-"`
-	XXX_sizecache        int32                           `json:"-"`
+	Entries []*ListFailPointsResponse_Entry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
 }
 
 func (m *ListFailPointsResponse) Reset()         { *m = ListFailPointsResponse{} }
@@ -1132,11 +1075,8 @@ func (m *ListFailPointsResponse) GetEntries() []*ListFailPointsResponse_Entry {
 }
 
 type ListFailPointsResponse_Entry struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Actions              string   `protobuf:"bytes,2,opt,name=actions,proto3" json:"actions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name    string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Actions string `protobuf:"bytes,2,opt,name=actions,proto3" json:"actions,omitempty"`
 }
 
 func (m *ListFailPointsResponse_Entry) Reset()         { *m = ListFailPointsResponse_Entry{} }
@@ -1187,10 +1127,7 @@ func (m *ListFailPointsResponse_Entry) GetActions() string {
 }
 
 type GetMetricsRequest struct {
-	All                  bool     `protobuf:"varint,1,opt,name=all,proto3" json:"all,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	All bool `protobuf:"varint,1,opt,name=all,proto3" json:"all,omitempty"`
 }
 
 func (m *GetMetricsRequest) Reset()         { *m = GetMetricsRequest{} }
@@ -1234,14 +1171,11 @@ func (m *GetMetricsRequest) GetAll() bool {
 }
 
 type GetMetricsResponse struct {
-	Prometheus           string   `protobuf:"bytes,1,opt,name=prometheus,proto3" json:"prometheus,omitempty"`
-	RocksdbKv            string   `protobuf:"bytes,2,opt,name=rocksdb_kv,json=rocksdbKv,proto3" json:"rocksdb_kv,omitempty"`
-	RocksdbRaft          string   `protobuf:"bytes,3,opt,name=rocksdb_raft,json=rocksdbRaft,proto3" json:"rocksdb_raft,omitempty"`
-	Jemalloc             string   `protobuf:"bytes,4,opt,name=jemalloc,proto3" json:"jemalloc,omitempty"`
-	StoreId              uint64   `protobuf:"varint,5,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Prometheus  string `protobuf:"bytes,1,opt,name=prometheus,proto3" json:"prometheus,omitempty"`
+	RocksdbKv   string `protobuf:"bytes,2,opt,name=rocksdb_kv,json=rocksdbKv,proto3" json:"rocksdb_kv,omitempty"`
+	RocksdbRaft string `protobuf:"bytes,3,opt,name=rocksdb_raft,json=rocksdbRaft,proto3" json:"rocksdb_raft,omitempty"`
+	Jemalloc    string `protobuf:"bytes,4,opt,name=jemalloc,proto3" json:"jemalloc,omitempty"`
+	StoreId     uint64 `protobuf:"varint,5,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
 }
 
 func (m *GetMetricsResponse) Reset()         { *m = GetMetricsResponse{} }
@@ -1313,10 +1247,7 @@ func (m *GetMetricsResponse) GetStoreId() uint64 {
 }
 
 type RegionConsistencyCheckRequest struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *RegionConsistencyCheckRequest) Reset()         { *m = RegionConsistencyCheckRequest{} }
@@ -1360,9 +1291,6 @@ func (m *RegionConsistencyCheckRequest) GetRegionId() uint64 {
 }
 
 type RegionConsistencyCheckResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *RegionConsistencyCheckResponse) Reset()         { *m = RegionConsistencyCheckResponse{} }
@@ -1399,12 +1327,9 @@ func (m *RegionConsistencyCheckResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_RegionConsistencyCheckResponse proto.InternalMessageInfo
 
 type ModifyTikvConfigRequest struct {
-	Module               MODULE   `protobuf:"varint,1,opt,name=module,proto3,enum=debugpb.MODULE" json:"module,omitempty"`
-	ConfigName           string   `protobuf:"bytes,2,opt,name=config_name,json=configName,proto3" json:"config_name,omitempty"`
-	ConfigValue          string   `protobuf:"bytes,3,opt,name=config_value,json=configValue,proto3" json:"config_value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Module      MODULE `protobuf:"varint,1,opt,name=module,proto3,enum=debugpb.MODULE" json:"module,omitempty"`
+	ConfigName  string `protobuf:"bytes,2,opt,name=config_name,json=configName,proto3" json:"config_name,omitempty"`
+	ConfigValue string `protobuf:"bytes,3,opt,name=config_value,json=configValue,proto3" json:"config_value,omitempty"`
 }
 
 func (m *ModifyTikvConfigRequest) Reset()         { *m = ModifyTikvConfigRequest{} }
@@ -1462,9 +1387,6 @@ func (m *ModifyTikvConfigRequest) GetConfigValue() string {
 }
 
 type ModifyTikvConfigResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ModifyTikvConfigResponse) Reset()         { *m = ModifyTikvConfigResponse{} }
@@ -1501,11 +1423,8 @@ func (m *ModifyTikvConfigResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_ModifyTikvConfigResponse proto.InternalMessageInfo
 
 type Property struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (m *Property) Reset()         { *m = Property{} }
@@ -1556,10 +1475,7 @@ func (m *Property) GetValue() string {
 }
 
 type GetRegionPropertiesRequest struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 }
 
 func (m *GetRegionPropertiesRequest) Reset()         { *m = GetRegionPropertiesRequest{} }
@@ -1603,10 +1519,7 @@ func (m *GetRegionPropertiesRequest) GetRegionId() uint64 {
 }
 
 type GetRegionPropertiesResponse struct {
-	Props                []*Property `protobuf:"bytes,1,rep,name=props,proto3" json:"props,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Props []*Property `protobuf:"bytes,1,rep,name=props,proto3" json:"props,omitempty"`
 }
 
 func (m *GetRegionPropertiesResponse) Reset()         { *m = GetRegionPropertiesResponse{} }
@@ -1650,9 +1563,6 @@ func (m *GetRegionPropertiesResponse) GetProps() []*Property {
 }
 
 type GetStoreInfoRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetStoreInfoRequest) Reset()         { *m = GetStoreInfoRequest{} }
@@ -1689,11 +1599,8 @@ func (m *GetStoreInfoRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetStoreInfoRequest proto.InternalMessageInfo
 
 type GetStoreInfoResponse struct {
-	StoreId              uint64             `protobuf:"varint,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	ApiVersion           kvrpcpb.APIVersion `protobuf:"varint,2,opt,name=api_version,json=apiVersion,proto3,enum=kvrpcpb.APIVersion" json:"api_version,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	StoreId    uint64             `protobuf:"varint,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	ApiVersion kvrpcpb.APIVersion `protobuf:"varint,2,opt,name=api_version,json=apiVersion,proto3,enum=kvrpcpb.APIVersion" json:"api_version,omitempty"`
 }
 
 func (m *GetStoreInfoResponse) Reset()         { *m = GetStoreInfoResponse{} }
@@ -1744,9 +1651,6 @@ func (m *GetStoreInfoResponse) GetApiVersion() kvrpcpb.APIVersion {
 }
 
 type GetClusterInfoRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetClusterInfoRequest) Reset()         { *m = GetClusterInfoRequest{} }
@@ -1783,10 +1687,7 @@ func (m *GetClusterInfoRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetClusterInfoRequest proto.InternalMessageInfo
 
 type GetClusterInfoResponse struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 }
 
 func (m *GetClusterInfoResponse) Reset()         { *m = GetClusterInfoResponse{} }
@@ -1830,9 +1731,6 @@ func (m *GetClusterInfoResponse) GetClusterId() uint64 {
 }
 
 type GetAllRegionsInStoreRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetAllRegionsInStoreRequest) Reset()         { *m = GetAllRegionsInStoreRequest{} }
@@ -1869,10 +1767,7 @@ func (m *GetAllRegionsInStoreRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetAllRegionsInStoreRequest proto.InternalMessageInfo
 
 type GetAllRegionsInStoreResponse struct {
-	Regions              []uint64 `protobuf:"varint,1,rep,packed,name=regions,proto3" json:"regions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Regions []uint64 `protobuf:"varint,1,rep,packed,name=regions,proto3" json:"regions,omitempty"`
 }
 
 func (m *GetAllRegionsInStoreResponse) Reset()         { *m = GetAllRegionsInStoreResponse{} }
@@ -1916,10 +1811,7 @@ func (m *GetAllRegionsInStoreResponse) GetRegions() []uint64 {
 }
 
 type ResetToVersionRequest struct {
-	Ts                   uint64   `protobuf:"varint,1,opt,name=ts,proto3" json:"ts,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Ts uint64 `protobuf:"varint,1,opt,name=ts,proto3" json:"ts,omitempty"`
 }
 
 func (m *ResetToVersionRequest) Reset()         { *m = ResetToVersionRequest{} }
@@ -1963,9 +1855,6 @@ func (m *ResetToVersionRequest) GetTs() uint64 {
 }
 
 type ResetToVersionResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ResetToVersionResponse) Reset()         { *m = ResetToVersionResponse{} }
@@ -2000,6 +1889,550 @@ func (m *ResetToVersionResponse) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_ResetToVersionResponse proto.InternalMessageInfo
+
+type GetRangePropertiesRequest struct {
+	StartKey []byte `protobuf:"bytes,1,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	EndKey   []byte `protobuf:"bytes,2,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+}
+
+func (m *GetRangePropertiesRequest) Reset()         { *m = GetRangePropertiesRequest{} }
+func (m *GetRangePropertiesRequest) String() string { return proto.CompactTextString(m) }
+func (*GetRangePropertiesRequest) ProtoMessage()    {}
+func (*GetRangePropertiesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{35}
+}
+func (m *GetRangePropertiesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetRangePropertiesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetRangePropertiesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetRangePropertiesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRangePropertiesRequest.Merge(m, src)
+}
+func (m *GetRangePropertiesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetRangePropertiesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRangePropertiesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRangePropertiesRequest proto.InternalMessageInfo
+
+func (m *GetRangePropertiesRequest) GetStartKey() []byte {
+	if m != nil {
+		return m.StartKey
+	}
+	return nil
+}
+
+func (m *GetRangePropertiesRequest) GetEndKey() []byte {
+	if m != nil {
+		return m.EndKey
+	}
+	return nil
+}
+
+type GetRangePropertiesResponse struct {
+	Properties []*GetRangePropertiesResponse_RangeProperty `protobuf:"bytes,1,rep,name=properties,proto3" json:"properties,omitempty"`
+}
+
+func (m *GetRangePropertiesResponse) Reset()         { *m = GetRangePropertiesResponse{} }
+func (m *GetRangePropertiesResponse) String() string { return proto.CompactTextString(m) }
+func (*GetRangePropertiesResponse) ProtoMessage()    {}
+func (*GetRangePropertiesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{36}
+}
+func (m *GetRangePropertiesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetRangePropertiesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetRangePropertiesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetRangePropertiesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRangePropertiesResponse.Merge(m, src)
+}
+func (m *GetRangePropertiesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetRangePropertiesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRangePropertiesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRangePropertiesResponse proto.InternalMessageInfo
+
+func (m *GetRangePropertiesResponse) GetProperties() []*GetRangePropertiesResponse_RangeProperty {
+	if m != nil {
+		return m.Properties
+	}
+	return nil
+}
+
+type GetRangePropertiesResponse_RangeProperty struct {
+	Key   string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) Reset() {
+	*m = GetRangePropertiesResponse_RangeProperty{}
+}
+func (m *GetRangePropertiesResponse_RangeProperty) String() string { return proto.CompactTextString(m) }
+func (*GetRangePropertiesResponse_RangeProperty) ProtoMessage()    {}
+func (*GetRangePropertiesResponse_RangeProperty) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{36, 0}
+}
+func (m *GetRangePropertiesResponse_RangeProperty) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetRangePropertiesResponse_RangeProperty) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetRangePropertiesResponse_RangeProperty.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetRangePropertiesResponse_RangeProperty) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRangePropertiesResponse_RangeProperty.Merge(m, src)
+}
+func (m *GetRangePropertiesResponse_RangeProperty) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetRangePropertiesResponse_RangeProperty) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRangePropertiesResponse_RangeProperty.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRangePropertiesResponse_RangeProperty proto.InternalMessageInfo
+
+func (m *GetRangePropertiesResponse_RangeProperty) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
+type FlashbackToVersionRequest struct {
+	Context  *kvrpcpb.Context `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
+	Version  uint64           `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
+	RegionId uint64           `protobuf:"varint,3,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	StartKey []byte           `protobuf:"bytes,4,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	EndKey   []byte           `protobuf:"bytes,5,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+	StartTs  uint64           `protobuf:"varint,6,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
+	CommitTs uint64           `protobuf:"varint,7,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
+}
+
+func (m *FlashbackToVersionRequest) Reset()         { *m = FlashbackToVersionRequest{} }
+func (m *FlashbackToVersionRequest) String() string { return proto.CompactTextString(m) }
+func (*FlashbackToVersionRequest) ProtoMessage()    {}
+func (*FlashbackToVersionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{37}
+}
+func (m *FlashbackToVersionRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FlashbackToVersionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FlashbackToVersionRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FlashbackToVersionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FlashbackToVersionRequest.Merge(m, src)
+}
+func (m *FlashbackToVersionRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FlashbackToVersionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FlashbackToVersionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FlashbackToVersionRequest proto.InternalMessageInfo
+
+func (m *FlashbackToVersionRequest) GetContext() *kvrpcpb.Context {
+	if m != nil {
+		return m.Context
+	}
+	return nil
+}
+
+func (m *FlashbackToVersionRequest) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
+func (m *FlashbackToVersionRequest) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+func (m *FlashbackToVersionRequest) GetStartKey() []byte {
+	if m != nil {
+		return m.StartKey
+	}
+	return nil
+}
+
+func (m *FlashbackToVersionRequest) GetEndKey() []byte {
+	if m != nil {
+		return m.EndKey
+	}
+	return nil
+}
+
+func (m *FlashbackToVersionRequest) GetStartTs() uint64 {
+	if m != nil {
+		return m.StartTs
+	}
+	return 0
+}
+
+func (m *FlashbackToVersionRequest) GetCommitTs() uint64 {
+	if m != nil {
+		return m.CommitTs
+	}
+	return 0
+}
+
+type FlashbackToVersionResponse struct {
+	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+}
+
+func (m *FlashbackToVersionResponse) Reset()         { *m = FlashbackToVersionResponse{} }
+func (m *FlashbackToVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*FlashbackToVersionResponse) ProtoMessage()    {}
+func (*FlashbackToVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{38}
+}
+func (m *FlashbackToVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FlashbackToVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FlashbackToVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FlashbackToVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FlashbackToVersionResponse.Merge(m, src)
+}
+func (m *FlashbackToVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *FlashbackToVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FlashbackToVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FlashbackToVersionResponse proto.InternalMessageInfo
+
+func (m *FlashbackToVersionResponse) GetError() string {
+	if m != nil {
+		return m.Error
+	}
+	return ""
+}
+
+type GetRegionReadProgressRequest struct {
+	RegionId   uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	LogLocks   bool   `protobuf:"varint,2,opt,name=log_locks,json=logLocks,proto3" json:"log_locks,omitempty"`
+	MinStartTs uint64 `protobuf:"varint,3,opt,name=min_start_ts,json=minStartTs,proto3" json:"min_start_ts,omitempty"`
+}
+
+func (m *GetRegionReadProgressRequest) Reset()         { *m = GetRegionReadProgressRequest{} }
+func (m *GetRegionReadProgressRequest) String() string { return proto.CompactTextString(m) }
+func (*GetRegionReadProgressRequest) ProtoMessage()    {}
+func (*GetRegionReadProgressRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{39}
+}
+func (m *GetRegionReadProgressRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetRegionReadProgressRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetRegionReadProgressRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetRegionReadProgressRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRegionReadProgressRequest.Merge(m, src)
+}
+func (m *GetRegionReadProgressRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetRegionReadProgressRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRegionReadProgressRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRegionReadProgressRequest proto.InternalMessageInfo
+
+func (m *GetRegionReadProgressRequest) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressRequest) GetLogLocks() bool {
+	if m != nil {
+		return m.LogLocks
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressRequest) GetMinStartTs() uint64 {
+	if m != nil {
+		return m.MinStartTs
+	}
+	return 0
+}
+
+type GetRegionReadProgressResponse struct {
+	// below are from region_read_progress module
+	SafeTs                        uint64 `protobuf:"varint,1,opt,name=safe_ts,json=safeTs,proto3" json:"safe_ts,omitempty"`
+	AppliedIndex                  uint64 `protobuf:"varint,2,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
+	PendingFrontAppliedIndex      uint64 `protobuf:"varint,3,opt,name=pending_front_applied_index,json=pendingFrontAppliedIndex,proto3" json:"pending_front_applied_index,omitempty"`
+	PendingFrontTs                uint64 `protobuf:"varint,4,opt,name=pending_front_ts,json=pendingFrontTs,proto3" json:"pending_front_ts,omitempty"`
+	PendingBackAppliedIndex       uint64 `protobuf:"varint,5,opt,name=pending_back_applied_index,json=pendingBackAppliedIndex,proto3" json:"pending_back_applied_index,omitempty"`
+	PendingBackTs                 uint64 `protobuf:"varint,6,opt,name=pending_back_ts,json=pendingBackTs,proto3" json:"pending_back_ts,omitempty"`
+	RegionReadProgressPaused      bool   `protobuf:"varint,7,opt,name=region_read_progress_paused,json=regionReadProgressPaused,proto3" json:"region_read_progress_paused,omitempty"`
+	DurationToLastUpdateSafeTsMs  uint64 `protobuf:"varint,8,opt,name=duration_to_last_update_safe_ts_ms,json=durationToLastUpdateSafeTsMs,proto3" json:"duration_to_last_update_safe_ts_ms,omitempty"`
+	DurationToLastConsumeLeaderMs uint64 `protobuf:"varint,9,opt,name=duration_to_last_consume_leader_ms,json=durationToLastConsumeLeaderMs,proto3" json:"duration_to_last_consume_leader_ms,omitempty"`
+	RegionReadProgressExist       bool   `protobuf:"varint,10,opt,name=region_read_progress_exist,json=regionReadProgressExist,proto3" json:"region_read_progress_exist,omitempty"`
+	ReadStateTs                   uint64 `protobuf:"varint,18,opt,name=read_state_ts,json=readStateTs,proto3" json:"read_state_ts,omitempty"`
+	ReadStateApplyIndex           uint64 `protobuf:"varint,19,opt,name=read_state_apply_index,json=readStateApplyIndex,proto3" json:"read_state_apply_index,omitempty"`
+	Discard                       bool   `protobuf:"varint,20,opt,name=discard,proto3" json:"discard,omitempty"`
+	// below are from resolved-ts module
+	ResolvedTs           uint64 `protobuf:"varint,11,opt,name=resolved_ts,json=resolvedTs,proto3" json:"resolved_ts,omitempty"`
+	ResolverTrackedIndex uint64 `protobuf:"varint,12,opt,name=resolver_tracked_index,json=resolverTrackedIndex,proto3" json:"resolver_tracked_index,omitempty"`
+	ResolverExist        bool   `protobuf:"varint,13,opt,name=resolver_exist,json=resolverExist,proto3" json:"resolver_exist,omitempty"`
+	ResolverStopped      bool   `protobuf:"varint,14,opt,name=resolver_stopped,json=resolverStopped,proto3" json:"resolver_stopped,omitempty"`
+	NumLocks             uint64 `protobuf:"varint,16,opt,name=num_locks,json=numLocks,proto3" json:"num_locks,omitempty"`
+	NumTransactions      uint64 `protobuf:"varint,17,opt,name=num_transactions,json=numTransactions,proto3" json:"num_transactions,omitempty"`
+	Error                string `protobuf:"bytes,15,opt,name=error,proto3" json:"error,omitempty"`
+}
+
+func (m *GetRegionReadProgressResponse) Reset()         { *m = GetRegionReadProgressResponse{} }
+func (m *GetRegionReadProgressResponse) String() string { return proto.CompactTextString(m) }
+func (*GetRegionReadProgressResponse) ProtoMessage()    {}
+func (*GetRegionReadProgressResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_823ddaea3037c5c3, []int{40}
+}
+func (m *GetRegionReadProgressResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetRegionReadProgressResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetRegionReadProgressResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetRegionReadProgressResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRegionReadProgressResponse.Merge(m, src)
+}
+func (m *GetRegionReadProgressResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetRegionReadProgressResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRegionReadProgressResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetRegionReadProgressResponse proto.InternalMessageInfo
+
+func (m *GetRegionReadProgressResponse) GetSafeTs() uint64 {
+	if m != nil {
+		return m.SafeTs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetAppliedIndex() uint64 {
+	if m != nil {
+		return m.AppliedIndex
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetPendingFrontAppliedIndex() uint64 {
+	if m != nil {
+		return m.PendingFrontAppliedIndex
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetPendingFrontTs() uint64 {
+	if m != nil {
+		return m.PendingFrontTs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetPendingBackAppliedIndex() uint64 {
+	if m != nil {
+		return m.PendingBackAppliedIndex
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetPendingBackTs() uint64 {
+	if m != nil {
+		return m.PendingBackTs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetRegionReadProgressPaused() bool {
+	if m != nil {
+		return m.RegionReadProgressPaused
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressResponse) GetDurationToLastUpdateSafeTsMs() uint64 {
+	if m != nil {
+		return m.DurationToLastUpdateSafeTsMs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetDurationToLastConsumeLeaderMs() uint64 {
+	if m != nil {
+		return m.DurationToLastConsumeLeaderMs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetRegionReadProgressExist() bool {
+	if m != nil {
+		return m.RegionReadProgressExist
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressResponse) GetReadStateTs() uint64 {
+	if m != nil {
+		return m.ReadStateTs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetReadStateApplyIndex() uint64 {
+	if m != nil {
+		return m.ReadStateApplyIndex
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetDiscard() bool {
+	if m != nil {
+		return m.Discard
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressResponse) GetResolvedTs() uint64 {
+	if m != nil {
+		return m.ResolvedTs
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetResolverTrackedIndex() uint64 {
+	if m != nil {
+		return m.ResolverTrackedIndex
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetResolverExist() bool {
+	if m != nil {
+		return m.ResolverExist
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressResponse) GetResolverStopped() bool {
+	if m != nil {
+		return m.ResolverStopped
+	}
+	return false
+}
+
+func (m *GetRegionReadProgressResponse) GetNumLocks() uint64 {
+	if m != nil {
+		return m.NumLocks
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetNumTransactions() uint64 {
+	if m != nil {
+		return m.NumTransactions
+	}
+	return 0
+}
+
+func (m *GetRegionReadProgressResponse) GetError() string {
+	if m != nil {
+		return m.Error
+	}
+	return ""
+}
 
 func init() {
 	proto.RegisterEnum("debugpb.DB", DB_name, DB_value)
@@ -2042,114 +2475,164 @@ func init() {
 	proto.RegisterType((*GetAllRegionsInStoreResponse)(nil), "debugpb.GetAllRegionsInStoreResponse")
 	proto.RegisterType((*ResetToVersionRequest)(nil), "debugpb.ResetToVersionRequest")
 	proto.RegisterType((*ResetToVersionResponse)(nil), "debugpb.ResetToVersionResponse")
+	proto.RegisterType((*GetRangePropertiesRequest)(nil), "debugpb.GetRangePropertiesRequest")
+	proto.RegisterType((*GetRangePropertiesResponse)(nil), "debugpb.GetRangePropertiesResponse")
+	proto.RegisterType((*GetRangePropertiesResponse_RangeProperty)(nil), "debugpb.GetRangePropertiesResponse.RangeProperty")
+	proto.RegisterType((*FlashbackToVersionRequest)(nil), "debugpb.FlashbackToVersionRequest")
+	proto.RegisterType((*FlashbackToVersionResponse)(nil), "debugpb.FlashbackToVersionResponse")
+	proto.RegisterType((*GetRegionReadProgressRequest)(nil), "debugpb.GetRegionReadProgressRequest")
+	proto.RegisterType((*GetRegionReadProgressResponse)(nil), "debugpb.GetRegionReadProgressResponse")
 }
 
 func init() { proto.RegisterFile("debugpb.proto", fileDescriptor_823ddaea3037c5c3) }
 
 var fileDescriptor_823ddaea3037c5c3 = []byte{
-	// 1628 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x58, 0xcf, 0x73, 0xe2, 0xc8,
-	0x15, 0x46, 0xe2, 0xf7, 0xc3, 0xc6, 0x72, 0xfb, 0x17, 0x96, 0xd7, 0x36, 0xd6, 0xac, 0xd7, 0xae,
-	0x49, 0xc5, 0xd9, 0x72, 0x36, 0xb5, 0x49, 0x25, 0x95, 0x94, 0x0d, 0x98, 0x10, 0x9b, 0xc1, 0xd5,
-	0xd8, 0xae, 0x9a, 0x13, 0x25, 0x44, 0xc3, 0x68, 0x11, 0x34, 0x91, 0xda, 0x54, 0xbc, 0x87, 0x1c,
-	0x73, 0xde, 0x63, 0xfe, 0x84, 0x5c, 0xf2, 0x7f, 0xe4, 0x98, 0x63, 0x8e, 0xa9, 0xc9, 0x39, 0x95,
-	0x53, 0xee, 0xa9, 0x6e, 0xb5, 0x84, 0x10, 0xb0, 0xe3, 0xec, 0x89, 0xee, 0xf7, 0x5e, 0x7f, 0xfd,
-	0xfa, 0xbd, 0xaf, 0xf5, 0x75, 0x01, 0xeb, 0x3d, 0xd2, 0x7d, 0x1e, 0x4c, 0xba, 0x17, 0x13, 0x97,
-	0x32, 0x8a, 0xb2, 0x72, 0xaa, 0xaf, 0x13, 0xd7, 0xec, 0xb3, 0xc0, 0xae, 0xaf, 0x0f, 0xa7, 0xee,
-	0xc4, 0x0a, 0xa7, 0x5b, 0xdc, 0xd9, 0xf1, 0x88, 0x3b, 0x25, 0x6e, 0x68, 0xdc, 0x1e, 0xd0, 0x01,
-	0x15, 0xc3, 0x9f, 0xf0, 0x91, 0xb4, 0x6e, 0xb8, 0xcf, 0x1e, 0x13, 0x43, 0xdf, 0x60, 0xdc, 0x02,
-	0xd4, 0x09, 0xc3, 0xe4, 0xf7, 0xcf, 0xc4, 0x63, 0xe8, 0x00, 0xd4, 0x5e, 0xb7, 0xa4, 0x94, 0x95,
-	0xf3, 0xe2, 0x65, 0xe1, 0x22, 0x48, 0xa6, 0x7a, 0x8d, 0xd5, 0x5e, 0x17, 0x15, 0x41, 0xb5, 0xfa,
-	0x25, 0xb5, 0xac, 0x9c, 0xe7, 0xb1, 0x6a, 0xf5, 0x91, 0x06, 0xc9, 0x21, 0x79, 0x29, 0x25, 0xcb,
-	0xca, 0xf9, 0x1a, 0xe6, 0x43, 0xe3, 0x0d, 0x14, 0x04, 0x98, 0x37, 0xa1, 0x63, 0x8f, 0xa0, 0x6d,
-	0x48, 0x4f, 0x4d, 0xe7, 0x99, 0x08, 0xc0, 0x35, 0xec, 0x4f, 0x8c, 0xdf, 0x41, 0x11, 0x9b, 0x7d,
-	0x76, 0x47, 0x07, 0xb3, 0x5d, 0xf3, 0x2e, 0x19, 0xd8, 0x74, 0xdc, 0xb1, 0x7b, 0x22, 0x36, 0x85,
-	0x73, 0xbe, 0xa1, 0xd1, 0xe3, 0x4e, 0x87, 0x0e, 0x3a, 0xf6, 0xb8, 0x47, 0xfe, 0x20, 0x36, 0x4f,
-	0xe1, 0x9c, 0x43, 0x07, 0x0d, 0x3e, 0x37, 0xbe, 0x86, 0x8d, 0x10, 0x4b, 0x6e, 0xfa, 0x39, 0xa4,
-	0xc9, 0x98, 0xb9, 0x2f, 0x02, 0xa8, 0x70, 0x59, 0xbc, 0x08, 0x4a, 0x57, 0xe3, 0x56, 0xec, 0x3b,
-	0x8d, 0x2f, 0x61, 0x13, 0xfb, 0x3b, 0x8c, 0xfb, 0xf4, 0x35, 0x79, 0x18, 0xff, 0x55, 0x00, 0x45,
-	0x97, 0xc8, 0xed, 0xea, 0xa0, 0x89, 0xea, 0x3b, 0xd4, 0x32, 0x9d, 0x8e, 0xc7, 0x4c, 0x46, 0xe4,
-	0xce, 0x87, 0x17, 0xf3, 0x6d, 0xf1, 0x13, 0xb5, 0x4c, 0xa7, 0xcd, 0x83, 0x70, 0xd1, 0x9d, 0x9b,
-	0x87, 0x40, 0xe6, 0x64, 0xe2, 0xbc, 0x48, 0x20, 0x75, 0x25, 0xd0, 0x15, 0x8f, 0x8a, 0x00, 0xcd,
-	0xe6, 0xa8, 0x09, 0x48, 0x9e, 0x22, 0x9a, 0x53, 0x52, 0x40, 0x1d, 0xc7, 0xa1, 0x44, 0x60, 0x24,
-	0x2b, 0xcd, 0x8d, 0x59, 0x8c, 0xeb, 0xa0, 0x52, 0x6d, 0xfb, 0x5b, 0xf2, 0xaa, 0x8e, 0x69, 0x90,
-	0xb4, 0xfa, 0x5e, 0x49, 0x2d, 0x27, 0xcf, 0xf3, 0x98, 0x0f, 0x8d, 0x3f, 0x06, 0xa5, 0xf3, 0x31,
-	0x64, 0xe9, 0x7e, 0x09, 0x59, 0xde, 0x0c, 0x9b, 0x78, 0x25, 0xa5, 0x9c, 0x3c, 0x2f, 0x5c, 0x9e,
-	0x84, 0x8c, 0x5b, 0x8c, 0x96, 0xed, 0x0b, 0x56, 0xe8, 0x3f, 0x82, 0xb4, 0xb0, 0x48, 0x56, 0x2a,
-	0x21, 0x2b, 0x11, 0xa4, 0x3c, 0xfb, 0x5b, 0x22, 0xa9, 0x22, 0xc6, 0xc6, 0x7b, 0xd8, 0x68, 0x5b,
-	0xe6, 0xb8, 0x39, 0xb5, 0xac, 0xe0, 0x04, 0xfb, 0x90, 0xeb, 0xbb, 0x74, 0xd4, 0xe1, 0x0c, 0xf6,
-	0xe9, 0x99, 0xe5, 0xf3, 0x5b, 0xf2, 0x82, 0x76, 0x20, 0xc3, 0xa8, 0x70, 0xa8, 0x3e, 0x6f, 0x19,
-	0xe5, 0xe6, 0x6d, 0x48, 0x3b, 0xf6, 0xc8, 0x66, 0xa2, 0x94, 0x29, 0xec, 0x4f, 0x8c, 0x5b, 0xd0,
-	0x66, 0xd0, 0xf2, 0x60, 0xf2, 0x62, 0x28, 0xe1, 0xc5, 0x40, 0xa7, 0x90, 0xb2, 0xc7, 0x7d, 0x2a,
-	0x1b, 0xba, 0x79, 0x11, 0xdc, 0x5f, 0xbe, 0x4c, 0xd0, 0x49, 0xb8, 0x8d, 0x7f, 0x2b, 0x50, 0xac,
-	0xd0, 0xd1, 0xc4, 0xb4, 0x7e, 0xd8, 0x8d, 0x8c, 0x1e, 0x2a, 0xb9, 0xea, 0x50, 0xa9, 0xe8, 0xa1,
-	0x4a, 0x90, 0x65, 0x1f, 0x5c, 0x62, 0xf6, 0xbc, 0x52, 0xba, 0xac, 0x9c, 0xaf, 0xe3, 0x60, 0x8a,
-	0xba, 0x70, 0xd0, 0xa5, 0x8c, 0xd1, 0xd1, 0x88, 0x7a, 0xac, 0xe3, 0x90, 0x29, 0x71, 0x3a, 0x96,
-	0x9f, 0x9b, 0x4d, 0xc7, 0xa5, 0x8c, 0xc8, 0xc8, 0x08, 0x33, 0xba, 0x0e, 0x63, 0xef, 0x78, 0x68,
-	0x25, 0x8c, 0xc4, 0xfb, 0xdd, 0x55, 0x2e, 0x63, 0x13, 0x36, 0xc2, 0xe3, 0xfa, 0xb5, 0x33, 0x6e,
-	0x60, 0xb7, 0x31, 0xfe, 0x86, 0x58, 0xec, 0xc6, 0xb4, 0x9d, 0x7b, 0x6a, 0x8f, 0xc3, 0x4a, 0x20,
-	0x48, 0x8d, 0xcd, 0x11, 0x91, 0xad, 0x16, 0x63, 0x9e, 0xbe, 0x0f, 0xe5, 0xc9, 0x2a, 0x04, 0x53,
-	0x63, 0x1f, 0xf6, 0x16, 0x70, 0xe4, 0x16, 0x3f, 0x86, 0x3d, 0x4c, 0x2c, 0x3a, 0x25, 0xee, 0x6b,
-	0xf6, 0x30, 0x74, 0x28, 0x2d, 0x86, 0x4b, 0xa8, 0x3d, 0xd8, 0xb9, 0xb3, 0xbd, 0xd9, 0x1e, 0x9e,
-	0x04, 0x32, 0xbe, 0x53, 0x60, 0x37, 0xee, 0x91, 0xec, 0xf8, 0x4d, 0x9c, 0xf6, 0xa7, 0x61, 0x11,
-	0x97, 0xaf, 0x88, 0x53, 0xff, 0x67, 0x01, 0xf5, 0xff, 0xbf, 0x8a, 0x9c, 0xc2, 0x66, 0x9d, 0xb0,
-	0x26, 0x61, 0xae, 0x6d, 0x05, 0x79, 0x72, 0xaa, 0x9a, 0x8e, 0x23, 0x10, 0x72, 0x98, 0x0f, 0x8d,
-	0xbf, 0x2a, 0x80, 0xa2, 0x71, 0x32, 0xeb, 0x23, 0x80, 0x89, 0x4b, 0x47, 0x84, 0x7d, 0x20, 0xcf,
-	0x9e, 0xdc, 0x31, 0x62, 0x41, 0x87, 0x00, 0x2e, 0xb5, 0x86, 0x5e, 0xaf, 0xdb, 0x19, 0x4e, 0xe5,
-	0xd6, 0x79, 0x69, 0xb9, 0x9d, 0xa2, 0x13, 0x58, 0x0b, 0xdc, 0xfc, 0x0b, 0x24, 0xd8, 0x99, 0xc7,
-	0x05, 0x69, 0xe3, 0x5f, 0x34, 0xa4, 0x43, 0xee, 0x1b, 0x32, 0x32, 0x1d, 0x87, 0x5a, 0x82, 0xa3,
-	0x79, 0x1c, 0xce, 0x39, 0xb1, 0x3d, 0x46, 0x5d, 0xc2, 0x3f, 0x37, 0x69, 0x71, 0xfd, 0xb2, 0x62,
-	0xde, 0xe8, 0x19, 0xbf, 0x82, 0x43, 0xff, 0x6b, 0x51, 0xa1, 0x63, 0xcf, 0xf6, 0x18, 0x19, 0x5b,
-	0x2f, 0x95, 0x0f, 0xc4, 0x1a, 0xbe, 0xea, 0xab, 0x5e, 0x86, 0xa3, 0x55, 0xab, 0x65, 0x8b, 0xff,
-	0xa4, 0xc0, 0x5e, 0x93, 0xf6, 0xec, 0xfe, 0xcb, 0x83, 0x3d, 0x9c, 0x56, 0xe8, 0xb8, 0x6f, 0x87,
-	0xc2, 0x75, 0x06, 0x99, 0x11, 0xed, 0x3d, 0x3b, 0x44, 0x5e, 0xd0, 0x8d, 0xb0, 0x93, 0xcd, 0x56,
-	0xf5, 0xf1, 0xae, 0x86, 0xa5, 0x1b, 0x1d, 0x43, 0xc1, 0x12, 0x2b, 0x3b, 0xa2, 0x61, 0x7e, 0x79,
-	0xc0, 0x37, 0xbd, 0xe3, 0x6d, 0x3b, 0x81, 0x35, 0x19, 0xe0, 0x2b, 0xa6, 0xac, 0x8f, 0x6f, 0x7b,
-	0x12, 0xba, 0xa9, 0x43, 0x69, 0x31, 0x0f, 0x99, 0xe4, 0x57, 0x90, 0xbb, 0x77, 0xe9, 0x84, 0xb8,
-	0x6c, 0x39, 0x2b, 0x42, 0x25, 0xf6, 0x77, 0x96, 0x4a, 0xfc, 0x0b, 0xd0, 0x85, 0x5c, 0xf3, 0xf3,
-	0xcb, 0xe5, 0x36, 0xf1, 0x5e, 0x55, 0xb7, 0x1b, 0x38, 0x58, 0xba, 0x54, 0xb2, 0xe5, 0x0c, 0xd2,
-	0x13, 0x97, 0x4e, 0x02, 0x86, 0x6f, 0x86, 0x75, 0x09, 0xb2, 0xc4, 0xbe, 0xdf, 0xd8, 0x81, 0xad,
-	0x3a, 0x61, 0x6d, 0xd1, 0xcb, 0x99, 0x12, 0x1b, 0x03, 0xd8, 0x9e, 0x37, 0x4b, 0xdc, 0x28, 0x0f,
-	0x94, 0x39, 0x1e, 0xa0, 0xaf, 0xa0, 0x60, 0x4e, 0xec, 0xce, 0x94, 0xb8, 0x1e, 0xff, 0x3e, 0xa9,
-	0xa2, 0x21, 0x5b, 0xe1, 0x97, 0xf6, 0xea, 0xbe, 0xf1, 0xe4, 0xbb, 0x30, 0x98, 0x13, 0x5b, 0x8e,
-	0xf9, 0x05, 0xae, 0x13, 0x56, 0x71, 0x9e, 0x3d, 0x46, 0xdc, 0x68, 0x06, 0x5f, 0xc3, 0x6e, 0xdc,
-	0x21, 0x73, 0x38, 0x04, 0xb0, 0x7c, 0xf3, 0x2c, 0x8b, 0xbc, 0xb4, 0x34, 0x7a, 0xc6, 0xa1, 0xa8,
-	0xcc, 0x95, 0xe3, 0xf8, 0xc5, 0xf1, 0x1a, 0x63, 0x71, 0x8c, 0x00, 0xf7, 0xe7, 0xf0, 0xd9, 0x72,
-	0xb7, 0x44, 0x2f, 0x41, 0xd6, 0x2f, 0xb2, 0x5f, 0xbb, 0x14, 0x0e, 0xa6, 0xc6, 0x19, 0xec, 0x60,
-	0xe2, 0x11, 0xf6, 0x40, 0x83, 0x83, 0xc8, 0x46, 0x15, 0x41, 0x65, 0x9e, 0x4c, 0x44, 0x65, 0x9e,
-	0x51, 0x82, 0xdd, 0x78, 0xa0, 0x0f, 0xfe, 0xf6, 0x0d, 0xa8, 0xd5, 0x6b, 0x54, 0x80, 0x6c, 0xe3,
-	0xdd, 0xd3, 0xd5, 0x5d, 0xa3, 0xaa, 0x25, 0x50, 0x06, 0xd4, 0xdb, 0x27, 0x4d, 0x41, 0x39, 0x48,
-	0xe1, 0xab, 0x9b, 0x07, 0x4d, 0x7d, 0xfb, 0x9d, 0x02, 0x19, 0x9f, 0xbe, 0x08, 0x20, 0xf3, 0xf8,
-	0xee, 0xb1, 0x5d, 0xe3, 0x81, 0x39, 0x48, 0xdd, 0x3e, 0x55, 0xaf, 0x35, 0x85, 0x5b, 0x79, 0x68,
-	0xf5, 0x5a, 0x53, 0xd1, 0x1a, 0xe4, 0x70, 0xed, 0xaa, 0x7a, 0xdf, 0x6a, 0xdd, 0x69, 0x49, 0xee,
-	0x69, 0xd7, 0xf0, 0x53, 0x0d, 0x6b, 0x29, 0xbe, 0x4b, 0xfb, 0xa1, 0x85, 0xaf, 0xea, 0x35, 0x2d,
-	0xcd, 0x77, 0xb9, 0xaf, 0x6a, 0x19, 0x1e, 0xd0, 0xac, 0x3d, 0xe0, 0x46, 0x45, 0xcb, 0xa2, 0x0d,
-	0x28, 0x54, 0x5a, 0xf7, 0xb8, 0x55, 0xa9, 0xb5, 0xdb, 0x2d, 0xac, 0xe5, 0x38, 0x56, 0xbb, 0x56,
-	0x79, 0xc4, 0x8d, 0x87, 0xf7, 0x5a, 0x9e, 0x87, 0x36, 0x9a, 0xf7, 0x2d, 0xfc, 0xa0, 0xc1, 0xdb,
-	0x3b, 0xd8, 0x5f, 0xa9, 0x2f, 0x3c, 0xb1, 0xf6, 0xd0, 0x9e, 0x68, 0x09, 0x94, 0x87, 0xf4, 0x0d,
-	0x75, 0x2d, 0xa2, 0x29, 0x48, 0x87, 0xdd, 0x46, 0xff, 0xb7, 0xe6, 0x94, 0xcc, 0x02, 0x6f, 0x6c,
-	0x87, 0x11, 0x57, 0x53, 0x2f, 0xff, 0x03, 0x90, 0xae, 0x72, 0x3e, 0xa2, 0x4b, 0x48, 0xd6, 0x09,
-	0x43, 0x5b, 0x21, 0x3d, 0x67, 0x4f, 0x61, 0x7d, 0x7b, 0xde, 0x28, 0x2f, 0x5a, 0x02, 0xfd, 0x1a,
-	0xb2, 0xf2, 0xc9, 0x89, 0xf6, 0x66, 0xef, 0x95, 0xb9, 0x07, 0xad, 0x5e, 0x5a, 0x74, 0x84, 0xeb,
-	0xeb, 0x00, 0xb3, 0x67, 0x24, 0xd2, 0x63, 0x4f, 0x9e, 0x08, 0x05, 0xf5, 0x83, 0xa5, 0xbe, 0x45,
-	0x20, 0xfe, 0x4c, 0x5a, 0x00, 0x8a, 0xbc, 0xd6, 0x16, 0x80, 0xa2, 0xef, 0x2a, 0x23, 0x81, 0x2a,
-	0x90, 0x0b, 0x9e, 0x30, 0x68, 0x96, 0x79, 0xec, 0xc1, 0xa4, 0xef, 0x2f, 0xf1, 0x04, 0x10, 0x5f,
-	0x2a, 0xbc, 0x2c, 0xb2, 0xd4, 0x91, 0xb2, 0xcc, 0xbf, 0x65, 0x22, 0x65, 0x89, 0xab, 0x7e, 0x02,
-	0x3d, 0xc1, 0x46, 0x4c, 0xaf, 0xd1, 0x71, 0x18, 0xbe, 0xfc, 0x45, 0xa0, 0x97, 0x57, 0x07, 0x84,
-	0xb8, 0xef, 0x41, 0x8b, 0xab, 0x37, 0x2a, 0x47, 0xea, 0xb1, 0xf4, 0x1d, 0xa0, 0x9f, 0x7c, 0x4f,
-	0x44, 0x08, 0xdd, 0x86, 0xe2, 0xbc, 0x60, 0xa3, 0xa3, 0x95, 0x4a, 0xee, 0xc3, 0x1e, 0x7f, 0x42,
-	0xe9, 0xfd, 0xae, 0xce, 0xd4, 0x37, 0xd2, 0xd5, 0x05, 0xe9, 0x8e, 0x74, 0x75, 0x51, 0xae, 0x8d,
-	0x04, 0x1a, 0xc2, 0xae, 0x14, 0xb2, 0x98, 0xbc, 0xa1, 0x2f, 0x62, 0x74, 0x58, 0x21, 0x9c, 0xfa,
-	0xd9, 0x27, 0xe3, 0xa2, 0x55, 0x8e, 0x6b, 0x53, 0xa4, 0xca, 0x2b, 0xe4, 0x33, 0x52, 0xe5, 0x95,
-	0xc2, 0x96, 0x40, 0x5d, 0xa1, 0x10, 0x71, 0xa5, 0x41, 0x6f, 0xe6, 0xaf, 0xe7, 0x52, 0x09, 0xd3,
-	0x3f, 0xff, 0xfe, 0xa0, 0x70, 0x8f, 0x26, 0xac, 0x45, 0xe5, 0x06, 0x7d, 0x16, 0x5d, 0x17, 0x17,
-	0x27, 0xfd, 0x70, 0x85, 0x37, 0x4a, 0x8c, 0x79, 0xed, 0x88, 0x10, 0x63, 0xa9, 0xda, 0x44, 0x88,
-	0xb1, 0x5c, 0x74, 0x8c, 0x04, 0x22, 0x42, 0x12, 0x17, 0x84, 0x03, 0xcd, 0x9d, 0x71, 0x95, 0xec,
-	0xe8, 0xa7, 0x9f, 0x88, 0x8a, 0xe6, 0x3e, 0x2f, 0x1e, 0x91, 0xdc, 0x97, 0xca, 0x4f, 0x24, 0xf7,
-	0xe5, 0xaa, 0x63, 0x24, 0xae, 0xbf, 0xf8, 0xc7, 0x5f, 0x72, 0xca, 0xdf, 0x3e, 0x1e, 0x29, 0x7f,
-	0xff, 0x78, 0xa4, 0xfc, 0xf3, 0xe3, 0x91, 0xf2, 0xe7, 0x7f, 0x1d, 0x25, 0x40, 0xa3, 0xee, 0xe0,
-	0x82, 0xd9, 0xc3, 0xe9, 0xc5, 0x70, 0x2a, 0xfe, 0x8c, 0xe8, 0x66, 0xc4, 0xcf, 0x4f, 0xff, 0x17,
-	0x00, 0x00, 0xff, 0xff, 0xff, 0x99, 0xbe, 0xc4, 0x07, 0x11, 0x00, 0x00,
+	// 2305 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x59, 0x4b, 0x73, 0xdb, 0xc8,
+	0x11, 0x26, 0x28, 0x4a, 0xa4, 0x5a, 0x2f, 0x68, 0x24, 0x4b, 0x14, 0xbc, 0x92, 0x65, 0x78, 0x65,
+	0x6b, 0x9d, 0x8a, 0xb2, 0xd1, 0x3a, 0xe5, 0xa4, 0x36, 0x8f, 0x92, 0xa8, 0xc7, 0x32, 0x92, 0x2c,
+	0x2d, 0x48, 0xab, 0xca, 0x27, 0x14, 0x04, 0x0c, 0x69, 0x2c, 0x41, 0x0c, 0x83, 0x19, 0xb2, 0x2c,
+	0x1f, 0x72, 0xcc, 0xd9, 0xc7, 0x54, 0xe5, 0x0f, 0xec, 0x25, 0xd7, 0xfc, 0x86, 0x1c, 0xf7, 0xb8,
+	0xc7, 0x94, 0x7d, 0x4d, 0x8e, 0xb9, 0xa7, 0xe6, 0x01, 0x70, 0xf8, 0xb2, 0xb5, 0x39, 0x09, 0xd3,
+	0xdd, 0xd3, 0xdd, 0xd3, 0xfd, 0xcd, 0xe3, 0xa3, 0x60, 0x21, 0xc0, 0x37, 0xdd, 0x66, 0xe7, 0x66,
+	0xaf, 0x93, 0x10, 0x46, 0x50, 0x51, 0x0d, 0xad, 0x05, 0x9c, 0x78, 0x0d, 0x96, 0xca, 0xad, 0x85,
+	0x56, 0x2f, 0xe9, 0xf8, 0xd9, 0x70, 0x85, 0x2b, 0x5d, 0x8a, 0x93, 0x1e, 0x4e, 0x32, 0xe1, 0x6a,
+	0x93, 0x34, 0x89, 0xf8, 0xfc, 0x05, 0xff, 0x52, 0xd2, 0xa5, 0xa4, 0x4b, 0x99, 0xf8, 0x94, 0x02,
+	0xfb, 0x0c, 0xe0, 0x14, 0x33, 0x07, 0xff, 0xa9, 0x8b, 0x29, 0x43, 0xf7, 0x21, 0x1f, 0xdc, 0x94,
+	0x8d, 0x6d, 0x63, 0x77, 0x71, 0x7f, 0x6e, 0x2f, 0x4d, 0xe6, 0xe8, 0xd0, 0xc9, 0x07, 0x37, 0x68,
+	0x11, 0xf2, 0x7e, 0xa3, 0x9c, 0xdf, 0x36, 0x76, 0x67, 0x9d, 0xbc, 0xdf, 0x40, 0x26, 0x4c, 0xb5,
+	0xf0, 0x6d, 0x79, 0x6a, 0xdb, 0xd8, 0x9d, 0x77, 0xf8, 0xa7, 0xfd, 0x08, 0xe6, 0x84, 0x33, 0xda,
+	0x21, 0x31, 0xc5, 0x68, 0x15, 0xa6, 0x7b, 0x5e, 0xd4, 0xc5, 0xc2, 0xe1, 0xbc, 0x23, 0x07, 0xf6,
+	0x1f, 0x61, 0xd1, 0xf1, 0x1a, 0xec, 0x9c, 0x34, 0xfb, 0x51, 0x67, 0x13, 0xdc, 0x0c, 0x49, 0xec,
+	0x86, 0x81, 0xb0, 0x2d, 0x38, 0x25, 0x29, 0xa8, 0x06, 0x5c, 0x19, 0x91, 0xa6, 0x1b, 0xc6, 0x01,
+	0x7e, 0x23, 0x82, 0x17, 0x9c, 0x52, 0x44, 0x9a, 0x55, 0x3e, 0xb6, 0x9f, 0xc3, 0x52, 0xe6, 0x4b,
+	0x05, 0xfd, 0x1c, 0xa6, 0x71, 0xcc, 0x92, 0x5b, 0xe1, 0x68, 0x6e, 0x7f, 0x71, 0x2f, 0x2d, 0xdd,
+	0x31, 0x97, 0x3a, 0x52, 0x69, 0x7f, 0x09, 0xcb, 0x8e, 0x8c, 0x10, 0x37, 0xc8, 0x5d, 0xf2, 0xb0,
+	0xff, 0x6b, 0x00, 0xd2, 0xa7, 0xa8, 0x70, 0xa7, 0x60, 0x8a, 0xea, 0x47, 0xc4, 0xf7, 0x22, 0x97,
+	0x32, 0x8f, 0x61, 0x15, 0x79, 0x73, 0x6f, 0xb0, 0x2d, 0x32, 0x51, 0xdf, 0x8b, 0x6a, 0xdc, 0xc8,
+	0x59, 0x4c, 0x06, 0xc6, 0x99, 0x23, 0xaf, 0xd3, 0x89, 0x6e, 0x95, 0xa3, 0xfc, 0x44, 0x47, 0x07,
+	0xdc, 0x4a, 0x73, 0xd4, 0x1f, 0xa3, 0x0b, 0x40, 0x6a, 0x15, 0x7a, 0x4e, 0x53, 0xc2, 0xd5, 0x83,
+	0x61, 0x57, 0xc2, 0x50, 0xcb, 0xca, 0x4c, 0x86, 0x24, 0xf6, 0x61, 0x5a, 0xa9, 0x5a, 0xf8, 0x16,
+	0xdf, 0xa9, 0x63, 0x26, 0x4c, 0xf9, 0x0d, 0x5a, 0xce, 0x6f, 0x4f, 0xed, 0xce, 0x3a, 0xfc, 0xd3,
+	0xfe, 0x73, 0x5a, 0x3a, 0xe9, 0x43, 0x95, 0xee, 0x6b, 0x28, 0xf2, 0x66, 0x84, 0x98, 0x96, 0x8d,
+	0xed, 0xa9, 0xdd, 0xb9, 0xfd, 0x87, 0x19, 0xe2, 0x46, 0xad, 0x55, 0xfb, 0xd2, 0x19, 0xd6, 0xcf,
+	0x60, 0x5a, 0x48, 0x14, 0x2a, 0x8d, 0x0c, 0x95, 0x08, 0x0a, 0x34, 0x7c, 0x8b, 0x15, 0x54, 0xc4,
+	0xb7, 0xfd, 0x0a, 0x96, 0x6a, 0xbe, 0x17, 0x5f, 0xf4, 0x7c, 0x3f, 0x5d, 0xc1, 0x06, 0x94, 0x1a,
+	0x09, 0x69, 0xbb, 0x1c, 0xc1, 0x12, 0x9e, 0x45, 0x3e, 0x3e, 0xc3, 0xb7, 0xe8, 0x1e, 0xcc, 0x30,
+	0x22, 0x14, 0x79, 0x89, 0x5b, 0x46, 0xb8, 0x78, 0x15, 0xa6, 0xa3, 0xb0, 0x1d, 0x32, 0x51, 0xca,
+	0x82, 0x23, 0x07, 0xf6, 0x19, 0x98, 0x7d, 0xd7, 0x6a, 0x61, 0x6a, 0x63, 0x18, 0xd9, 0xc6, 0x40,
+	0x3b, 0x50, 0x08, 0xe3, 0x06, 0x51, 0x0d, 0x5d, 0xde, 0x4b, 0xf7, 0x2f, 0x9f, 0x26, 0xe0, 0x24,
+	0xd4, 0xf6, 0x7f, 0x0c, 0x58, 0xac, 0x90, 0x76, 0xc7, 0xf3, 0xff, 0xbf, 0x1d, 0xa9, 0x2f, 0x6a,
+	0x6a, 0xd2, 0xa2, 0x0a, 0xfa, 0xa2, 0xca, 0x50, 0x64, 0xaf, 0x13, 0xec, 0x05, 0xb4, 0x3c, 0xbd,
+	0x6d, 0xec, 0x2e, 0x38, 0xe9, 0x10, 0xdd, 0xc0, 0xfd, 0x1b, 0xc2, 0x18, 0x69, 0xb7, 0x09, 0x65,
+	0x6e, 0x84, 0x7b, 0x38, 0x72, 0x7d, 0x99, 0x5b, 0x48, 0xe2, 0xf2, 0x8c, 0xc8, 0xc8, 0xce, 0x32,
+	0x3a, 0xcc, 0x6c, 0xcf, 0xb9, 0x69, 0x25, 0xb3, 0x74, 0x36, 0x6e, 0x26, 0xa9, 0xec, 0x65, 0x58,
+	0xca, 0x96, 0x2b, 0x6b, 0x67, 0x9f, 0xc0, 0x5a, 0x35, 0xfe, 0x0e, 0xfb, 0xec, 0xc4, 0x0b, 0xa3,
+	0x2b, 0x12, 0xc6, 0x59, 0x25, 0x10, 0x14, 0x62, 0xaf, 0x8d, 0x55, 0xab, 0xc5, 0x37, 0x4f, 0x5f,
+	0xba, 0xa2, 0xaa, 0x0a, 0xe9, 0xd0, 0xde, 0x80, 0xf5, 0x11, 0x3f, 0x2a, 0xc4, 0xcf, 0x61, 0xdd,
+	0xc1, 0x3e, 0xe9, 0xe1, 0xe4, 0x2e, 0x31, 0x6c, 0x0b, 0xca, 0xa3, 0xe6, 0xca, 0xd5, 0x3a, 0xdc,
+	0x3b, 0x0f, 0x69, 0x3f, 0x06, 0x55, 0x8e, 0xec, 0x77, 0x06, 0xac, 0x0d, 0x6b, 0x14, 0x3a, 0xfe,
+	0x30, 0x0c, 0xfb, 0x9d, 0xac, 0x88, 0xe3, 0x67, 0x0c, 0x43, 0xff, 0x57, 0x29, 0xf4, 0x7f, 0x5a,
+	0x45, 0x76, 0x60, 0xf9, 0x14, 0xb3, 0x0b, 0xcc, 0x92, 0xd0, 0x4f, 0xf3, 0xe4, 0x50, 0xf5, 0xa2,
+	0x48, 0x78, 0x28, 0x39, 0xfc, 0xd3, 0xfe, 0xbb, 0x01, 0x48, 0xb7, 0x53, 0x59, 0x6f, 0x01, 0x74,
+	0x12, 0xd2, 0xc6, 0xec, 0x35, 0xee, 0x52, 0x15, 0x51, 0x93, 0xa0, 0x4d, 0x80, 0x84, 0xf8, 0x2d,
+	0x1a, 0xdc, 0xb8, 0xad, 0x9e, 0x0a, 0x3d, 0xab, 0x24, 0x67, 0x3d, 0xf4, 0x10, 0xe6, 0x53, 0x35,
+	0x3f, 0x81, 0x04, 0x3a, 0x67, 0x9d, 0x39, 0x25, 0xe3, 0x27, 0x1a, 0xb2, 0xa0, 0xf4, 0x1d, 0x6e,
+	0x7b, 0x51, 0x44, 0x7c, 0x81, 0xd1, 0x59, 0x27, 0x1b, 0x73, 0x60, 0x53, 0x46, 0x12, 0xcc, 0x8f,
+	0x9b, 0x69, 0xb1, 0xfd, 0x8a, 0x62, 0x5c, 0x0d, 0xec, 0xdf, 0xc2, 0xa6, 0x3c, 0x2d, 0x2a, 0x24,
+	0xa6, 0x21, 0x65, 0x38, 0xf6, 0x6f, 0x2b, 0xaf, 0xb1, 0xdf, 0xba, 0xd3, 0xa9, 0xbe, 0x0d, 0x5b,
+	0x93, 0x66, 0xab, 0x16, 0xff, 0xc5, 0x80, 0xf5, 0x0b, 0x12, 0x84, 0x8d, 0xdb, 0x7a, 0xd8, 0xea,
+	0x55, 0x48, 0xdc, 0x08, 0xb3, 0x8b, 0xeb, 0x09, 0xcc, 0xb4, 0x49, 0xd0, 0x8d, 0xb0, 0xda, 0xa0,
+	0x4b, 0x59, 0x27, 0x2f, 0x2e, 0x8f, 0x5e, 0x9e, 0x1f, 0x3b, 0x4a, 0x8d, 0x1e, 0xc0, 0x9c, 0x2f,
+	0x66, 0xba, 0xa2, 0x61, 0xb2, 0x3c, 0x20, 0x45, 0x2f, 0x78, 0xdb, 0x1e, 0xc2, 0xbc, 0x32, 0x90,
+	0x37, 0xa6, 0xaa, 0x8f, 0x94, 0x5d, 0x8b, 0x7b, 0xd3, 0x82, 0xf2, 0x68, 0x1e, 0x2a, 0xc9, 0x67,
+	0x50, 0xba, 0x4a, 0x48, 0x07, 0x27, 0x6c, 0x3c, 0x2a, 0xb2, 0x9b, 0x58, 0x46, 0x56, 0x37, 0xf1,
+	0x6f, 0xc0, 0x12, 0xd7, 0x35, 0x5f, 0xbf, 0x9a, 0x1e, 0x62, 0x7a, 0xa7, 0xba, 0x9d, 0xc0, 0xfd,
+	0xb1, 0x53, 0x15, 0x5a, 0x9e, 0xc0, 0x74, 0x27, 0x21, 0x9d, 0x14, 0xe1, 0xcb, 0x59, 0x5d, 0xd2,
+	0x2c, 0x1d, 0xa9, 0xb7, 0xef, 0xc1, 0xca, 0x29, 0x66, 0x35, 0xd1, 0xcb, 0xfe, 0x4d, 0x6c, 0x37,
+	0x61, 0x75, 0x50, 0xac, 0xfc, 0xea, 0x38, 0x30, 0x06, 0x70, 0x80, 0x9e, 0xc1, 0x9c, 0xd7, 0x09,
+	0xdd, 0x1e, 0x4e, 0x28, 0x3f, 0x9f, 0xf2, 0xa2, 0x21, 0x2b, 0xd9, 0x49, 0x7b, 0x70, 0x55, 0xbd,
+	0x96, 0x2a, 0x07, 0xbc, 0x4e, 0xa8, 0xbe, 0xf9, 0x06, 0x3e, 0xc5, 0xac, 0x12, 0x75, 0x29, 0xc3,
+	0x89, 0x9e, 0xc1, 0x73, 0x58, 0x1b, 0x56, 0xa8, 0x1c, 0x36, 0x01, 0x7c, 0x29, 0xee, 0x67, 0x31,
+	0xab, 0x24, 0xd5, 0xc0, 0xde, 0x14, 0x95, 0x39, 0x88, 0x22, 0x59, 0x1c, 0x5a, 0x8d, 0xc5, 0x32,
+	0x52, 0xbf, 0xbf, 0x86, 0xcf, 0xc6, 0xab, 0x95, 0xf7, 0x32, 0x14, 0x65, 0x91, 0x65, 0xed, 0x0a,
+	0x4e, 0x3a, 0xb4, 0x9f, 0xc0, 0x3d, 0x07, 0x53, 0xcc, 0xea, 0x24, 0x5d, 0x88, 0x6a, 0xd4, 0x22,
+	0xe4, 0x19, 0x55, 0x89, 0xe4, 0x19, 0xb5, 0xcb, 0xb0, 0x36, 0x6c, 0xa8, 0x60, 0xf2, 0x2d, 0x6c,
+	0xf0, 0xae, 0x79, 0x71, 0x13, 0x8f, 0xed, 0x37, 0x65, 0x5e, 0xc2, 0xb4, 0x2b, 0xb1, 0x24, 0x04,
+	0xfc, 0x9e, 0x58, 0xe7, 0x87, 0x56, 0xa0, 0x5d, 0x8a, 0x33, 0x38, 0x0e, 0xce, 0xf0, 0xad, 0xfd,
+	0xbd, 0x21, 0x41, 0x34, 0xec, 0x53, 0x2d, 0xe7, 0x5b, 0x71, 0x6c, 0x28, 0xa9, 0x42, 0xc3, 0x2f,
+	0x33, 0x34, 0x4c, 0x9e, 0xb8, 0xa7, 0xcb, 0x6f, 0x1d, 0xcd, 0x89, 0xf5, 0x1c, 0x16, 0x06, 0x94,
+	0xfa, 0x75, 0x3b, 0x2b, 0xaf, 0xdb, 0xf1, 0x70, 0xff, 0xb7, 0x01, 0x1b, 0x27, 0x91, 0x47, 0x5f,
+	0xdf, 0x78, 0x7e, 0x6b, 0xa4, 0x8a, 0x4f, 0xa1, 0xe8, 0x93, 0x98, 0xe1, 0x37, 0x4c, 0xbd, 0xdf,
+	0xcc, 0x0c, 0x3b, 0x15, 0x29, 0x77, 0x52, 0x03, 0xde, 0x24, 0x1d, 0x67, 0x05, 0x27, 0x1d, 0x0e,
+	0x6e, 0x9a, 0xa9, 0xd1, 0xa7, 0x6c, 0xbf, 0xc2, 0x85, 0xc9, 0x15, 0x9e, 0xd6, 0x2b, 0x2c, 0x31,
+	0xcf, 0x67, 0x31, 0x2a, 0x6e, 0x5d, 0x81, 0x79, 0x2f, 0x61, 0x75, 0xca, 0x1d, 0xfa, 0xa4, 0xdd,
+	0x0e, 0x85, 0xae, 0x28, 0xa3, 0x49, 0x41, 0x9d, 0xda, 0xfb, 0x60, 0x8d, 0x5b, 0x6d, 0xff, 0x6d,
+	0x8e, 0x93, 0x84, 0x24, 0xaa, 0x6c, 0x72, 0x60, 0xbf, 0x15, 0xe8, 0x94, 0xd0, 0x74, 0xb0, 0x17,
+	0x5c, 0x25, 0xa4, 0x99, 0x60, 0x4a, 0x7f, 0xca, 0x4b, 0x3d, 0xe2, 0x67, 0xba, 0xa8, 0x4b, 0x49,
+	0xbc, 0xd4, 0xcf, 0xf9, 0x18, 0x6d, 0xc3, 0x7c, 0x3b, 0x8c, 0xdd, 0x6c, 0x25, 0xb2, 0x36, 0xd0,
+	0x0e, 0xe3, 0x9a, 0x5c, 0x8c, 0xfd, 0x8f, 0x22, 0x6c, 0x4e, 0x08, 0xae, 0x72, 0x5e, 0x87, 0x22,
+	0xf5, 0x1a, 0xd8, 0xcd, 0xd0, 0x3e, 0xc3, 0x87, 0x75, 0x8a, 0x1e, 0xc1, 0x02, 0x7f, 0x36, 0x87,
+	0x38, 0x18, 0xe0, 0x09, 0xf3, 0x4a, 0x28, 0xb8, 0x02, 0xfa, 0x1d, 0xdc, 0xef, 0xe0, 0x38, 0x08,
+	0xe3, 0xa6, 0xdb, 0x48, 0x48, 0x2c, 0x5f, 0xda, 0xfd, 0x29, 0x32, 0xa1, 0xb2, 0x32, 0x39, 0xe1,
+	0x16, 0x07, 0xfa, 0xf4, 0x5d, 0x30, 0x07, 0xa7, 0x33, 0x2a, 0x7a, 0x58, 0x70, 0x16, 0xf5, 0x39,
+	0x75, 0x8a, 0xbe, 0x06, 0x2b, 0xb5, 0xe4, 0xb5, 0x1f, 0x8a, 0x23, 0xaf, 0xaf, 0x75, 0x65, 0x71,
+	0xe8, 0xf9, 0xad, 0x81, 0x30, 0x8f, 0x61, 0x69, 0x60, 0x72, 0xd6, 0xf4, 0x05, 0x6d, 0x46, 0x9d,
+	0xf2, 0xd5, 0xa8, 0x4e, 0xf0, 0xe7, 0x9a, 0xdb, 0x51, 0xb5, 0x72, 0x3b, 0x5e, 0x97, 0xe2, 0x40,
+	0x80, 0xa1, 0xe4, 0x94, 0x93, 0x91, 0x62, 0x5e, 0x09, 0x3d, 0xfa, 0x06, 0xec, 0xa0, 0x9b, 0x78,
+	0xfc, 0x65, 0xe0, 0x32, 0xe2, 0x46, 0x1e, 0x65, 0x6e, 0xb7, 0x13, 0x78, 0x0c, 0xbb, 0xaa, 0xc4,
+	0x6e, 0x9b, 0x96, 0x4b, 0x22, 0xf2, 0x67, 0xa9, 0x65, 0x9d, 0x9c, 0x7b, 0x94, 0xbd, 0x14, 0x66,
+	0x35, 0x51, 0xf9, 0x0b, 0x8a, 0xaa, 0x63, 0x3c, 0xf9, 0x24, 0xa6, 0xdd, 0x36, 0x76, 0x23, 0xec,
+	0x05, 0x38, 0xe1, 0x9e, 0x66, 0x85, 0xa7, 0xcd, 0x41, 0x4f, 0x15, 0x69, 0x76, 0x2e, 0xac, 0x2e,
+	0x44, 0xe1, 0xc6, 0xae, 0x09, 0xbf, 0x09, 0x29, 0x2b, 0x83, 0x58, 0xd2, 0xfa, 0xe8, 0x92, 0x8e,
+	0xb9, 0x1a, 0xd9, 0xb0, 0x20, 0x66, 0x09, 0xba, 0xc3, 0xcb, 0x86, 0x44, 0xc8, 0x39, 0x2e, 0x14,
+	0x4c, 0xa6, 0x4e, 0xd1, 0x57, 0xb0, 0xa6, 0xd9, 0x48, 0xa6, 0x25, 0xbb, 0xb2, 0x22, 0x8c, 0x57,
+	0x32, 0x63, 0xc1, 0xa7, 0x64, 0x47, 0xca, 0x50, 0x0c, 0x42, 0xea, 0x7b, 0x49, 0x50, 0x5e, 0x15,
+	0x29, 0xa4, 0x43, 0x7e, 0xab, 0x27, 0x98, 0x92, 0xa8, 0x87, 0x03, 0x1e, 0x70, 0x4e, 0x42, 0x3a,
+	0x15, 0xd5, 0x29, 0x7a, 0xc6, 0xe3, 0x89, 0x51, 0xe2, 0xb2, 0xc4, 0xf3, 0x5b, 0x19, 0x0a, 0xe6,
+	0x85, 0xed, 0x6a, 0xaa, 0xad, 0x4b, 0xa5, 0x0c, 0xb8, 0x03, 0x8b, 0xd9, 0x2c, 0xb9, 0xf4, 0x05,
+	0x11, 0x77, 0x21, 0x95, 0xca, 0x05, 0x7f, 0x01, 0x66, 0x66, 0x46, 0x19, 0xe9, 0x74, 0x70, 0x50,
+	0x5e, 0x14, 0x86, 0x4b, 0xa9, 0xbc, 0x26, 0xc5, 0x7c, 0x67, 0xc6, 0xdd, 0xb6, 0xda, 0x99, 0xa6,
+	0xdc, 0xb6, 0x71, 0xb7, 0x2d, 0x77, 0xe6, 0x17, 0x60, 0x72, 0x25, 0x4b, 0xbc, 0x98, 0xa6, 0x4f,
+	0xc7, 0x65, 0x61, 0xb3, 0x14, 0x77, 0xdb, 0x75, 0x4d, 0xdc, 0x3f, 0x34, 0x96, 0xb4, 0x43, 0xe3,
+	0xe9, 0x23, 0xc8, 0x1f, 0x1d, 0xa2, 0x39, 0x28, 0x56, 0x5f, 0x5c, 0x1f, 0x9c, 0x57, 0x8f, 0xcc,
+	0x1c, 0x9a, 0x81, 0xfc, 0xd9, 0xb5, 0x69, 0xa0, 0x12, 0x14, 0x9c, 0x83, 0x93, 0xba, 0x99, 0x7f,
+	0xfa, 0xce, 0x80, 0x19, 0xf9, 0x28, 0x42, 0x00, 0x33, 0x2f, 0x5f, 0xbc, 0xac, 0x1d, 0x73, 0xc3,
+	0x12, 0x14, 0xce, 0xae, 0x8f, 0x0e, 0x4d, 0x83, 0x4b, 0xb9, 0xe9, 0xd1, 0xa1, 0x99, 0x47, 0xf3,
+	0x50, 0x72, 0x8e, 0x0f, 0x8e, 0xae, 0x2e, 0x2f, 0xcf, 0xcd, 0x29, 0xae, 0xa9, 0x1d, 0x3b, 0xd7,
+	0xc7, 0x8e, 0x59, 0xe0, 0x51, 0x6a, 0xf5, 0x4b, 0xe7, 0xe0, 0xf4, 0xd8, 0x9c, 0xe6, 0x51, 0xae,
+	0x8e, 0xcc, 0x19, 0x6e, 0x70, 0x71, 0x5c, 0x77, 0xaa, 0x15, 0xb3, 0x88, 0x96, 0x60, 0xae, 0x72,
+	0x79, 0xe5, 0x5c, 0x56, 0x8e, 0x6b, 0xb5, 0x4b, 0xc7, 0x2c, 0x71, 0x5f, 0xb5, 0xe3, 0xca, 0x4b,
+	0xa7, 0x5a, 0x7f, 0x65, 0xce, 0x72, 0xd3, 0xea, 0xc5, 0xd5, 0xa5, 0x53, 0x37, 0xe1, 0xe9, 0x39,
+	0x6c, 0x4c, 0x64, 0x2d, 0x3c, 0xb1, 0x5a, 0x2b, 0xec, 0x98, 0x39, 0x34, 0x0b, 0xd3, 0x27, 0x24,
+	0xf1, 0xb1, 0x69, 0x20, 0x0b, 0xd6, 0xaa, 0x8d, 0x6f, 0xbc, 0x1e, 0xee, 0x1b, 0x9e, 0x84, 0x11,
+	0xc3, 0x89, 0x99, 0xdf, 0xff, 0xdb, 0x02, 0x4c, 0x1f, 0xf1, 0x7b, 0x0d, 0xed, 0xc3, 0xd4, 0x29,
+	0x66, 0x68, 0x65, 0xe0, 0x9a, 0x93, 0x07, 0xa8, 0xb5, 0x3a, 0x28, 0x54, 0xf7, 0x72, 0x0e, 0xfd,
+	0x1e, 0x8a, 0xea, 0x87, 0x0c, 0xb4, 0xde, 0x67, 0xc1, 0x03, 0x3f, 0x93, 0x58, 0xe5, 0x51, 0x45,
+	0x36, 0xff, 0x14, 0xa0, 0xff, 0xe3, 0x04, 0xb2, 0x86, 0x88, 0xb4, 0xf6, 0xb0, 0xb1, 0xee, 0x8f,
+	0xd5, 0x8d, 0x3a, 0xe2, 0xe4, 0x7b, 0xc4, 0x91, 0xf6, 0x1b, 0xc0, 0x88, 0x23, 0x9d, 0xad, 0xdb,
+	0x39, 0x54, 0x81, 0x52, 0x4a, 0x8c, 0x51, 0x3f, 0xf3, 0x21, 0x1a, 0x6e, 0x6d, 0x8c, 0xd1, 0xa4,
+	0x2e, 0xbe, 0x34, 0x78, 0x59, 0x54, 0xa9, 0xb5, 0xb2, 0x0c, 0x32, 0x64, 0xad, 0x2c, 0xc3, 0x5c,
+	0x32, 0x87, 0xae, 0x61, 0x69, 0x88, 0x05, 0xa2, 0x07, 0x99, 0xf9, 0x78, 0x9e, 0x69, 0x6d, 0x4f,
+	0x36, 0xc8, 0xfc, 0xbe, 0x02, 0x73, 0x98, 0x13, 0xa2, 0x6d, 0xad, 0x1e, 0x63, 0xd9, 0xa5, 0xf5,
+	0xf0, 0x23, 0x16, 0x99, 0xeb, 0x1a, 0x2c, 0x0e, 0xd2, 0x40, 0xb4, 0x35, 0x91, 0x1f, 0x4a, 0xb7,
+	0x0f, 0x3e, 0xc1, 0x1f, 0x65, 0x57, 0xfb, 0x9c, 0x4e, 0xeb, 0xea, 0x08, 0x21, 0xd4, 0xba, 0x3a,
+	0x4a, 0x02, 0xed, 0x1c, 0x6a, 0xc1, 0x9a, 0xa2, 0x47, 0x43, 0xa4, 0x09, 0x3d, 0x1e, 0x82, 0xc3,
+	0x04, 0x3a, 0x66, 0x3d, 0xf9, 0xa4, 0x9d, 0x5e, 0xe5, 0x61, 0xc6, 0xa3, 0x55, 0x79, 0x02, 0x29,
+	0xd3, 0xaa, 0x3c, 0x91, 0x2e, 0xe5, 0xd0, 0x8d, 0xe0, 0x1d, 0xc3, 0xfc, 0x05, 0x3d, 0x1a, 0xdc,
+	0x9e, 0x63, 0x89, 0x91, 0xf5, 0xf9, 0xc7, 0x8d, 0xb2, 0x18, 0x17, 0x30, 0xaf, 0x93, 0x18, 0xf4,
+	0x99, 0x3e, 0x6f, 0x98, 0xf2, 0x58, 0x9b, 0x13, 0xb4, 0x3a, 0x30, 0x06, 0x19, 0x89, 0x06, 0x8c,
+	0xb1, 0x1c, 0x46, 0x03, 0xc6, 0x78, 0x2a, 0x63, 0xe7, 0x10, 0x16, 0x44, 0x6b, 0x84, 0x8e, 0xa0,
+	0x81, 0x35, 0x4e, 0x22, 0x33, 0xd6, 0xce, 0x27, 0xac, 0xf4, 0xdc, 0x07, 0x29, 0x89, 0x96, 0xfb,
+	0x58, 0x52, 0xa3, 0xe5, 0x3e, 0x81, 0xcb, 0xe4, 0x90, 0x2b, 0x7e, 0xa8, 0x18, 0x22, 0x10, 0xc8,
+	0xfe, 0x28, 0xbb, 0x90, 0xce, 0x1f, 0xdd, 0x81, 0x81, 0xc8, 0x00, 0xa3, 0x2f, 0x68, 0x2d, 0xc0,
+	0x44, 0x32, 0xa1, 0x05, 0x98, 0xfc, 0x04, 0xb7, 0x73, 0xe8, 0xb5, 0x60, 0x9f, 0xa3, 0x2f, 0x5e,
+	0xb4, 0x33, 0x0a, 0xb1, 0x31, 0xcf, 0x71, 0xeb, 0xf1, 0xa7, 0xcc, 0xd2, 0x48, 0x87, 0xfb, 0x3f,
+	0x7e, 0x5f, 0x32, 0xfe, 0xf9, 0x7e, 0xcb, 0xf8, 0xe1, 0xfd, 0x96, 0xf1, 0xaf, 0xf7, 0x5b, 0xc6,
+	0xbb, 0x0f, 0x5b, 0xb9, 0xbf, 0x7e, 0xd8, 0xca, 0xfd, 0xf0, 0x61, 0x2b, 0xf7, 0xe3, 0x87, 0xad,
+	0x1c, 0x98, 0x24, 0x69, 0xee, 0xb1, 0xb0, 0xd5, 0xdb, 0x6b, 0xf5, 0xc4, 0xbf, 0x06, 0x6e, 0x66,
+	0xc4, 0x9f, 0xaf, 0xfe, 0x17, 0x00, 0x00, 0xff, 0xff, 0xce, 0x55, 0xae, 0xc7, 0x95, 0x18, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2203,6 +2686,12 @@ type DebugClient interface {
 	GetAllRegionsInStore(ctx context.Context, in *GetAllRegionsInStoreRequest, opts ...grpc.CallOption) (*GetAllRegionsInStoreResponse, error)
 	// Make this TiKV node return to the status on this node to certain ts.
 	ResetToVersion(ctx context.Context, in *ResetToVersionRequest, opts ...grpc.CallOption) (*ResetToVersionResponse, error)
+	// Get range properties
+	GetRangeProperties(ctx context.Context, in *GetRangePropertiesRequest, opts ...grpc.CallOption) (*GetRangePropertiesResponse, error)
+	// Flashback given key range to a specified version.
+	FlashbackToVersion(ctx context.Context, in *FlashbackToVersionRequest, opts ...grpc.CallOption) (*FlashbackToVersionResponse, error)
+	// GetRegionReadProgress returns the some useful info in RegionReadProgress
+	GetRegionReadProgress(ctx context.Context, in *GetRegionReadProgressRequest, opts ...grpc.CallOption) (*GetRegionReadProgressResponse, error)
 }
 
 type debugClient struct {
@@ -2389,6 +2878,33 @@ func (c *debugClient) ResetToVersion(ctx context.Context, in *ResetToVersionRequ
 	return out, nil
 }
 
+func (c *debugClient) GetRangeProperties(ctx context.Context, in *GetRangePropertiesRequest, opts ...grpc.CallOption) (*GetRangePropertiesResponse, error) {
+	out := new(GetRangePropertiesResponse)
+	err := c.cc.Invoke(ctx, "/debugpb.Debug/GetRangeProperties", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *debugClient) FlashbackToVersion(ctx context.Context, in *FlashbackToVersionRequest, opts ...grpc.CallOption) (*FlashbackToVersionResponse, error) {
+	out := new(FlashbackToVersionResponse)
+	err := c.cc.Invoke(ctx, "/debugpb.Debug/FlashbackToVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *debugClient) GetRegionReadProgress(ctx context.Context, in *GetRegionReadProgressRequest, opts ...grpc.CallOption) (*GetRegionReadProgressResponse, error) {
+	out := new(GetRegionReadProgressResponse)
+	err := c.cc.Invoke(ctx, "/debugpb.Debug/GetRegionReadProgress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DebugServer is the server API for Debug service.
 type DebugServer interface {
 	// Read a value arbitrarily for a key.
@@ -2430,6 +2946,12 @@ type DebugServer interface {
 	GetAllRegionsInStore(context.Context, *GetAllRegionsInStoreRequest) (*GetAllRegionsInStoreResponse, error)
 	// Make this TiKV node return to the status on this node to certain ts.
 	ResetToVersion(context.Context, *ResetToVersionRequest) (*ResetToVersionResponse, error)
+	// Get range properties
+	GetRangeProperties(context.Context, *GetRangePropertiesRequest) (*GetRangePropertiesResponse, error)
+	// Flashback given key range to a specified version.
+	FlashbackToVersion(context.Context, *FlashbackToVersionRequest) (*FlashbackToVersionResponse, error)
+	// GetRegionReadProgress returns the some useful info in RegionReadProgress
+	GetRegionReadProgress(context.Context, *GetRegionReadProgressRequest) (*GetRegionReadProgressResponse, error)
 }
 
 // UnimplementedDebugServer can be embedded to have forward compatible implementations.
@@ -2486,6 +3008,15 @@ func (*UnimplementedDebugServer) GetAllRegionsInStore(ctx context.Context, req *
 }
 func (*UnimplementedDebugServer) ResetToVersion(ctx context.Context, req *ResetToVersionRequest) (*ResetToVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetToVersion not implemented")
+}
+func (*UnimplementedDebugServer) GetRangeProperties(ctx context.Context, req *GetRangePropertiesRequest) (*GetRangePropertiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRangeProperties not implemented")
+}
+func (*UnimplementedDebugServer) FlashbackToVersion(ctx context.Context, req *FlashbackToVersionRequest) (*FlashbackToVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FlashbackToVersion not implemented")
+}
+func (*UnimplementedDebugServer) GetRegionReadProgress(ctx context.Context, req *GetRegionReadProgressRequest) (*GetRegionReadProgressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRegionReadProgress not implemented")
 }
 
 func RegisterDebugServer(s *grpc.Server, srv DebugServer) {
@@ -2801,6 +3332,60 @@ func _Debug_ResetToVersion_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Debug_GetRangeProperties_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRangePropertiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).GetRangeProperties(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/GetRangeProperties",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).GetRangeProperties(ctx, req.(*GetRangePropertiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Debug_FlashbackToVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FlashbackToVersionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).FlashbackToVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/FlashbackToVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).FlashbackToVersion(ctx, req.(*FlashbackToVersionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Debug_GetRegionReadProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRegionReadProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).GetRegionReadProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/GetRegionReadProgress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).GetRegionReadProgress(ctx, req.(*GetRegionReadProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Debug_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "debugpb.Debug",
 	HandlerType: (*DebugServer)(nil),
@@ -2869,6 +3454,18 @@ var _Debug_serviceDesc = grpc.ServiceDesc{
 			MethodName: "ResetToVersion",
 			Handler:    _Debug_ResetToVersion_Handler,
 		},
+		{
+			MethodName: "GetRangeProperties",
+			Handler:    _Debug_GetRangeProperties_Handler,
+		},
+		{
+			MethodName: "FlashbackToVersion",
+			Handler:    _Debug_FlashbackToVersion_Handler,
+		},
+		{
+			MethodName: "GetRegionReadProgress",
+			Handler:    _Debug_GetRegionReadProgress_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -2900,10 +3497,6 @@ func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Key) > 0 {
 		i -= len(m.Key)
 		copy(dAtA[i:], m.Key)
@@ -2946,10 +3539,6 @@ func (m *GetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Value) > 0 {
 		i -= len(m.Value)
 		copy(dAtA[i:], m.Value)
@@ -2980,10 +3569,6 @@ func (m *RaftLogRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.LogIndex != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.LogIndex))
 		i--
@@ -3017,10 +3602,6 @@ func (m *RaftLogResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Entry != nil {
 		{
 			size, err := m.Entry.MarshalToSizedBuffer(dAtA[:i])
@@ -3056,10 +3637,6 @@ func (m *RegionInfoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -3088,10 +3665,6 @@ func (m *RegionInfoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionLocalState != nil {
 		{
 			size, err := m.RegionLocalState.MarshalToSizedBuffer(dAtA[:i])
@@ -3151,10 +3724,6 @@ func (m *RegionSizeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Cfs) > 0 {
 		for iNdEx := len(m.Cfs) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Cfs[iNdEx])
@@ -3192,10 +3761,6 @@ func (m *RegionSizeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Entries) > 0 {
 		for iNdEx := len(m.Entries) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3233,10 +3798,6 @@ func (m *RegionSizeResponse_Entry) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Size_ != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.Size_))
 		i--
@@ -3272,10 +3833,6 @@ func (m *ScanMvccRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Limit != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.Limit))
 		i--
@@ -3318,10 +3875,6 @@ func (m *ScanMvccResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Info != nil {
 		{
 			size, err := m.Info.MarshalToSizedBuffer(dAtA[:i])
@@ -3364,10 +3917,6 @@ func (m *CompactRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.BottommostLevelCompaction != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.BottommostLevelCompaction))
 		i--
@@ -3427,10 +3976,6 @@ func (m *CompactResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3454,10 +3999,6 @@ func (m *InjectFailPointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Actions) > 0 {
 		i -= len(m.Actions)
 		copy(dAtA[i:], m.Actions)
@@ -3495,10 +4036,6 @@ func (m *InjectFailPointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3522,10 +4059,6 @@ func (m *RecoverFailPointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Name) > 0 {
 		i -= len(m.Name)
 		copy(dAtA[i:], m.Name)
@@ -3556,10 +4089,6 @@ func (m *RecoverFailPointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3583,10 +4112,6 @@ func (m *ListFailPointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3610,10 +4135,6 @@ func (m *ListFailPointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Entries) > 0 {
 		for iNdEx := len(m.Entries) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3651,10 +4172,6 @@ func (m *ListFailPointsResponse_Entry) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Actions) > 0 {
 		i -= len(m.Actions)
 		copy(dAtA[i:], m.Actions)
@@ -3692,10 +4209,6 @@ func (m *GetMetricsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.All {
 		i--
 		if m.All {
@@ -3729,10 +4242,6 @@ func (m *GetMetricsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.StoreId != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.StoreId))
 		i--
@@ -3789,10 +4298,6 @@ func (m *RegionConsistencyCheckRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -3821,10 +4326,6 @@ func (m *RegionConsistencyCheckResponse) MarshalToSizedBuffer(dAtA []byte) (int,
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3848,10 +4349,6 @@ func (m *ModifyTikvConfigRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ConfigValue) > 0 {
 		i -= len(m.ConfigValue)
 		copy(dAtA[i:], m.ConfigValue)
@@ -3894,10 +4391,6 @@ func (m *ModifyTikvConfigResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -3921,10 +4414,6 @@ func (m *Property) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Value) > 0 {
 		i -= len(m.Value)
 		copy(dAtA[i:], m.Value)
@@ -3962,10 +4451,6 @@ func (m *GetRegionPropertiesRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.RegionId != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
 		i--
@@ -3994,10 +4479,6 @@ func (m *GetRegionPropertiesResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Props) > 0 {
 		for iNdEx := len(m.Props) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -4035,10 +4516,6 @@ func (m *GetStoreInfoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -4062,10 +4539,6 @@ func (m *GetStoreInfoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.ApiVersion != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.ApiVersion))
 		i--
@@ -4099,10 +4572,6 @@ func (m *GetClusterInfoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -4126,10 +4595,6 @@ func (m *GetClusterInfoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.ClusterId != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.ClusterId))
 		i--
@@ -4158,10 +4623,6 @@ func (m *GetAllRegionsInStoreRequest) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -4185,10 +4646,6 @@ func (m *GetAllRegionsInStoreResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Regions) > 0 {
 		dAtA7 := make([]byte, len(m.Regions)*10)
 		var j6 int
@@ -4230,10 +4687,6 @@ func (m *ResetToVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Ts != 0 {
 		i = encodeVarintDebugpb(dAtA, i, uint64(m.Ts))
 		i--
@@ -4262,9 +4715,418 @@ func (m *ResetToVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	return len(dAtA) - i, nil
+}
+
+func (m *GetRangePropertiesRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetRangePropertiesRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRangePropertiesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.EndKey) > 0 {
+		i -= len(m.EndKey)
+		copy(dAtA[i:], m.EndKey)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.EndKey)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.StartKey) > 0 {
+		i -= len(m.StartKey)
+		copy(dAtA[i:], m.StartKey)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.StartKey)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetRangePropertiesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetRangePropertiesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRangePropertiesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Properties) > 0 {
+		for iNdEx := len(m.Properties) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Properties[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDebugpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FlashbackToVersionRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FlashbackToVersionRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FlashbackToVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.CommitTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.CommitTs))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.StartTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.StartTs))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.EndKey) > 0 {
+		i -= len(m.EndKey)
+		copy(dAtA[i:], m.EndKey)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.EndKey)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.StartKey) > 0 {
+		i -= len(m.StartKey)
+		copy(dAtA[i:], m.StartKey)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.StartKey)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.RegionId != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Version != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Context != nil {
+		{
+			size, err := m.Context.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDebugpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FlashbackToVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FlashbackToVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FlashbackToVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Error) > 0 {
+		i -= len(m.Error)
+		copy(dAtA[i:], m.Error)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Error)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetRegionReadProgressRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetRegionReadProgressRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRegionReadProgressRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.MinStartTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.MinStartTs))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.LogLocks {
+		i--
+		if m.LogLocks {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.RegionId != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetRegionReadProgressResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetRegionReadProgressResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRegionReadProgressResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Discard {
+		i--
+		if m.Discard {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa0
+	}
+	if m.ReadStateApplyIndex != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.ReadStateApplyIndex))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x98
+	}
+	if m.ReadStateTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.ReadStateTs))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x90
+	}
+	if m.NumTransactions != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.NumTransactions))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x88
+	}
+	if m.NumLocks != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.NumLocks))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x80
+	}
+	if len(m.Error) > 0 {
+		i -= len(m.Error)
+		copy(dAtA[i:], m.Error)
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Error)))
+		i--
+		dAtA[i] = 0x7a
+	}
+	if m.ResolverStopped {
+		i--
+		if m.ResolverStopped {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x70
+	}
+	if m.ResolverExist {
+		i--
+		if m.ResolverExist {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x68
+	}
+	if m.ResolverTrackedIndex != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.ResolverTrackedIndex))
+		i--
+		dAtA[i] = 0x60
+	}
+	if m.ResolvedTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.ResolvedTs))
+		i--
+		dAtA[i] = 0x58
+	}
+	if m.RegionReadProgressExist {
+		i--
+		if m.RegionReadProgressExist {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x50
+	}
+	if m.DurationToLastConsumeLeaderMs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.DurationToLastConsumeLeaderMs))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.DurationToLastUpdateSafeTsMs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.DurationToLastUpdateSafeTsMs))
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.RegionReadProgressPaused {
+		i--
+		if m.RegionReadProgressPaused {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.PendingBackTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.PendingBackTs))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.PendingBackAppliedIndex != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.PendingBackAppliedIndex))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.PendingFrontTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.PendingFrontTs))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.PendingFrontAppliedIndex != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.PendingFrontAppliedIndex))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.AppliedIndex != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.AppliedIndex))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.SafeTs != 0 {
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.SafeTs))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -4297,9 +5159,6 @@ func (m *GetRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4312,9 +5171,6 @@ func (m *GetResponse) Size() (n int) {
 	l = len(m.Value)
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4331,9 +5187,6 @@ func (m *RaftLogRequest) Size() (n int) {
 	if m.LogIndex != 0 {
 		n += 1 + sovDebugpb(uint64(m.LogIndex))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4347,9 +5200,6 @@ func (m *RaftLogResponse) Size() (n int) {
 		l = m.Entry.Size()
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4361,9 +5211,6 @@ func (m *RegionInfoRequest) Size() (n int) {
 	_ = l
 	if m.RegionId != 0 {
 		n += 1 + sovDebugpb(uint64(m.RegionId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4386,9 +5233,6 @@ func (m *RegionInfoResponse) Size() (n int) {
 		l = m.RegionLocalState.Size()
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4407,9 +5251,6 @@ func (m *RegionSizeRequest) Size() (n int) {
 			n += 1 + l + sovDebugpb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4424,9 +5265,6 @@ func (m *RegionSizeResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovDebugpb(uint64(l))
 		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4443,9 +5281,6 @@ func (m *RegionSizeResponse_Entry) Size() (n int) {
 	}
 	if m.Size_ != 0 {
 		n += 1 + sovDebugpb(uint64(m.Size_))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4467,9 +5302,6 @@ func (m *ScanMvccRequest) Size() (n int) {
 	if m.Limit != 0 {
 		n += 1 + sovDebugpb(uint64(m.Limit))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4486,9 +5318,6 @@ func (m *ScanMvccResponse) Size() (n int) {
 	if m.Info != nil {
 		l = m.Info.Size()
 		n += 1 + l + sovDebugpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4520,9 +5349,6 @@ func (m *CompactRequest) Size() (n int) {
 	if m.BottommostLevelCompaction != 0 {
 		n += 1 + sovDebugpb(uint64(m.BottommostLevelCompaction))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4532,9 +5358,6 @@ func (m *CompactResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4552,9 +5375,6 @@ func (m *InjectFailPointRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4564,9 +5384,6 @@ func (m *InjectFailPointResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4580,9 +5397,6 @@ func (m *RecoverFailPointRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4592,9 +5406,6 @@ func (m *RecoverFailPointResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4604,9 +5415,6 @@ func (m *ListFailPointsRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4621,9 +5429,6 @@ func (m *ListFailPointsResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovDebugpb(uint64(l))
 		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4642,9 +5447,6 @@ func (m *ListFailPointsResponse_Entry) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4656,9 +5458,6 @@ func (m *GetMetricsRequest) Size() (n int) {
 	_ = l
 	if m.All {
 		n += 2
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4688,9 +5487,6 @@ func (m *GetMetricsResponse) Size() (n int) {
 	if m.StoreId != 0 {
 		n += 1 + sovDebugpb(uint64(m.StoreId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4703,9 +5499,6 @@ func (m *RegionConsistencyCheckRequest) Size() (n int) {
 	if m.RegionId != 0 {
 		n += 1 + sovDebugpb(uint64(m.RegionId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4715,9 +5508,6 @@ func (m *RegionConsistencyCheckResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4738,9 +5528,6 @@ func (m *ModifyTikvConfigRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4750,9 +5537,6 @@ func (m *ModifyTikvConfigResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4770,9 +5554,6 @@ func (m *Property) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4784,9 +5565,6 @@ func (m *GetRegionPropertiesRequest) Size() (n int) {
 	_ = l
 	if m.RegionId != 0 {
 		n += 1 + sovDebugpb(uint64(m.RegionId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4803,9 +5581,6 @@ func (m *GetRegionPropertiesResponse) Size() (n int) {
 			n += 1 + l + sovDebugpb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4815,9 +5590,6 @@ func (m *GetStoreInfoRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4833,9 +5605,6 @@ func (m *GetStoreInfoResponse) Size() (n int) {
 	if m.ApiVersion != 0 {
 		n += 1 + sovDebugpb(uint64(m.ApiVersion))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4845,9 +5614,6 @@ func (m *GetClusterInfoRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4860,9 +5626,6 @@ func (m *GetClusterInfoResponse) Size() (n int) {
 	if m.ClusterId != 0 {
 		n += 1 + sovDebugpb(uint64(m.ClusterId))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4872,9 +5635,6 @@ func (m *GetAllRegionsInStoreRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4891,9 +5651,6 @@ func (m *GetAllRegionsInStoreResponse) Size() (n int) {
 		}
 		n += 1 + sovDebugpb(uint64(l)) + l
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4906,9 +5663,6 @@ func (m *ResetToVersionRequest) Size() (n int) {
 	if m.Ts != 0 {
 		n += 1 + sovDebugpb(uint64(m.Ts))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -4918,8 +5672,188 @@ func (m *ResetToVersionResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *GetRangePropertiesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.StartKey)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.EndKey)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	return n
+}
+
+func (m *GetRangePropertiesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Properties) > 0 {
+		for _, e := range m.Properties {
+			l = e.Size()
+			n += 1 + l + sovDebugpb(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *GetRangePropertiesResponse_RangeProperty) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	return n
+}
+
+func (m *FlashbackToVersionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Context != nil {
+		l = m.Context.Size()
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	if m.Version != 0 {
+		n += 1 + sovDebugpb(uint64(m.Version))
+	}
+	if m.RegionId != 0 {
+		n += 1 + sovDebugpb(uint64(m.RegionId))
+	}
+	l = len(m.StartKey)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.EndKey)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	if m.StartTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.StartTs))
+	}
+	if m.CommitTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.CommitTs))
+	}
+	return n
+}
+
+func (m *FlashbackToVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Error)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	return n
+}
+
+func (m *GetRegionReadProgressRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RegionId != 0 {
+		n += 1 + sovDebugpb(uint64(m.RegionId))
+	}
+	if m.LogLocks {
+		n += 2
+	}
+	if m.MinStartTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.MinStartTs))
+	}
+	return n
+}
+
+func (m *GetRegionReadProgressResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SafeTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.SafeTs))
+	}
+	if m.AppliedIndex != 0 {
+		n += 1 + sovDebugpb(uint64(m.AppliedIndex))
+	}
+	if m.PendingFrontAppliedIndex != 0 {
+		n += 1 + sovDebugpb(uint64(m.PendingFrontAppliedIndex))
+	}
+	if m.PendingFrontTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.PendingFrontTs))
+	}
+	if m.PendingBackAppliedIndex != 0 {
+		n += 1 + sovDebugpb(uint64(m.PendingBackAppliedIndex))
+	}
+	if m.PendingBackTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.PendingBackTs))
+	}
+	if m.RegionReadProgressPaused {
+		n += 2
+	}
+	if m.DurationToLastUpdateSafeTsMs != 0 {
+		n += 1 + sovDebugpb(uint64(m.DurationToLastUpdateSafeTsMs))
+	}
+	if m.DurationToLastConsumeLeaderMs != 0 {
+		n += 1 + sovDebugpb(uint64(m.DurationToLastConsumeLeaderMs))
+	}
+	if m.RegionReadProgressExist {
+		n += 2
+	}
+	if m.ResolvedTs != 0 {
+		n += 1 + sovDebugpb(uint64(m.ResolvedTs))
+	}
+	if m.ResolverTrackedIndex != 0 {
+		n += 1 + sovDebugpb(uint64(m.ResolverTrackedIndex))
+	}
+	if m.ResolverExist {
+		n += 2
+	}
+	if m.ResolverStopped {
+		n += 2
+	}
+	l = len(m.Error)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	if m.NumLocks != 0 {
+		n += 2 + sovDebugpb(uint64(m.NumLocks))
+	}
+	if m.NumTransactions != 0 {
+		n += 2 + sovDebugpb(uint64(m.NumTransactions))
+	}
+	if m.ReadStateTs != 0 {
+		n += 2 + sovDebugpb(uint64(m.ReadStateTs))
+	}
+	if m.ReadStateApplyIndex != 0 {
+		n += 2 + sovDebugpb(uint64(m.ReadStateApplyIndex))
+	}
+	if m.Discard {
+		n += 3
 	}
 	return n
 }
@@ -5056,7 +5990,6 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5141,7 +6074,6 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5230,7 +6162,6 @@ func (m *RaftLogRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5317,7 +6248,6 @@ func (m *RaftLogResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5387,7 +6317,6 @@ func (m *RegionInfoRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5546,7 +6475,6 @@ func (m *RegionInfoResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5648,7 +6576,6 @@ func (m *RegionSizeRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5733,7 +6660,6 @@ func (m *RegionSizeResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5835,7 +6761,6 @@ func (m *RegionSizeResponse_Entry) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5973,7 +6898,6 @@ func (m *ScanMvccRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6094,7 +7018,6 @@ func (m *ScanMvccResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6302,7 +7225,6 @@ func (m *CompactRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6353,7 +7275,6 @@ func (m *CompactResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6468,7 +7389,6 @@ func (m *InjectFailPointRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6519,7 +7439,6 @@ func (m *InjectFailPointResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6602,7 +7521,6 @@ func (m *RecoverFailPointRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6653,7 +7571,6 @@ func (m *RecoverFailPointResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6704,7 +7621,6 @@ func (m *ListFailPointsRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6789,7 +7705,6 @@ func (m *ListFailPointsResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6904,7 +7819,6 @@ func (m *ListFailPointsResponse_Entry) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6975,7 +7889,6 @@ func (m *GetMetricsRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7173,7 +8086,6 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7243,7 +8155,6 @@ func (m *RegionConsistencyCheckRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7294,7 +8205,6 @@ func (m *RegionConsistencyCheckResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7428,7 +8338,6 @@ func (m *ModifyTikvConfigRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7479,7 +8388,6 @@ func (m *ModifyTikvConfigResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7594,7 +8502,6 @@ func (m *Property) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7664,7 +8571,6 @@ func (m *GetRegionPropertiesRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7749,7 +8655,6 @@ func (m *GetRegionPropertiesResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7800,7 +8705,6 @@ func (m *GetStoreInfoRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7889,7 +8793,6 @@ func (m *GetStoreInfoResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7940,7 +8843,6 @@ func (m *GetClusterInfoRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8010,7 +8912,6 @@ func (m *GetClusterInfoResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8061,7 +8962,6 @@ func (m *GetAllRegionsInStoreRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8188,7 +9088,6 @@ func (m *GetAllRegionsInStoreResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8258,7 +9157,6 @@ func (m *ResetToVersionRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8309,7 +9207,1190 @@ func (m *ResetToVersionResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetRangePropertiesRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetRangePropertiesRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetRangePropertiesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StartKey = append(m.StartKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.StartKey == nil {
+				m.StartKey = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EndKey = append(m.EndKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.EndKey == nil {
+				m.EndKey = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetRangePropertiesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetRangePropertiesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetRangePropertiesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Properties", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Properties = append(m.Properties, &GetRangePropertiesResponse_RangeProperty{})
+			if err := m.Properties[len(m.Properties)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetRangePropertiesResponse_RangeProperty) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RangeProperty: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RangeProperty: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Key = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FlashbackToVersionRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FlashbackToVersionRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FlashbackToVersionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Context", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Context == nil {
+				m.Context = &kvrpcpb.Context{}
+			}
+			if err := m.Context.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StartKey = append(m.StartKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.StartKey == nil {
+				m.StartKey = []byte{}
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EndKey = append(m.EndKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.EndKey == nil {
+				m.EndKey = []byte{}
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartTs", wireType)
+			}
+			m.StartTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StartTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CommitTs", wireType)
+			}
+			m.CommitTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CommitTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FlashbackToVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FlashbackToVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FlashbackToVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Error = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetRegionReadProgressRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetRegionReadProgressRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetRegionReadProgressRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LogLocks", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.LogLocks = bool(v != 0)
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MinStartTs", wireType)
+			}
+			m.MinStartTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MinStartTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetRegionReadProgressResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetRegionReadProgressResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetRegionReadProgressResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SafeTs", wireType)
+			}
+			m.SafeTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SafeTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AppliedIndex", wireType)
+			}
+			m.AppliedIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.AppliedIndex |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PendingFrontAppliedIndex", wireType)
+			}
+			m.PendingFrontAppliedIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PendingFrontAppliedIndex |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PendingFrontTs", wireType)
+			}
+			m.PendingFrontTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PendingFrontTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PendingBackAppliedIndex", wireType)
+			}
+			m.PendingBackAppliedIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PendingBackAppliedIndex |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PendingBackTs", wireType)
+			}
+			m.PendingBackTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PendingBackTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionReadProgressPaused", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.RegionReadProgressPaused = bool(v != 0)
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DurationToLastUpdateSafeTsMs", wireType)
+			}
+			m.DurationToLastUpdateSafeTsMs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DurationToLastUpdateSafeTsMs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DurationToLastConsumeLeaderMs", wireType)
+			}
+			m.DurationToLastConsumeLeaderMs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DurationToLastConsumeLeaderMs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionReadProgressExist", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.RegionReadProgressExist = bool(v != 0)
+		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResolvedTs", wireType)
+			}
+			m.ResolvedTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ResolvedTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResolverTrackedIndex", wireType)
+			}
+			m.ResolverTrackedIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ResolverTrackedIndex |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResolverExist", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.ResolverExist = bool(v != 0)
+		case 14:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResolverStopped", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.ResolverStopped = bool(v != 0)
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Error = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 16:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NumLocks", wireType)
+			}
+			m.NumLocks = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NumLocks |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 17:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NumTransactions", wireType)
+			}
+			m.NumTransactions = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NumTransactions |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 18:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReadStateTs", wireType)
+			}
+			m.ReadStateTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReadStateTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 19:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReadStateApplyIndex", wireType)
+			}
+			m.ReadStateApplyIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReadStateApplyIndex |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 20:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Discard", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Discard = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}

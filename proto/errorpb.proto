@@ -5,14 +5,17 @@ import "metapb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
-option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// NotLeader is the error variant that tells a request be handle by raft leader 
+// NotLeader is the error variant that tells a request be handle by raft leader
 // is sent to raft follower or learner.
 message NotLeader {
     // The requested region ID
@@ -28,6 +31,13 @@ message IsWitness {
     uint64 region_id = 1;
 }
 
+// BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+// client should update the buckets version and retry.
+message BucketVersionNotMatch{
+    uint64 version = 1;
+    repeated bytes keys = 2;
+}
+
 message DiskFull {
     // The requested store ID
     repeated uint64 store_id = 1;
@@ -35,7 +45,7 @@ message DiskFull {
     string reason = 2;
 }
 
-// StoreNotMatch is the error variant that tells the request is sent to wrong store. 
+// StoreNotMatch is the error variant that tells the request is sent to wrong store.
 // (i.e. inconsistency of the store ID that request shows and the real store ID of this server.)
 message StoreNotMatch {
     // Store id in request
@@ -59,7 +69,7 @@ message RegionNotInitialized  {
 }
 
 // KeyNotInRegion is the error variant that tells the key the request requires isn't present in
-// this region. 
+// this region.
 message KeyNotInRegion {
     // The requested key
     bytes key = 1;
@@ -154,6 +164,19 @@ message FlashbackNotPrepared {
     uint64 region_id = 1;
 }
 
+// MismatchPeerId is the error variant that tells the request is sent to wrong peer.
+// Client receives this error should reload the region info and retry.
+message MismatchPeerId {
+    uint64 request_peer_id = 1;
+    uint64 store_peer_id = 2;
+}
+
+// UndeterminedResult is the error variant that tells the result is not determined yet.
+// For example, the raft protocol timed out and the apply result is unknown.
+message UndeterminedResult {
+    string message = 1;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -186,4 +209,12 @@ message Error {
     // IsWitness is the error variant that tells a request be handle by witness
     // which should be forbidden and retry.
     IsWitness is_witness = 19;
+
+    MismatchPeerId mismatch_peer_id = 20;
+
+    // BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+    BucketVersionNotMatch bucket_version_not_match = 21;
+
+    // UndeterminedResult is the error variant that tells the result is not determined yet.
+    UndeterminedResult undetermined_result = 22;
 }
